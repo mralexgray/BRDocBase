@@ -37,6 +37,12 @@ static NSString* const TestDocBaseName = @"doc_base_test";
 
 @end
 
+@interface ChangeTrackingDocument : TestDocument
+{
+	BOOL _isDocumentEdited;
+}
+@end
+
 @implementation DocBaseTest
 
 -(void)setup
@@ -197,6 +203,52 @@ static NSString* const TestDocBaseName = @"doc_base_test";
 	BRAssertTrue([found count] == 0);
 }
 
+-(void)testIsDocumentEdited
+{
+	// flag not set, new document should not be saved, an error should be returned
+	BRDocBase* docBase = [self createDocBase];
+	ChangeTrackingDocument* doc = [ChangeTrackingDocument testDocumentWithName:@"foo" number:5];
+	NSError* error = nil;
+	NSString* docId = [docBase saveDocument:doc error:&error];
+	BRAssertNil(docId);
+	BRAssertNotNil(error);
+	BRAssertTrue([error code] == BRDocBaseErrorNewDocumentNotSaved);
+	
+	// with flag set, new document should be saved, no error should be returned
+	doc.isDocumentEdited = YES;
+	docId = [docBase saveDocument:doc error:nil];
+	BRAssertTrue(!doc.isDocumentEdited);
+	docBase = [self createDocBase];
+	doc = [docBase documentWithId:docId error:nil];
+	BRAssertNotNil(doc);
+	
+	// without flag set, existing document should not be saved
+	doc.name = @"changed";
+	docId = [docBase saveDocument:doc error:nil];
+	BRAssertEqual(doc.documentId, docId);
+	docBase = [self createDocBase];
+	doc = [docBase documentWithId:docId error:nil];
+	BRAssertEqual(@"foo", doc.name);
+	
+	// with flag set, existing document should be saved
+	doc.name = @"changed";
+	doc.isDocumentEdited = YES;
+	[docBase saveDocument:doc error:nil];
+	BRAssertTrue(!doc.isDocumentEdited);
+	docBase = [self createDocBase];
+	doc = [docBase documentWithId:docId error:nil];
+	BRAssertEqual(@"changed", doc.name);
+}
+
+
+-(void)testDocumentIdHash
+{
+	NSString* test = @"some random string";
+	BRAssertTrue([test hash] != [test documentIdHash]);
+	NSString* test2 = @"some other random string";
+	BRAssertTrue([test documentIdHash] != [test2 documentIdHash]);
+}
+
 #pragma mark --
 #pragma mark Helper methods
 
@@ -249,5 +301,17 @@ static NSString* const TestDocBaseName = @"doc_base_test";
 			[NSNumber numberWithInt:self.number], @"number",
 			nil];
 }
+
+@end
+
+@implementation ChangeTrackingDocument
+
+-(id)init
+{
+	_isDocumentEdited = NO;
+	return self;
+}
+
+@synthesize isDocumentEdited = _isDocumentEdited;
 
 @end

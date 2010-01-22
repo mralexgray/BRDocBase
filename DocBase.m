@@ -21,6 +21,7 @@ static NSString* const BRDocExtension = @"doc.js";
 #pragma mark error codes 
 NSString* const BRDocBaseErrorDomain = @"com.blueropesoftware.docbase.ErrorDomain";
 const NSInteger BRDocBaseErrorNotFound = 1;
+const NSInteger BRDocBaseErrorNewDocumentNotSaved = 2;
 
 #pragma mark --
 #pragma mark Helper functions
@@ -39,6 +40,7 @@ static BOOL BRIsMutable(id<BRDocument> document);
 -(NSDictionary*)translateToDictionary:(id<BRDocument>)document;
 -(id<BRDocument>)translateToDocument:(NSDictionary*)dictionary;
 -(NSError*)notFoundError:(NSString*)documentId;
+-(NSError*)errorForDocumentId:(NSString*)documentId withCode:(NSInteger)errorCode;
 @end
 
 @implementation BRDocBase
@@ -88,6 +90,16 @@ static BOOL BRIsMutable(id<BRDocument> document);
 -(NSString*)saveDocument:(id<BRDocument>)document error:(NSError**)error
 {
 	NSString* documentId = [document documentId];
+	// check isDocumentEdited
+	if ([document respondsToSelector:@selector(isDocumentEdited)] &&
+		![document isDocumentEdited]) {
+		if ((documentId == nil) && (error != nil)) {
+			// this is an odd situation, isDocumentEdited is false, but no id is set.
+			// since we're returning nil, an error is set as well
+			*error = [self errorForDocumentId:nil withCode:BRDocBaseErrorNewDocumentNotSaved];
+		}
+		return documentId;
+	}
 	// assign id if needed
 	if (documentId == nil) {
 		if (BRIsMutable(document)) {
@@ -95,7 +107,7 @@ static BOOL BRIsMutable(id<BRDocument> document);
 			[document setDocumentId:documentId];
 		}
 	}
-
+	
 	// save the document
 	BOOL saved = NO;
 	NSNumber* bucket = [self bucketForDocumentId:documentId];
@@ -103,6 +115,9 @@ static BOOL BRIsMutable(id<BRDocument> document);
 	if (documentsInBucket) {
 		[documentsInBucket setObject:document forKey:documentId];
 		saved = [self saveDocuments:documentsInBucket inBucket:bucket error:error];
+		if (saved && [document respondsToSelector:@selector(setIsDocumentEdited:)]) {
+			[document setIsDocumentEdited:NO];
+		}
 	}
 	return saved ? documentId : nil;
 }
@@ -200,7 +215,7 @@ static BOOL BRIsMutable(id<BRDocument> document);
 
 -(NSNumber*)bucketForDocumentId:(NSString *)documentId
 {
-	NSUInteger bucketForDocument = [documentId hash] % _bucketCount;
+	NSUInteger bucketForDocument = [documentId documentIdHash] % _bucketCount;
 	return [NSNumber numberWithUnsignedInt:bucketForDocument];
 }
 
@@ -263,9 +278,13 @@ static BOOL BRIsMutable(id<BRDocument> document);
 
 -(NSError*)notFoundError:(NSString *)documentId
 {
-	return [[[NSError alloc] initWithDomain:BRDocBaseErrorDomain code:BRDocBaseErrorNotFound userInfo:nil] autorelease];
+	return [self errorForDocumentId:documentId withCode:BRDocBaseErrorNotFound];
 }
 
+-(NSError*)errorForDocumentId:(NSString*)documentId withCode:(NSInteger)errorCode
+{
+	return [[[NSError alloc] initWithDomain:BRDocBaseErrorDomain code:errorCode userInfo:nil] autorelease];
+}
 @end
 
 
@@ -294,6 +313,32 @@ static BOOL BRIsMutable(id<BRDocument> document);
 -(NSDictionary*)documentDictionary
 {
 	return self;
+}
+
+@end
+
+#pragma mark -
+#pragma mark String extensions
+
+@implementation NSString(BRDocBase_String)
+
+#define FNV_32_PRIME ((Fnv32_t)0x01000193)
+
+-(NSUInteger)documentIdHash
+{
+	NSUInteger hval = 2166136261;
+	const NSUInteger fnvPrime = 0x01000193;
+    const unsigned char *s = (const unsigned char *)[self UTF8String];	/* unsigned string */
+	
+    /*
+     * FNV-1 hash each octet in the buffer
+     */
+    while (*s) {
+		
+		hval *= fnvPrime;
+		hval ^= (NSUInteger)*s++;
+    }
+    return hval;
 }
 
 @end

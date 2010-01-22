@@ -16,8 +16,13 @@ extern const NSUInteger BRDocDefaultBucketCount;
 
 extern NSString* const BRDocBaseErrorDomain;
 extern const NSInteger BRDocBaseErrorNotFound;
+extern const NSInteger BRDocBaseErrorNewDocumentNotSaved;
 
 @class SBJSON;
+
+@interface NSString(BRDocBase_String)
+-(NSUInteger)documentIdHash;
+@end
 
 // Document protocol.  Any object that can be considered a document
 // should implement this protocol.
@@ -26,6 +31,14 @@ extern const NSInteger BRDocBaseErrorNotFound;
 @property (readwrite, copy) NSString* documentId;
 -(NSDictionary*)documentDictionary;
 -(id)initWithDocumentDictionary:(NSDictionary*)dictionary;
+@optional
+
+// If implemented, documents will only be saved if they have changes.
+// The flag will be cleared once the document has been saved.
+// This flag will be ignored if the document was not originally retrieved
+// from the document database or has not been saved previously.
+@property (readwrite, assign) BOOL isDocumentEdited;
+
 @end
 
 // Dictionaries are valid document objects
