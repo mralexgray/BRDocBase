@@ -237,6 +237,9 @@ static BOOL BRIsMutable(id<BRDocument> document);
 		translatedDocuments = [NSMutableDictionary dictionaryWithCapacity:[untranslatedDocuments count]];
 		for (NSDictionary* documentDictionary in untranslatedDocuments) {
 			id<BRDocument> document = [self translateToDocument:documentDictionary];
+			if ([document respondsToSelector:@selector(setIsDocumentEdited:)]) {
+				document.isDocumentEdited = NO;
+			}
 			[translatedDocuments setObject:document forKey:document.documentId];
 		}
 	}

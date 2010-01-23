@@ -208,6 +208,7 @@ static NSString* const TestDocBaseName = @"doc_base_test";
 	// flag not set, new document should not be saved, an error should be returned
 	BRDocBase* docBase = [self createDocBase];
 	ChangeTrackingDocument* doc = [ChangeTrackingDocument testDocumentWithName:@"foo" number:5];
+	doc.isDocumentEdited = NO;
 	NSError* error = nil;
 	NSString* docId = [docBase saveDocument:doc error:&error];
 	BRAssertNil(docId);
@@ -238,6 +239,11 @@ static NSString* const TestDocBaseName = @"doc_base_test";
 	docBase = [self createDocBase];
 	doc = [docBase documentWithId:docId error:nil];
 	BRAssertEqual(@"changed", doc.name);
+	
+	// when a document is first read, the flag should be forced to NO
+	docBase = [self createDocBase];
+	doc = [docBase documentWithId:docId error:nil];
+	BRAssertTrue(!doc.isDocumentEdited);
 }
 
 
@@ -285,7 +291,7 @@ static NSString* const TestDocBaseName = @"doc_base_test";
 
 -(id)initWithDocumentDictionary:(NSDictionary *)dictionary
 {
-	self = [super init];
+	self = [self init];
 	_documentId = [[dictionary objectForKey:BRDocIdKey] copy];
 	_name = [[dictionary objectForKey:@"name"] copy];
 	_number = [[dictionary objectForKey:@"number"] intValue];
@@ -308,7 +314,7 @@ static NSString* const TestDocBaseName = @"doc_base_test";
 
 -(id)init
 {
-	_isDocumentEdited = NO;
+	_isDocumentEdited = YES;
 	return self;
 }
 
