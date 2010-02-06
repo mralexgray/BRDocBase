@@ -14,9 +14,12 @@ extern NSString* const BRDocTypeKey;
 extern NSString* const BRDocBaseExtension;
 extern const NSUInteger BRDocDefaultBucketCount;
 
+extern NSString* const BRDocBaseConfigBucketCount;
+
 extern NSString* const BRDocBaseErrorDomain;
 extern const NSInteger BRDocBaseErrorNotFound;
 extern const NSInteger BRDocBaseErrorNewDocumentNotSaved;
+extern const NSInteger BRDocBaseErrorConfigurationMismatch;
 
 @class SBJSON;
 
@@ -50,17 +53,26 @@ extern const NSInteger BRDocBaseErrorNewDocumentNotSaved;
 	SBJSON* _json;
 	NSString* _path;
 
+	NSDictionary* _configuration;
 	NSUInteger _bucketCount;
 	NSMutableDictionary* _documentsInBucket;
+	BOOL _environmentVerified;
 }
 
 @property (readonly) NSString* path;
+@property (readonly) NSDictionary* configuration;
 
 +(NSString*)generateId;
++(NSDictionary*)defaultConfiguration;
+
 /// Create a DocBase instance with documents stored at the given path
 +(id)docBaseWithPath:(NSString*)path;
+/// Create a DocBase instance with documents stored at the given path and configuration
++(id)docBaseWithPath:(NSString*)path configuration:(NSDictionary*)configuration;
 /// Initialize a DocBase instance with documents stored at the given path
 -(id)initWithPath:(NSString*)path;
+/// Initialize a DocBase instance with documents stored at the given path and configuration
+-(id)initWithPath:(NSString*)path configuration:(NSDictionary*)configuration;
 /// Save the document to the document database returning the id of the saved document.
 -(NSString*)saveDocument:(id<BRDocument>)document error:(NSError**)error;
 /// Get the document with the given id.

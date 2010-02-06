@@ -15,6 +15,8 @@ NSString* const BRDocIdKey = @"_id";
 NSString* const BRDocRevKey = @"_rev";
 NSString* const BRDocTypeKey = @"_type";
 NSString* const BRDocBaseExtension = @"docbase";
+NSString* const BRDocBaseConfigBucketCount = @"bucketCount";
+
 const NSUInteger BRDocDefaultBucketCount = 17;
 static NSString* const BRDocExtension = @"doc.js";
 
@@ -22,6 +24,7 @@ static NSString* const BRDocExtension = @"doc.js";
 NSString* const BRDocBaseErrorDomain = @"com.blueropesoftware.docbase.ErrorDomain";
 const NSInteger BRDocBaseErrorNotFound = 1;
 const NSInteger BRDocBaseErrorNewDocumentNotSaved = 2;
+const NSInteger BRDocBaseErrorConfigurationMismatch = 3;
 
 #pragma mark --
 #pragma mark Helper functions
@@ -39,16 +42,19 @@ static BOOL BRIsMutable(id<BRDocument> document);
 -(NSMutableDictionary*)deserializeDocuments:(NSString*)documentData error:(NSError**)error;
 -(NSDictionary*)translateToDictionary:(id<BRDocument>)document;
 -(id<BRDocument>)translateToDocument:(NSDictionary*)dictionary;
+
+-(BOOL)verifyEnvironment:(NSError**)error;
+-(BOOL)readConfiguration:(NSError**)error;
+
 -(NSError*)notFoundError:(NSString*)documentId;
 -(NSError*)errorForDocumentId:(NSString*)documentId withCode:(NSInteger)errorCode;
+
 @end
 
 @implementation BRDocBase
 
 #pragma mark --
-#pragma mark Public implementation
-
-@synthesize path = _path;
+#pragma mark Class Methods
 
 +(NSString*)generateId
 {
@@ -58,24 +64,45 @@ static BOOL BRIsMutable(id<BRDocument> document);
 	return [uuidString autorelease];
 }
 
++(NSDictionary*)defaultConfiguration
+{
+	return [NSDictionary dictionaryWithObjectsAndKeys:
+		[NSNumber numberWithInt:BRDocDefaultBucketCount], BRDocBaseConfigBucketCount,
+		nil];
+}
+
+#pragma mark -
+#pragma mark Initialization
+
 +(id)docBaseWithPath:(NSString *)path
 {
 	return [[[self alloc] initWithPath:path] autorelease];
 }
 
++(id)docBaseWithPath:(NSString *)path configuration:(NSDictionary*)configuration
+{
+	return [[[self alloc] initWithPath:path configuration:configuration] autorelease];
+}
+
 -(id)initWithPath:(NSString *)path
+{
+	return [self initWithPath:path configuration:nil];
+}
+
+-(id)initWithPath:(NSString *)path configuration:(NSDictionary*)configuration
 {
 	self = [super init];
 	_documentsInBucket = [[NSMutableDictionary alloc] init];
 	_json = [[SBJSON alloc] init];
 	_json.humanReadable = YES;
 	_bucketCount = BRDocDefaultBucketCount;
+	_configuration = [configuration copy];
+	_environmentVerified = NO;
 	if ([[path pathExtension] caseInsensitiveCompare:BRDocBaseExtension] != 0) {
 		_path = [[path stringByAppendingPathExtension:BRDocBaseExtension] retain];
 	} else {
 		_path = [path copy];
 	}
-	[[NSFileManager defaultManager] createDirectoryAtPath:_path withIntermediateDirectories:YES attributes:nil error:nil];
 	return self;
 }
 
@@ -84,11 +111,20 @@ static BOOL BRIsMutable(id<BRDocument> document);
 	[_json release], _json = nil;
 	[_documentsInBucket release], _documentsInBucket = nil;
 	[_path release], _path = nil;
+	[_configuration release], _configuration = nil;
 	[super dealloc];
 }
 
+#pragma mark -
+#pragma mark Public Properties
+@synthesize path = _path;
+@synthesize configuration = _configuration;
+
+#pragma mark -
+#pragma mark Public Methods
 -(NSString*)saveDocument:(id<BRDocument>)document error:(NSError**)error
 {
+	if (![self verifyEnvironment:error]) return NO;
 	NSString* documentId = [document documentId];
 	// check isDocumentEdited
 	if ([document respondsToSelector:@selector(isDocumentEdited)] &&
@@ -124,6 +160,7 @@ static BOOL BRIsMutable(id<BRDocument> document);
 
 -(id<BRDocument>)documentWithId:(NSString *)documentId error:(NSError**)error
 {
+	if (![self verifyEnvironment:error]) return NO;
 	NSNumber* bucket = [self bucketForDocumentId:documentId];
 	id<BRDocument> doc = [[self documentsInBucket:bucket error:error] objectForKey:documentId];
 	if ((doc == nil) && (error)) {
@@ -134,6 +171,7 @@ static BOOL BRIsMutable(id<BRDocument> document);
 
 -(BOOL)deleteDocumentWithId:(NSString *)documentId error:(NSError **)error
 {
+	if (![self verifyEnvironment:error]) return NO;
 	BOOL deleted = NO;
 	NSNumber* bucket = [self bucketForDocumentId:documentId];
 	NSMutableDictionary* documentsInBucket = [self documentsInBucket:bucket error:error];
@@ -151,6 +189,7 @@ static BOOL BRIsMutable(id<BRDocument> document);
 
 -(NSSet*)findDocumentsUsingPredicate:(NSPredicate*)predicate error:(NSError**)error
 {
+	if (![self verifyEnvironment:error]) return NO;
 	BOOL success = YES;
 	NSMutableSet* matchingDocuments = [NSMutableSet set];
 	for (NSUInteger bucket = 0; bucket < _bucketCount; ++bucket) {
@@ -279,6 +318,69 @@ static BOOL BRIsMutable(id<BRDocument> document);
 	return document;
 }
 
+-(BOOL)verifyEnvironment:(NSError **)error
+{
+	if (!_environmentVerified) {
+		if (![[NSFileManager defaultManager] createDirectoryAtPath:self.path 
+			withIntermediateDirectories:YES 
+			attributes:nil error:error]) {
+			return NO;
+		}
+		if (![self readConfiguration:error]) {
+			return NO;
+		}
+		_environmentVerified = YES;
+	}
+	return _environmentVerified;
+}
+
+-(BOOL)readConfiguration:(NSError **)error
+{
+	NSString* configFilePath = [self.path stringByAppendingPathComponent:@"config.js"];
+	if (![[NSFileManager defaultManager] fileExistsAtPath:configFilePath]) {
+		// no configuration exists, just write out the one we have
+		if (!_configuration) _configuration = [[[self class] defaultConfiguration] copy];
+		NSString* configData = [_json stringWithObject:self.configuration error:error];
+		if (!configData) {
+			// error converting to json
+			return NO;
+		}
+		if (![configData writeToFile:configFilePath atomically:YES encoding:NSUTF8StringEncoding error:error]) {
+			// error writing out file
+			return NO;
+		}
+	} else {
+		// config file exists, read it in
+		NSString* configData = [NSString stringWithContentsOfFile:configFilePath encoding:NSUTF8StringEncoding error:error];
+		if (!configData) {
+			// error reading file
+			return NO;
+		}
+		NSDictionary* readConfig = [_json objectWithString:configData error:error];
+		if (!readConfig) {
+			// error parsing json
+			return NO;
+		}
+		if ((self.configuration != nil) && (![readConfig isEqualToDictionary:self.configuration])) {
+			if (error) {
+				*error = [[[NSError alloc] initWithDomain:BRDocBaseErrorDomain 
+					code:BRDocBaseErrorConfigurationMismatch userInfo:nil] autorelease];
+			}
+			return NO;
+		}
+		// update configuration in case none was provided
+		[_configuration release];
+		_configuration = [readConfig copy];
+		
+	}
+
+	// setup any configuration
+	_bucketCount = [[self.configuration objectForKey:BRDocBaseConfigBucketCount] intValue];
+	_bucketCount = _bucketCount <= 0 ? BRDocDefaultBucketCount : _bucketCount;
+	
+	return YES;
+}
+
 -(NSError*)notFoundError:(NSString *)documentId
 {
 	return [self errorForDocumentId:documentId withCode:BRDocBaseErrorNotFound];
@@ -288,6 +390,7 @@ static BOOL BRIsMutable(id<BRDocument> document);
 {
 	return [[[NSError alloc] initWithDomain:BRDocBaseErrorDomain code:errorCode userInfo:nil] autorelease];
 }
+
 @end
 
 

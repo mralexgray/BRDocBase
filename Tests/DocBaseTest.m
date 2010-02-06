@@ -19,6 +19,8 @@ static NSString* const TestDocBaseName = @"doc_base_test";
 @property (readonly) NSString* docBasePath;
 
 -(BRDocBase*)createDocBase;
+-(BRDocBase*)createDocBaseWithConfiguration:(NSDictionary*)configuration;
+-(void)deleteDocBase;
 
 @end
 
@@ -48,14 +50,7 @@ static NSString* const TestDocBaseName = @"doc_base_test";
 -(void)setup
 {
 	// cleanup any old documents
-	NSString* fileName = [self.docBasePath stringByAppendingPathExtension:BRDocBaseExtension];
-	if ([[NSFileManager defaultManager] fileExistsAtPath:fileName]) {
-		NSError* error;
-		if (![[NSFileManager defaultManager] removeItemAtPath:fileName error:&error]) {
-			NSLog(@"couldn't delete test doc base at: %@", fileName);
-			NSLog(@"error: %@", error);
-		}
-	}
+	[self deleteDocBase];
 }
 
 -(void)tearDown
@@ -246,13 +241,44 @@ static NSString* const TestDocBaseName = @"doc_base_test";
 	BRAssertTrue(!doc.isDocumentEdited);
 }
 
-
 -(void)testDocumentIdHash
 {
 	NSString* test = @"some random string";
 	BRAssertTrue([test hash] != [test documentIdHash]);
 	NSString* test2 = @"some other random string";
 	BRAssertTrue([test documentIdHash] != [test2 documentIdHash]);
+}
+
+-(void)testConfiguration
+{
+	TestDocument* document = [TestDocument testDocumentWithName:@"test" number:5];	
+	BRAssertNotNil([BRDocBase defaultConfiguration]);
+	
+	// test default configuration
+	BRDocBase* docBase = [self createDocBase];
+	BRAssertNil(docBase.configuration);
+	[docBase saveDocument:document error:nil];	// make sure environment is initied
+	BRAssertNotNil(docBase.configuration);
+	BRAssertTrue([docBase.configuration isEqualToDictionary:[BRDocBase defaultConfiguration]]);
+	
+	// test custom configuration
+	[self deleteDocBase];
+	NSDictionary* configuration = [NSDictionary dictionaryWithObjectsAndKeys:
+		[NSNumber numberWithInt:55], BRDocBaseConfigBucketCount,
+		nil];
+	docBase = [self createDocBaseWithConfiguration:configuration];
+	BRAssertTrue([configuration isEqualToDictionary:docBase.configuration]);
+	[docBase saveDocument:document error:nil];	// make sure config is writting out
+	docBase = [self createDocBase];
+	[docBase documentWithId:document.documentId error:nil];	// make sure environment is inited
+	BRAssertTrue([configuration isEqualToDictionary:docBase.configuration]);
+	
+	// test config mismatch
+	docBase = [self createDocBaseWithConfiguration:[BRDocBase defaultConfiguration]];
+	NSError* error = nil;
+	BRAssertTrue(![docBase documentWithId:document.documentId error:&error]);
+	BRAssertNotNil(error);
+	BRAssertTrue([error code] == BRDocBaseErrorConfigurationMismatch);
 }
 
 #pragma mark --
@@ -268,6 +294,22 @@ static NSString* const TestDocBaseName = @"doc_base_test";
 	return [BRDocBase docBaseWithPath:self.docBasePath];
 }
 
+-(BRDocBase*)createDocBaseWithConfiguration:(NSDictionary*)configuration
+{
+	return [BRDocBase docBaseWithPath:self.docBasePath configuration:configuration];
+}
+
+-(void)deleteDocBase
+{
+	NSString* fileName = [self.docBasePath stringByAppendingPathExtension:BRDocBaseExtension];
+	if ([[NSFileManager defaultManager] fileExistsAtPath:fileName]) {
+		NSError* error;
+		if (![[NSFileManager defaultManager] removeItemAtPath:fileName error:&error]) {
+			NSLog(@"couldn't delete test doc base at: %@", fileName);
+			NSLog(@"error: %@", error);
+		}
+	}
+}
 @end
 
 @implementation TestDocument
