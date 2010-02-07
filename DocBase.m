@@ -123,7 +123,7 @@ static BOOL BRIsMutable(id<BRDocument> document);
 #pragma mark Public Methods
 -(NSString*)saveDocument:(id<BRDocument>)document error:(NSError**)error
 {
-	if (![self verifyEnvironment:error]) return NO;
+	if (![self verifyEnvironment:error]) return nil;
 	NSString* documentId = [document documentId];
 	// check isDocumentEdited
 	if ([document respondsToSelector:@selector(isDocumentEdited)] &&
@@ -159,7 +159,7 @@ static BOOL BRIsMutable(id<BRDocument> document);
 
 -(id<BRDocument>)documentWithId:(NSString *)documentId error:(NSError**)error
 {
-	if (![self verifyEnvironment:error]) return NO;
+	if (![self verifyEnvironment:error]) return nil;
 	NSNumber* bucket = [self bucketForDocumentId:documentId];
 	id<BRDocument> doc = [[self documentsInBucket:bucket error:error] objectForKey:documentId];
 	if ((doc == nil) && (error)) {
@@ -188,7 +188,7 @@ static BOOL BRIsMutable(id<BRDocument> document);
 
 -(NSSet*)findDocumentsUsingPredicate:(NSPredicate*)predicate error:(NSError**)error
 {
-	if (![self verifyEnvironment:error]) return NO;
+	if (![self verifyEnvironment:error]) return nil;
 	BOOL success = YES;
 	NSMutableSet* matchingDocuments = [NSMutableSet set];
 	for (NSUInteger bucket = 0; bucket < _bucketCount; ++bucket) {

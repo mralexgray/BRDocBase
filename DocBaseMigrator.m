@@ -49,6 +49,9 @@
 		return nil;
 	}
 	for (id<BRDocument> doc in allDocs) {
+		if ([doc respondsToSelector:@selector(setIsDocumentEdited:)]) {
+			[doc setIsDocumentEdited:YES];
+		}
 		if (![tempDocBase saveDocument:doc error:error]) {
 			return nil;
 		}

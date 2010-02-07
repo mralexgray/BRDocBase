@@ -27,7 +27,7 @@
 		[NSNumber numberWithInt:31], BRDocBaseConfigBucketCount,
 		nil];
 	BRDocBase* docBase = [self createDocBaseWithConfiguration:originalConfig];
-	TestDocument* doc = [TestDocument testDocumentWithName:@"george" number:12];
+	ChangeTrackingDocument* doc = [ChangeTrackingDocument testDocumentWithName:@"george" number:12];
 	[docBase saveDocument:doc error:nil];
 	
 	BRDocBase* updatedDocBase = [[BRDocBaseMigrator docBaseMigrator] update:docBase toConfiguration:newConfig error:nil];
