@@ -30,6 +30,13 @@
 #pragma mark Public Methods
 -(BRDocBase*)update:(BRDocBase *)docBase toConfiguration:(NSDictionary *)configuration error:(NSError **)error
 {
+	if (![docBase verifyEnvironment:error]) {
+		return nil;
+	}
+	if ([docBase.configuration isEqualToDictionary:configuration]) {
+		// configurations already match, no update needed
+		return docBase;
+	}
 	NSString* tempDocBasePath = [self tempDocBasePath];
 	if (![self deleteDocBaseAtPath:tempDocBasePath error:error]) {
 		return nil;
@@ -46,6 +53,9 @@
 		}
 	}
 	NSString* tempOldPath = [docBase.path stringByAppendingFormat:@"%d", [[NSProcessInfo processInfo] processIdentifier]];
+	if (![self deleteDocBaseAtPath:tempOldPath error:error]) {
+		return nil;
+	}
 	if (![[NSFileManager defaultManager] moveItemAtPath:docBase.path toPath:tempOldPath error:error]) {
 		return nil;
 	}

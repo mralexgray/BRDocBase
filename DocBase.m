@@ -43,7 +43,6 @@ static BOOL BRIsMutable(id<BRDocument> document);
 -(NSDictionary*)translateToDictionary:(id<BRDocument>)document;
 -(id<BRDocument>)translateToDocument:(NSDictionary*)dictionary;
 
--(BOOL)verifyEnvironment:(NSError**)error;
 -(BOOL)readConfiguration:(NSError**)error;
 
 -(NSError*)notFoundError:(NSString*)documentId;

@@ -43,4 +43,16 @@
 	BRAssertTrue([error code] == BRDocBaseErrorConfigurationMismatch);
 }
 
+-(void)testUpdateWithSameConfiguration
+{
+	NSDictionary* originalConfig = [NSDictionary dictionaryWithObjectsAndKeys:
+		[NSNumber numberWithInt:23], BRDocBaseConfigBucketCount,
+		nil];
+	NSDictionary* newConfig = [NSDictionary dictionaryWithObjectsAndKeys:
+		[NSNumber numberWithInt:23], BRDocBaseConfigBucketCount,
+		nil];
+	BRDocBase* docBase = [self createDocBaseWithConfiguration:originalConfig];	
+	BRDocBase* updatedDocBase = [[BRDocBaseMigrator docBaseMigrator] update:docBase toConfiguration:newConfig error:nil];
+	BRAssertEqual(docBase, updatedDocBase);
+}
 @end
