@@ -216,7 +216,7 @@
 						<key>_historyCapacity</key>
 						<integer>0</integer>
 						<key>bookmark</key>
-						<string>5537575A111EEE660015B1D7</string>
+						<string>55375786111F0A380015B1D7</string>
 						<key>history</key>
 						<array>
 							<string>55375752111EEE660015B1D7</string>
@@ -226,7 +226,7 @@
 							<string>55375756111EEE660015B1D7</string>
 							<string>55375757111EEE660015B1D7</string>
 							<string>55375758111EEE660015B1D7</string>
-							<string>55375759111EEE660015B1D7</string>
+							<string>5537575B111F08230015B1D7</string>
 						</array>
 					</dict>
 					<key>SplitCount</key>
@@ -326,7 +326,7 @@
 										</array>
 									</array>
 									<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
-									<string>{{0, 73}, {429, 333}}</string>
+									<string>{{0, 2}, {429, 333}}</string>
 								</dict>
 								<key>PBXTopSmartGroupGIDs</key>
 								<array/>
@@ -488,8 +488,8 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>553756D1111E0D720015B1D7</string>
-				<string>553756D2111E0D720015B1D7</string>
+				<string>55375784111F0A380015B1D7</string>
+				<string>55375785111F0A380015B1D7</string>
 				<string>1C9437FD063B20B00039CFAC</string>
 				<string>1C9437FE063B20B00039CFAC</string>
 				<string>1C9437FF063B20B00039CFAC</string>
@@ -528,13 +528,13 @@
 	<integer>0</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>553756D7111E0D720015B1D7</string>
-		<string>553756D8111E0D720015B1D7</string>
+		<string>5537578F111F0A380015B1D7</string>
+		<string>55375790111F0A380015B1D7</string>
 		<string>1C530D54069F1CE1000CFCEE</string>
 		<string>1C530D52069F1CE1000CFCEE</string>
-		<string>1C530D5B069F1CE1000CFCEE</string>
 		<string>/Users/neilallain/projects/Library/BRDocBase/DocBase.xcodeproj</string>
 		<string>55DC162E10FE785F00705EC8</string>
+		<string>1C530D5B069F1CE1000CFCEE</string>
 	</array>
 	<key>WindowString</key>
 	<string>1410 439 446 419 0 0 1920 1178 </string>
@@ -690,14 +690,12 @@
 					<key>Dock</key>
 					<array>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
 								<string>1CD0528F0623707200166675</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>AbstractDocBaseTest.m</string>
+								<string></string>
 								<key>StatusBarVisibility</key>
 								<true/>
 							</dict>
@@ -753,7 +751,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1C530D52069F1CE1000CFCEE</string>
-				<string>55375684111DF4DF0015B1D7</string>
+				<string>55375787111F0A380015B1D7</string>
 				<string>1CD0528F0623707200166675</string>
 				<string>XCMainBuildResultsModuleGUID</string>
 			</array>
@@ -875,13 +873,13 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1C530D54069F1CE1000CFCEE</string>
-				<string>55375685111DF4DF0015B1D7</string>
+				<string>55375788111F0A380015B1D7</string>
 				<string>1C162984064C10D400B95A72</string>
-				<string>55375686111DF4DF0015B1D7</string>
-				<string>55375687111DF4DF0015B1D7</string>
-				<string>55375688111DF4DF0015B1D7</string>
-				<string>55375689111DF4DF0015B1D7</string>
-				<string>5537568A111DF4DF0015B1D7</string>
+				<string>55375789111F0A380015B1D7</string>
+				<string>5537578A111F0A380015B1D7</string>
+				<string>5537578B111F0A380015B1D7</string>
+				<string>5537578C111F0A380015B1D7</string>
+				<string>5537578D111F0A380015B1D7</string>
 			</array>
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.debugV3</string>
@@ -1037,7 +1035,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1C530D5B069F1CE1000CFCEE</string>
-				<string>5537568B111DF4DF0015B1D7</string>
+				<string>5537578E111F0A380015B1D7</string>
 				<string>1C78EAAC065D492600B07095</string>
 			</array>
 			<key>ToolbarConfiguration</key>
