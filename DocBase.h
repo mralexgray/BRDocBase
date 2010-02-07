@@ -81,4 +81,6 @@ extern const NSInteger BRDocBaseErrorConfigurationMismatch;
 -(NSSet*)findDocumentsUsingPredicate:(NSPredicate*)predicate error:(NSError**)error;
 /// Delete the document with the given id.
 -(BOOL)deleteDocumentWithId:(NSString*)documentId error:(NSError**)error;
+/// Inform the docbase that it should reverify it's configuration
+-(void)environmentChanged;
 @end

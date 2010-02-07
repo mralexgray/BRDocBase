@@ -27,6 +27,10 @@
 		1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
 		256AC3DA0F4B6AC300CF3369 /* DocBaseAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 256AC3D90F4B6AC300CF3369 /* DocBaseAppDelegate.m */; };
 		551F8A831088A95A00A5FCBC /* libBRDocBase.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55B4C9B31088A4DD00869682 /* libBRDocBase.a */; };
+		553756DF111E0EB60015B1D7 /* DocBaseMigrator.h in Headers */ = {isa = PBXBuildFile; fileRef = 553756DD111E0EB60015B1D7 /* DocBaseMigrator.h */; };
+		553756E0111E0EB60015B1D7 /* DocBaseMigrator.m in Sources */ = {isa = PBXBuildFile; fileRef = 553756DE111E0EB60015B1D7 /* DocBaseMigrator.m */; };
+		553756E3111E0F880015B1D7 /* DocBaseMigratorTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 553756E2111E0F880015B1D7 /* DocBaseMigratorTest.m */; };
+		553756E8111E10330015B1D7 /* AbstractDocBaseTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 553756E7111E10330015B1D7 /* AbstractDocBaseTest.m */; };
 		5559F27710E4EBEC00FAA853 /* libBRDocBase.a in Copy Lib */ = {isa = PBXBuildFile; fileRef = 55B4C9B31088A4DD00869682 /* libBRDocBase.a */; };
 		5559F28010E4ECC800FAA853 /* DocBase.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 55A9A80710C5A86600CAF697 /* DocBase.h */; };
 		5559F2B710E4F3D000FAA853 /* SDKSettings.plist in Copy MacOSX SDK */ = {isa = PBXBuildFile; fileRef = 5559F2B110E4F1CD00FAA853 /* SDKSettings.plist */; };
@@ -113,6 +117,11 @@
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		553756DD111E0EB60015B1D7 /* DocBaseMigrator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DocBaseMigrator.h; sourceTree = "<group>"; };
+		553756DE111E0EB60015B1D7 /* DocBaseMigrator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DocBaseMigrator.m; sourceTree = "<group>"; };
+		553756E2111E0F880015B1D7 /* DocBaseMigratorTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DocBaseMigratorTest.m; sourceTree = "<group>"; };
+		553756E6111E10330015B1D7 /* AbstractDocBaseTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AbstractDocBaseTest.h; sourceTree = "<group>"; };
+		553756E7111E10330015B1D7 /* AbstractDocBaseTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AbstractDocBaseTest.m; sourceTree = "<group>"; };
 		5559F2B110E4F1CD00FAA853 /* SDKSettings.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SDKSettings.plist; sourceTree = "<group>"; };
 		55A9A7F810C5A82200CAF697 /* DocBaseTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DocBaseTest.m; sourceTree = "<group>"; };
 		55A9A80710C5A86600CAF697 /* DocBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DocBase.h; sourceTree = "<group>"; };
@@ -163,6 +172,8 @@
 				256AC3D90F4B6AC300CF3369 /* DocBaseAppDelegate.m */,
 				55A9A80710C5A86600CAF697 /* DocBase.h */,
 				55A9A80810C5A86600CAF697 /* DocBase.m */,
+				553756DD111E0EB60015B1D7 /* DocBaseMigrator.h */,
+				553756DE111E0EB60015B1D7 /* DocBaseMigrator.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -253,6 +264,9 @@
 				55B4C9BD1088A57C00869682 /* TestCase.m */,
 				55B4C9BE1088A57C00869682 /* TestMain.m */,
 				55A9A7F810C5A82200CAF697 /* DocBaseTest.m */,
+				553756E2111E0F880015B1D7 /* DocBaseMigratorTest.m */,
+				553756E6111E10330015B1D7 /* AbstractDocBaseTest.h */,
+				553756E7111E10330015B1D7 /* AbstractDocBaseTest.m */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -265,6 +279,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				55A9A80910C5A86600CAF697 /* DocBase.h in Headers */,
+				553756DF111E0EB60015B1D7 /* DocBaseMigrator.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -364,6 +379,8 @@
 				55B4C9BF1088A57C00869682 /* TestCase.m in Sources */,
 				55B4C9C01088A57C00869682 /* TestMain.m in Sources */,
 				55A9A7F910C5A82200CAF697 /* DocBaseTest.m in Sources */,
+				553756E3111E0F880015B1D7 /* DocBaseMigratorTest.m in Sources */,
+				553756E8111E10330015B1D7 /* AbstractDocBaseTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -372,6 +389,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				55A9A80A10C5A86600CAF697 /* DocBase.m in Sources */,
+				553756E0111E0EB60015B1D7 /* DocBaseMigrator.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

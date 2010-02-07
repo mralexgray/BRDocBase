@@ -214,6 +214,11 @@ static BOOL BRIsMutable(id<BRDocument> document);
 	return success ? matchingDocuments : nil;
 }
 
+-(void)environmentChanged
+{
+	_environmentVerified = NO;
+}
+
 #pragma mark Private implementation
 
 -(NSString*)pathForBucket:(NSNumber*)bucket
