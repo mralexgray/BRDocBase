@@ -43,6 +43,10 @@
 		return nil;
 	}
 	BRDocBase* tempDocBase = [BRDocBase docBaseWithPath:tempDocBasePath configuration:configuration];
+	// this ensures the temporary doc base is created even if no documents exist in the one we're migrating from
+	if (![tempDocBase verifyEnvironment:error]) {
+		return nil;
+	}
 	NSPredicate* predicate = [NSPredicate predicateWithValue:YES];
 	NSSet* allDocs = [docBase findDocumentsUsingPredicate:predicate error:error];
 	if (!allDocs) {

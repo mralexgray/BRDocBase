@@ -55,4 +55,22 @@
 	BRDocBase* updatedDocBase = [[BRDocBaseMigrator docBaseMigrator] update:docBase toConfiguration:newConfig error:nil];
 	BRAssertEqual(docBase, updatedDocBase);
 }
+
+-(void)testUpdateEmptyDocBase
+{
+	[self deleteDocBase];
+	NSError* error = nil;
+	NSDictionary* config = [NSDictionary dictionaryWithObjectsAndKeys:
+		[NSNumber numberWithInt:23], BRDocBaseConfigBucketCount,
+		nil];
+	BRDocBase* updatedDocBase = [[BRDocBaseMigrator docBaseMigrator] 
+		update:[BRDocBase docBaseWithPath:self.docBasePath]
+		toConfiguration:config error:&error];
+	if (updatedDocBase == nil) {
+		NSLog(@"error description: %@", [error localizedDescription]);
+		NSLog(@"error failure reason: %@", [error localizedFailureReason]);
+		NSLog(@"error recovery suggestion: %@", [error localizedRecoverySuggestion]);
+	}
+	BRAssertNotNil(updatedDocBase);
+}
 @end
