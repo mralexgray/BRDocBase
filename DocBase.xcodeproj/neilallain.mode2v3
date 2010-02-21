@@ -216,12 +216,12 @@
 						<key>_historyCapacity</key>
 						<integer>0</integer>
 						<key>bookmark</key>
-						<string>55E9DAD6112DC89F0077865A</string>
+						<string>55E9DD74113179410077865A</string>
 						<key>history</key>
 						<array>
 							<string>55E9DAD3112DC89F0077865A</string>
 							<string>55E9DAD4112DC89F0077865A</string>
-							<string>55E9DAD5112DC89F0077865A</string>
+							<string>55E9DAE1112DC9130077865A</string>
 						</array>
 					</dict>
 					<key>SplitCount</key>
@@ -483,8 +483,8 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>55E9DAD0112DC89F0077865A</string>
-				<string>55E9DAD1112DC89F0077865A</string>
+				<string>55E9DD72113179410077865A</string>
+				<string>55E9DD73113179410077865A</string>
 				<string>1C9437FD063B20B00039CFAC</string>
 				<string>1C9437FE063B20B00039CFAC</string>
 				<string>1C9437FF063B20B00039CFAC</string>
@@ -523,11 +523,8 @@
 	<integer>0</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>55E9DADF112DC89F0077865A</string>
-		<string>55E9DAE0112DC89F0077865A</string>
 		<string>1C530D52069F1CE1000CFCEE</string>
 		<string>1C530D54069F1CE1000CFCEE</string>
-		<string>1C530D5B069F1CE1000CFCEE</string>
 		<string>/Users/neilallain/projects/Library/BRDocBase/DocBase.xcodeproj</string>
 		<string>55E9DABC112DC6CE0077865A</string>
 	</array>
@@ -746,7 +743,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1C530D52069F1CE1000CFCEE</string>
-				<string>55E9DAD7112DC89F0077865A</string>
+				<string>55E9DD75113179410077865A</string>
 				<string>1CD0528F0623707200166675</string>
 				<string>XCMainBuildResultsModuleGUID</string>
 			</array>
@@ -868,13 +865,13 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1C530D54069F1CE1000CFCEE</string>
-				<string>55E9DAD8112DC89F0077865A</string>
+				<string>55E9DD76113179410077865A</string>
 				<string>1C162984064C10D400B95A72</string>
-				<string>55E9DAD9112DC89F0077865A</string>
-				<string>55E9DADA112DC89F0077865A</string>
-				<string>55E9DADB112DC89F0077865A</string>
-				<string>55E9DADC112DC89F0077865A</string>
-				<string>55E9DADD112DC89F0077865A</string>
+				<string>55E9DD77113179410077865A</string>
+				<string>55E9DD78113179410077865A</string>
+				<string>55E9DD79113179410077865A</string>
+				<string>55E9DD7A113179410077865A</string>
+				<string>55E9DD7B113179410077865A</string>
 			</array>
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.debugV3</string>

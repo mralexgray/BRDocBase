@@ -8,6 +8,12 @@
 
 #import "DocBase.h"
 #import <JSON/JSON.h>
+#import <Carbon/Carbon.h>
+
+union FinderInfoTransmuter {
+	UInt8 *bytes;
+	struct FileInfo *finderInfo;
+};
 
 #pragma mark --
 #pragma mark Constants
@@ -43,6 +49,7 @@ static BOOL BRIsMutable(id<BRDocument> document);
 -(NSDictionary*)translateToDictionary:(id<BRDocument>)document;
 -(id<BRDocument>)translateToDocument:(NSDictionary*)dictionary;
 
+-(void)makeBundle:(BOOL)isBundle;
 -(BOOL)readConfiguration:(NSError**)error;
 
 -(NSError*)notFoundError:(NSString*)documentId;
@@ -114,6 +121,7 @@ static BOOL BRIsMutable(id<BRDocument> document);
 	[super dealloc];
 }
 
+
 #pragma mark -
 #pragma mark Public Properties
 @synthesize path = _path;
@@ -121,6 +129,25 @@ static BOOL BRIsMutable(id<BRDocument> document);
 
 #pragma mark -
 #pragma mark Public Methods
+
+-(BOOL)verifyEnvironment:(NSError **)error
+{
+	if (!_environmentVerified) {
+		if (![[NSFileManager defaultManager] createDirectoryAtPath:self.path 
+									   withIntermediateDirectories:YES 
+														attributes:nil error:error]) {
+			return NO;
+		}
+		[self makeBundle:YES];
+		if (![self readConfiguration:error]) {
+			return NO;
+		}
+		_environmentVerified = YES;
+	}
+	return _environmentVerified;
+}
+
+
 -(NSString*)saveDocument:(id<BRDocument>)document error:(NSError**)error
 {
 	if (![self verifyEnvironment:error]) return nil;
@@ -219,6 +246,35 @@ static BOOL BRIsMutable(id<BRDocument> document);
 }
 
 #pragma mark Private implementation
+
+-(void)makeBundle:(BOOL)isBundle
+{
+	const char* pathFSR = [self.path fileSystemRepresentation];
+	FSRef ref;
+	OSStatus err = FSPathMakeRef((const UInt8*)pathFSR, &ref, /*isDirectory*/ NULL);
+	if (err == noErr) {
+		struct FSCatalogInfo catInfo;
+		union FinderInfoTransmuter finderInfoPointers = { .bytes = catInfo.finderInfo };
+		err = FSGetCatalogInfo(
+			&ref,
+			kFSCatInfoFinderInfo,
+			&catInfo,
+			/*outName*/ NULL,
+			/*FSSpec*/ NULL,
+			/*parentRef*/ NULL);
+		if (err == noErr) {
+			if (isBundle) {
+				finderInfoPointers.finderInfo->finderFlags |= kHasBundle;
+			} else {
+				finderInfoPointers.finderInfo->finderFlags &= ~kHasBundle;
+			}
+			FSSetCatalogInfo(
+				&ref,
+				kFSCatInfoFinderInfo,
+				&catInfo);
+		}
+	}
+}
 
 -(NSString*)pathForBucket:(NSNumber*)bucket
 {
@@ -320,22 +376,6 @@ static BOOL BRIsMutable(id<BRDocument> document);
 		}
 	}
 	return document;
-}
-
--(BOOL)verifyEnvironment:(NSError **)error
-{
-	if (!_environmentVerified) {
-		if (![[NSFileManager defaultManager] createDirectoryAtPath:self.path 
-			withIntermediateDirectories:YES 
-			attributes:nil error:error]) {
-			return NO;
-		}
-		if (![self readConfiguration:error]) {
-			return NO;
-		}
-		_environmentVerified = YES;
-	}
-	return _environmentVerified;
 }
 
 -(BOOL)readConfiguration:(NSError **)error

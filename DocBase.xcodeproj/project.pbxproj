@@ -41,6 +41,7 @@
 		55B4C9BA1088A50300869682 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55B4C9B91088A50300869682 /* Cocoa.framework */; };
 		55B4C9BF1088A57C00869682 /* TestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B4C9BD1088A57C00869682 /* TestCase.m */; };
 		55B4C9C01088A57C00869682 /* TestMain.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B4C9BE1088A57C00869682 /* TestMain.m */; };
+		55E9DD8011317D7E0077865A /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55E9DD7F11317D7E0077865A /* Carbon.framework */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
@@ -132,6 +133,7 @@
 		55B4C9BC1088A57C00869682 /* TestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestCase.h; sourceTree = "<group>"; };
 		55B4C9BD1088A57C00869682 /* TestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestCase.m; sourceTree = "<group>"; };
 		55B4C9BE1088A57C00869682 /* TestMain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestMain.m; sourceTree = "<group>"; };
+		55E9DD7F11317D7E0077865A /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 		8D1107310486CEB800E47090 /* DocBase-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "DocBase-Info.plist"; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* DocBase.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DocBase.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -143,6 +145,7 @@
 			files = (
 				55B4C9B81088A4F000869682 /* libBRDocBase.a in Frameworks */,
 				55B4C9BA1088A50300869682 /* Cocoa.framework in Frameworks */,
+				55E9DD8011317D7E0077865A /* Carbon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -182,6 +185,7 @@
 			isa = PBXGroup;
 			children = (
 				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
+				55E9DD7F11317D7E0077865A /* Carbon.framework */,
 			);
 			name = "Linked Frameworks";
 			sourceTree = "<group>";
