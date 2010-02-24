@@ -301,12 +301,24 @@ static BOOL BRIsMutable(id<BRDocument> document);
 -(BOOL)saveDocuments:(NSMutableDictionary*)documents inBucket:(NSNumber*)bucket error:(NSError**)error
 {
 	BOOL saved = NO;
-	NSString* serializedJson = [self serializeDocuments:documents error:error];
-	if (serializedJson != nil) {
-		saved = [serializedJson writeToFile:[self pathForBucket:bucket]
-								 atomically:NO 
-								   encoding:NSUTF8StringEncoding 
-									  error:error];
+	NSString* bucketFile = [self pathForBucket:bucket];
+	if ([documents count] > 0) {
+		NSString* serializedJson = [self serializeDocuments:documents error:error];
+		if (serializedJson != nil) {
+			saved = [serializedJson 
+				writeToFile:bucketFile
+				atomically:NO 
+				encoding:NSUTF8StringEncoding 
+				error:error];
+		}
+	} else {
+		// no documents in the file, delete the file instead
+		if ([[NSFileManager defaultManager] fileExistsAtPath:bucketFile]) {
+			saved = [[NSFileManager defaultManager] removeItemAtPath:bucketFile error:error];
+		} else {
+			// nothing to save
+			saved = YES;
+		}
 	}
 	return saved;
 }
