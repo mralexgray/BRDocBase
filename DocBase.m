@@ -8,7 +8,7 @@
 
 #import "DocBase.h"
 #import <JSON/JSON.h>
-#import <Carbon/Carbon.h>
+//#import <Carbon/Carbon.h>
 
 union FinderInfoTransmuter {
 	UInt8 *bytes;
@@ -249,31 +249,33 @@ static BOOL BRIsMutable(id<BRDocument> document);
 
 -(void)makeBundle:(BOOL)isBundle
 {
-	const char* pathFSR = [self.path fileSystemRepresentation];
-	FSRef ref;
-	OSStatus err = FSPathMakeRef((const UInt8*)pathFSR, &ref, /*isDirectory*/ NULL);
-	if (err == noErr) {
-		struct FSCatalogInfo catInfo;
-		union FinderInfoTransmuter finderInfoPointers = { .bytes = catInfo.finderInfo };
-		err = FSGetCatalogInfo(
-			&ref,
-			kFSCatInfoFinderInfo,
-			&catInfo,
-			/*outName*/ NULL,
-			/*FSSpec*/ NULL,
-			/*parentRef*/ NULL);
-		if (err == noErr) {
-			if (isBundle) {
-				finderInfoPointers.finderInfo->finderFlags |= kHasBundle;
-			} else {
-				finderInfoPointers.finderInfo->finderFlags &= ~kHasBundle;
-			}
-			FSSetCatalogInfo(
-				&ref,
-				kFSCatInfoFinderInfo,
-				&catInfo);
-		}
-	}
+	NSURL* url = [NSURL URLWithString:self.path];
+	[url setResourceValue:[NSNumber numberWithBool:isBundle] forKey:NSURLIsPackageKey error:nil];
+//	const char* pathFSR = [self.path fileSystemRepresentation];
+//	FSRef ref;
+//	OSStatus err = FSPathMakeRef((const UInt8*)pathFSR, &ref, /*isDirectory*/ NULL);
+//	if (err == noErr) {
+//		struct FSCatalogInfo catInfo;
+//		union FinderInfoTransmuter finderInfoPointers = { .bytes = catInfo.finderInfo };
+//		err = FSGetCatalogInfo(
+//			&ref,
+//			kFSCatInfoFinderInfo,
+//			&catInfo,
+//			/*outName*/ NULL,
+//			/*FSSpec*/ NULL,
+//			/*parentRef*/ NULL);
+//		if (err == noErr) {
+//			if (isBundle) {
+//				finderInfoPointers.finderInfo->finderFlags |= kHasBundle;
+//			} else {
+//				finderInfoPointers.finderInfo->finderFlags &= ~kHasBundle;
+//			}
+//			FSSetCatalogInfo(
+//				&ref,
+//				kFSCatInfoFinderInfo,
+//				&catInfo);
+//		}
+//	}
 }
 
 -(NSString*)pathForBucket:(NSNumber*)bucket

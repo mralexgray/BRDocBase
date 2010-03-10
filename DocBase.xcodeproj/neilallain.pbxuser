@@ -24,18 +24,18 @@
 			55B4C9AB1088A4AC00869682 /* Tests */,
 		);
 		perUserDictionary = {
-			PBXPerProjectTemplateStateSaveDate = 289946919;
-			PBXWorkspaceStateSaveDate = 289946919;
+			PBXPerProjectTemplateStateSaveDate = 289956028;
+			PBXWorkspaceStateSaveDate = 289956028;
 		};
 		perUserProjectItems = {
-			55EDCDDA1148310100042507 /* PBXTextBookmark */ = 55EDCDDA1148310100042507 /* PBXTextBookmark */;
-			55EDCDDC1148310100042507 /* PBXTextBookmark */ = 55EDCDDC1148310100042507 /* PBXTextBookmark */;
-			55EDCDFF1148351B00042507 /* PBXTextBookmark */ = 55EDCDFF1148351B00042507 /* PBXTextBookmark */;
-			55EDCE22114836E800042507 /* PBXTextBookmark */ = 55EDCE22114836E800042507 /* PBXTextBookmark */;
-			55EDCE23114836E800042507 /* PBXTextBookmark */ = 55EDCE23114836E800042507 /* PBXTextBookmark */;
-			55EDCE6811483AE300042507 /* PBXTextBookmark */ = 55EDCE6811483AE300042507 /* PBXTextBookmark */;
-			55EDCEA611483D4900042507 /* PBXTextBookmark */ = 55EDCEA611483D4900042507 /* PBXTextBookmark */;
-			55EDCEA711483D4900042507 /* PBXTextBookmark */ = 55EDCEA711483D4900042507 /* PBXTextBookmark */;
+			55EDCDDA1148310100042507 = 55EDCDDA1148310100042507 /* PBXTextBookmark */;
+			55EDCDDC1148310100042507 = 55EDCDDC1148310100042507 /* PBXTextBookmark */;
+			55EDCDFF1148351B00042507 = 55EDCDFF1148351B00042507 /* PBXTextBookmark */;
+			55EDCE22114836E800042507 = 55EDCE22114836E800042507 /* PBXTextBookmark */;
+			55EDCE23114836E800042507 = 55EDCE23114836E800042507 /* PBXTextBookmark */;
+			55EDCE6811483AE300042507 = 55EDCE6811483AE300042507 /* PBXTextBookmark */;
+			55EDCEA611483D4900042507 = 55EDCEA611483D4900042507 /* PBXTextBookmark */;
+			55EDCEA711483D4900042507 = 55EDCEA711483D4900042507 /* PBXTextBookmark */;
 		};
 		sourceControlManager = 55B4C99E1088A43000869682 /* Source Control */;
 		userBookmarkGroup = 556822AA10D5A2B200432B34 /* PBXBookmarkGroup */;
@@ -132,10 +132,10 @@
 	};
 	55A9A80810C5A86600CAF697 /* DocBase.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {963, 6331}}";
-			sepNavSelRange = "{11542, 62}";
-			sepNavVisRange = "{10820, 1763}";
-			sepNavWindowFrame = "{{481, 353}, {1022, 802}}";
+			sepNavIntBoundsRect = "{{0, 0}, {963, 6604}}";
+			sepNavSelRange = "{178, 0}";
+			sepNavVisRange = "{0, 1706}";
+			sepNavWindowFrame = "{{384, 97}, {1022, 802}}";
 		};
 	};
 	55B4C9961088A40D00869682 /* DocBase */ = {
@@ -274,7 +274,7 @@
 		fRef = 55A9A80810C5A86600CAF697 /* DocBase.m */;
 		name = "DocBase.m: 373";
 		rLen = 62;
-		rLoc = 11542;
+		rLoc = 11736;
 		rType = 0;
 		vrLen = 1763;
 		vrLoc = 10820;
