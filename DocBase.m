@@ -225,7 +225,7 @@ static BOOL BRIsMutable(id<BRDocument> document);
 			success = NO;
 			break;
 		} else {
-			[documentsInBucket enumerateKeysAndObjectsUsingBlock:^(id key, id value, BOOL* stop) {
+			for (id value in [documentsInBucket allValues]) {
 				@try {
 					if ([predicate evaluateWithObject:value]) {
 						[matchingDocuments addObject:value];
@@ -234,7 +234,7 @@ static BOOL BRIsMutable(id<BRDocument> document);
 				@catch (NSException* e) {
 					// ignore
 				}
-			}];
+			};
 		}
 	}
 	return success ? matchingDocuments : nil;
@@ -249,8 +249,10 @@ static BOOL BRIsMutable(id<BRDocument> document);
 
 -(void)makeBundle:(BOOL)isBundle
 {
+#if TARGET_OS_MAC && !(TARGET_OS_IPHONE || TARGET_OS_EMBEDDED)
 	NSURL* url = [NSURL URLWithString:self.path];
 	[url setResourceValue:[NSNumber numberWithBool:isBundle] forKey:NSURLIsPackageKey error:nil];
+#endif
 //	const char* pathFSR = [self.path fileSystemRepresentation];
 //	FSRef ref;
 //	OSStatus err = FSPathMakeRef((const UInt8*)pathFSR, &ref, /*isDirectory*/ NULL);
@@ -335,10 +337,10 @@ static BOOL BRIsMutable(id<BRDocument> document);
 -(NSString*)serializeDocuments:(NSDictionary*)documents error:(NSError**)error
 {
 	NSMutableArray* translatedDocuments = [NSMutableArray arrayWithCapacity:[documents count]];
-	[documents enumerateKeysAndObjectsUsingBlock:^(id documentId, id document, BOOL* stop) {
-		NSDictionary* documentDictionary = [self translateToDictionary:(id<BRDocument>)document];
+	for (id<BRDocument> document in [documents allValues]) {
+		NSDictionary* documentDictionary = [self translateToDictionary:document];
 		[translatedDocuments addObject:documentDictionary];
-	}];
+	};
 	return [_json stringWithObject:translatedDocuments error:error];
 }
 

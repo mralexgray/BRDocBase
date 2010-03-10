@@ -197,7 +197,48 @@
 	<key>Notifications</key>
 	<array/>
 	<key>OpenEditors</key>
-	<array/>
+	<array>
+		<dict>
+			<key>Content</key>
+			<dict>
+				<key>PBXProjectModuleGUID</key>
+				<string>55EDCF8D1148655000042507</string>
+				<key>PBXProjectModuleLabel</key>
+				<string>DocBase.m</string>
+				<key>PBXSplitModuleInNavigatorKey</key>
+				<dict>
+					<key>Split0</key>
+					<dict>
+						<key>PBXProjectModuleGUID</key>
+						<string>55EDCF9C1148683D00042507</string>
+						<key>PBXProjectModuleLabel</key>
+						<string>DocBase.m</string>
+						<key>_historyCapacity</key>
+						<integer>0</integer>
+						<key>bookmark</key>
+						<string>55EDCF9D1148683D00042507</string>
+						<key>history</key>
+						<array>
+							<string>55EDCF8C1148655000042507</string>
+						</array>
+					</dict>
+					<key>SplitCount</key>
+					<string>1</string>
+				</dict>
+				<key>StatusBarVisibility</key>
+				<true/>
+			</dict>
+			<key>Geometry</key>
+			<dict>
+				<key>Frame</key>
+				<string>{{0, 20}, {1022, 705}}</string>
+				<key>PBXModuleWindowStatusBarHidden2</key>
+				<false/>
+				<key>RubberWindowFrame</key>
+				<string>384 153 1022 746 0 0 1920 1178 </string>
+			</dict>
+		</dict>
+	</array>
 	<key>PerspectiveWidths</key>
 	<array>
 		<integer>-1</integer>
@@ -455,7 +496,7 @@
 	<key>PerspectivesBarVisible</key>
 	<false/>
 	<key>PinnedNavigatorIdentifier</key>
-	<string>55EDCDB81147B4BD00042507</string>
+	<string>55EDCF8D1148655000042507</string>
 	<key>ShelfIsVisible</key>
 	<false/>
 	<key>SourceDescription</key>
@@ -480,8 +521,12 @@
 	<integer>0</integer>
 	<key>WindowOrderList</key>
 	<array>
+		<string>55EDCF9F1148683D00042507</string>
+		<string>55EDCFA01148683D00042507</string>
 		<string>1C530D52069F1CE1000CFCEE</string>
 		<string>1C530D54069F1CE1000CFCEE</string>
+		<string>55EDCF8D1148655000042507</string>
+		<string>1C530D5B069F1CE1000CFCEE</string>
 		<string>/Users/neilallain/projects/Library/BRDocBase/DocBase.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
@@ -983,7 +1028,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1C530D5B069F1CE1000CFCEE</string>
-				<string>55EDCEAF11483D4900042507</string>
+				<string>55EDCF9E1148683D00042507</string>
 				<string>1C78EAAC065D492600B07095</string>
 			</array>
 			<key>ToolbarConfiguration</key>
