@@ -58,15 +58,15 @@
 		return nil;
 	}
 	for (id<BRDocument> doc in allDocs) {
-		if ([doc respondsToSelector:@selector(setIsDocumentEdited:)]) {
-			[doc setIsDocumentEdited:YES];
-		}
 		if (self.delegate) {
 			id<BRDocument> newDoc = [self.delegate 
 				updateDocument:doc 
 				fromConfiguration:docBase.configuration 
 				toConfiguration:tempDocBase.configuration];
 			doc = newDoc ? newDoc : doc;
+		}
+		if ([doc respondsToSelector:@selector(setIsDocumentEdited:)]) {
+			[doc setIsDocumentEdited:YES];
 		}
 		if (![tempDocBase saveDocument:doc error:error]) {
 			return nil;
