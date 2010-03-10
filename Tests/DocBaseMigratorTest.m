@@ -10,7 +10,7 @@
 #import "AbstractDocBaseTest.h"
 #import "DocBaseMigrator.h"
 
-@interface DocBaseMigratorTest : BRAbstractDocBaseTest {
+@interface DocBaseMigratorTest : BRAbstractDocBaseTest<BRDocBaseMigratorDelegate> {
 
 }
 
@@ -73,4 +73,41 @@
 	}
 	BRAssertNotNil(updatedDocBase);
 }
+
+-(void)testUpdateDocumentOnMigrate
+{
+	NSDictionary* originalConfig = [NSDictionary dictionaryWithObjectsAndKeys:
+									[NSNumber numberWithInt:23], BRDocBaseConfigBucketCount,
+									nil];
+	NSDictionary* newConfig = [NSDictionary dictionaryWithObjectsAndKeys:
+							   [NSNumber numberWithInt:23], BRDocBaseConfigBucketCount,
+							   [NSNumber numberWithInt:1], @"VersionNumber", nil];
+	BRDocBase* docBase = [self createDocBaseWithConfiguration:originalConfig];
+	TestDocument* doc = [TestDocument testDocumentWithName:@"updateme" number:12];
+	[docBase saveDocument:doc error:nil];
+	
+	BRDocBaseMigrator* migrator = [BRDocBaseMigrator docBaseMigrator];
+	migrator.delegate = self;
+	BRDocBase* updatedDocBase = [migrator update:docBase toConfiguration:newConfig error:nil];
+	BRAssertNotNil(updatedDocBase);
+	TestDocument* foundDoc = [updatedDocBase documentWithId:doc.documentId error:nil];
+	BRAssertNotNil(foundDoc);
+	BRAssertEqual(@"I updated you", foundDoc.name);
+	BRAssertTrue([newConfig isEqualToDictionary:updatedDocBase.configuration]);
+}
+
+-(id<BRDocument>)updateDocument:(id<BRDocument>)document 
+	fromConfiguration:(NSDictionary *)oldConfiguration 
+	toConfiguration:(NSDictionary *)newConfiguration
+{
+	if ([document isKindOfClass:[TestDocument class]]) {
+		TestDocument* td = (TestDocument*)document;
+		if ([td.name isEqualToString:@"updateme"]) {
+			td.name = @"I updated you";
+			return document;
+		}
+	}
+	return nil;
+}
+
 @end

@@ -243,5 +243,6 @@
 	BRAssertTrue([error code] == BRDocBaseErrorConfigurationMismatch);
 }
 
+
 @end
 

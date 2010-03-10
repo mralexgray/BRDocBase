@@ -27,6 +27,11 @@
 }
 
 #pragma mark -
+#pragma mark Properties
+
+@synthesize delegate = _delegate;
+
+#pragma mark -
 #pragma mark Public Methods
 -(BRDocBase*)update:(BRDocBase *)docBase toConfiguration:(NSDictionary *)configuration error:(NSError **)error
 {
@@ -55,6 +60,9 @@
 	for (id<BRDocument> doc in allDocs) {
 		if ([doc respondsToSelector:@selector(setIsDocumentEdited:)]) {
 			[doc setIsDocumentEdited:YES];
+		}
+		if (self.delegate) {
+			[self.delegate updateDocument:doc fromConfiguration:docBase.configuration toConfiguration:tempDocBase.configuration];
 		}
 		if (![tempDocBase saveDocument:doc error:error]) {
 			return nil;

@@ -52,11 +52,11 @@ extern const NSInteger BRDocBaseErrorConfigurationMismatch;
 @interface BRDocBase : NSObject {
 	SBJSON* _json;
 	NSString* _path;
-
 	NSDictionary* _configuration;
+	BOOL _environmentVerified;
+	
 	NSUInteger _bucketCount;
 	NSMutableDictionary* _documentsInBucket;
-	BOOL _environmentVerified;
 }
 
 @property (readonly) NSString* path;
