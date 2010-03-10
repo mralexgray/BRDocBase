@@ -103,8 +103,9 @@
 	if ([document isKindOfClass:[TestDocument class]]) {
 		TestDocument* td = (TestDocument*)document;
 		if ([td.name isEqualToString:@"updateme"]) {
-			td.name = @"I updated you";
-			return document;
+			TestDocument* newDoc = [TestDocument testDocumentWithName:@"I updated you" number:55];
+			newDoc.documentId = td.documentId;
+			return newDoc;
 		}
 	}
 	return nil;

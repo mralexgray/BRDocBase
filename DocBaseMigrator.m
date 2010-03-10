@@ -62,7 +62,11 @@
 			[doc setIsDocumentEdited:YES];
 		}
 		if (self.delegate) {
-			[self.delegate updateDocument:doc fromConfiguration:docBase.configuration toConfiguration:tempDocBase.configuration];
+			id<BRDocument> newDoc = [self.delegate 
+				updateDocument:doc 
+				fromConfiguration:docBase.configuration 
+				toConfiguration:tempDocBase.configuration];
+			doc = newDoc ? newDoc : doc;
 		}
 		if (![tempDocBase saveDocument:doc error:error]) {
 			return nil;
