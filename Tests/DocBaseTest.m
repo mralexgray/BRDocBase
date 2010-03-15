@@ -9,6 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "AbstractDocBaseTest.h"
 #import "DocBase.h"
+#import "DocBaseBucketStorage.h"
 
 @interface DocBaseTest : BRAbstractDocBaseTest {
 

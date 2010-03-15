@@ -26,6 +26,8 @@
 /* Begin PBXBuildFile section */
 		1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
 		256AC3DA0F4B6AC300CF3369 /* DocBaseAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 256AC3D90F4B6AC300CF3369 /* DocBaseAppDelegate.m */; };
+		551872BE114D0E61006E0250 /* DocBaseBucketStorage.h in Headers */ = {isa = PBXBuildFile; fileRef = 551872BC114D0E61006E0250 /* DocBaseBucketStorage.h */; };
+		551872BF114D0E61006E0250 /* DocBaseBucketStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 551872BD114D0E61006E0250 /* DocBaseBucketStorage.m */; };
 		551F8A831088A95A00A5FCBC /* libBRDocBase.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55B4C9B31088A4DD00869682 /* libBRDocBase.a */; };
 		553756DF111E0EB60015B1D7 /* DocBaseMigrator.h in Headers */ = {isa = PBXBuildFile; fileRef = 553756DD111E0EB60015B1D7 /* DocBaseMigrator.h */; };
 		553756E0111E0EB60015B1D7 /* DocBaseMigrator.m in Sources */ = {isa = PBXBuildFile; fileRef = 553756DE111E0EB60015B1D7 /* DocBaseMigrator.m */; };
@@ -118,6 +120,9 @@
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		551872B8114D0DE5006E0250 /* DocBaseStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DocBaseStorage.h; sourceTree = "<group>"; };
+		551872BC114D0E61006E0250 /* DocBaseBucketStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DocBaseBucketStorage.h; sourceTree = "<group>"; };
+		551872BD114D0E61006E0250 /* DocBaseBucketStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DocBaseBucketStorage.m; sourceTree = "<group>"; };
 		553756DD111E0EB60015B1D7 /* DocBaseMigrator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DocBaseMigrator.h; sourceTree = "<group>"; };
 		553756DE111E0EB60015B1D7 /* DocBaseMigrator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DocBaseMigrator.m; sourceTree = "<group>"; };
 		553756E2111E0F880015B1D7 /* DocBaseMigratorTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DocBaseMigratorTest.m; sourceTree = "<group>"; };
@@ -177,6 +182,9 @@
 				55A9A80810C5A86600CAF697 /* DocBase.m */,
 				553756DD111E0EB60015B1D7 /* DocBaseMigrator.h */,
 				553756DE111E0EB60015B1D7 /* DocBaseMigrator.m */,
+				551872B8114D0DE5006E0250 /* DocBaseStorage.h */,
+				551872BC114D0E61006E0250 /* DocBaseBucketStorage.h */,
+				551872BD114D0E61006E0250 /* DocBaseBucketStorage.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -284,6 +292,7 @@
 			files = (
 				55A9A80910C5A86600CAF697 /* DocBase.h in Headers */,
 				553756DF111E0EB60015B1D7 /* DocBaseMigrator.h in Headers */,
+				551872BE114D0E61006E0250 /* DocBaseBucketStorage.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -394,6 +403,7 @@
 			files = (
 				55A9A80A10C5A86600CAF697 /* DocBase.m in Sources */,
 				553756E0111E0EB60015B1D7 /* DocBaseMigrator.m in Sources */,
+				551872BF114D0E61006E0250 /* DocBaseBucketStorage.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

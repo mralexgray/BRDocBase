@@ -11,21 +11,17 @@
 extern NSString* const BRDocIdKey;
 extern NSString* const BRDocRevKey;
 extern NSString* const BRDocTypeKey;
+
 extern NSString* const BRDocBaseExtension;
-extern const NSUInteger BRDocDefaultBucketCount;
 
-extern NSString* const BRDocBaseConfigBucketCount;
-
+// error constants
 extern NSString* const BRDocBaseErrorDomain;
 extern const NSInteger BRDocBaseErrorNotFound;
 extern const NSInteger BRDocBaseErrorNewDocumentNotSaved;
 extern const NSInteger BRDocBaseErrorConfigurationMismatch;
 
+@protocol BRDocBaseStorage;
 @class SBJSON;
-
-@interface NSString(BRDocBase_String)
--(NSUInteger)documentIdHash;
-@end
 
 // Document protocol.  Any object that can be considered a document
 // should implement this protocol.
@@ -50,13 +46,12 @@ extern const NSInteger BRDocBaseErrorConfigurationMismatch;
 
 
 @interface BRDocBase : NSObject {
-	SBJSON* _json;
 	NSString* _path;
 	NSDictionary* _configuration;
-	BOOL _environmentVerified;
-	
-	NSUInteger _bucketCount;
-	NSMutableDictionary* _documentsInBucket;
+	BOOL _environmentVerified;	
+	id<BRDocBaseStorage> _storage;
+	SBJSON* _json;
+	NSMutableDictionary* _documentsById;
 }
 
 @property (readonly) NSString* path;

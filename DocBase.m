@@ -7,8 +7,8 @@
 //
 
 #import "DocBase.h"
+#import "DocBaseBucketStorage.h"
 #import <JSON/JSON.h>
-//#import <Carbon/Carbon.h>
 
 union FinderInfoTransmuter {
 	UInt8 *bytes;
@@ -21,10 +21,6 @@ NSString* const BRDocIdKey = @"_id";
 NSString* const BRDocRevKey = @"_rev";
 NSString* const BRDocTypeKey = @"_type";
 NSString* const BRDocBaseExtension = @"docbase";
-NSString* const BRDocBaseConfigBucketCount = @"bucketCount";
-
-const NSUInteger BRDocDefaultBucketCount = 17;
-static NSString* const BRDocExtension = @"doc.js";
 
 #pragma mark error codes 
 NSString* const BRDocBaseErrorDomain = @"com.blueropesoftware.docbase.ErrorDomain";
@@ -40,12 +36,6 @@ static BOOL BRIsMutable(id<BRDocument> document);
 #pragma mark Private interface
 
 @interface BRDocBase()
--(NSNumber*)bucketForDocumentId:(NSString*)documentId;
--(NSString*)pathForBucket:(NSNumber*)bucket;
--(NSMutableDictionary*)documentsInBucket:(NSNumber*)bucket error:(NSError**)error;
--(BOOL)saveDocuments:(NSMutableDictionary*)documents inBucket:(NSNumber*)bucket error:(NSError**)error;
--(NSString*)serializeDocuments:(NSDictionary*)documents error:(NSError**)error;
--(NSMutableDictionary*)deserializeDocuments:(NSString*)documentData error:(NSError**)error;
 -(NSDictionary*)translateToDictionary:(id<BRDocument>)document;
 -(id<BRDocument>)translateToDocument:(NSDictionary*)dictionary;
 
@@ -98,10 +88,9 @@ static BOOL BRIsMutable(id<BRDocument> document);
 -(id)initWithPath:(NSString *)path configuration:(NSDictionary*)configuration
 {
 	self = [super init];
-	_documentsInBucket = [[NSMutableDictionary alloc] init];
+	_documentsById = [[NSMutableDictionary alloc] init];
 	_json = [[SBJSON alloc] init];
 	_json.humanReadable = YES;
-	_bucketCount = BRDocDefaultBucketCount;
 	_configuration = [configuration copy];
 	_environmentVerified = NO;
 	if ([[path pathExtension] caseInsensitiveCompare:BRDocBaseExtension] != 0) {
@@ -114,10 +103,11 @@ static BOOL BRIsMutable(id<BRDocument> document);
 
 -(void)dealloc
 {
+	[_documentsById release], _documentsById = nil;
 	[_json release], _json = nil;
-	[_documentsInBucket release], _documentsInBucket = nil;
 	[_path release], _path = nil;
 	[_configuration release], _configuration = nil;
+	[_storage release], _storage = nil;
 	[super dealloc];
 }
 
@@ -171,44 +161,45 @@ static BOOL BRIsMutable(id<BRDocument> document);
 	}
 	
 	// save the document
-	BOOL saved = NO;
-	NSNumber* bucket = [self bucketForDocumentId:documentId];
-	NSMutableDictionary* documentsInBucket = [self documentsInBucket:bucket error:error];
-	if (documentsInBucket) {
-		[documentsInBucket setObject:document forKey:documentId];
-		saved = [self saveDocuments:documentsInBucket inBucket:bucket error:error];
-		if (saved && [document respondsToSelector:@selector(setIsDocumentEdited:)]) {
+	NSDictionary* dictionary = [self translateToDictionary:document];
+	BOOL saved = [_storage saveDocument:dictionary withDocumentId:documentId error:error];
+	if (saved) {
+		if ([document respondsToSelector:@selector(setIsDocumentEdited:)]) {
 			[document setIsDocumentEdited:NO];
 		}
+		[_documentsById setObject:document forKey:documentId];
 	}
 	return saved ? documentId : nil;
 }
 
 -(id<BRDocument>)documentWithId:(NSString *)documentId error:(NSError**)error
 {
+	id<BRDocument> doc = nil;
 	if (![self verifyEnvironment:error]) return nil;
-	NSNumber* bucket = [self bucketForDocumentId:documentId];
-	id<BRDocument> doc = [[self documentsInBucket:bucket error:error] objectForKey:documentId];
-	if ((doc == nil) && (error)) {
-		*error = [self notFoundError:documentId];
+	doc = [_documentsById objectForKey:documentId];
+	if (!doc) {
+		NSDictionary* dictionary = [_storage documentWithId:documentId error:error];
+		if (!dictionary && (error) && (*error == nil)) {
+			*error = [self notFoundError:documentId];
+		}
+		if (dictionary) {
+			doc = [self translateToDocument:dictionary];
+			[_documentsById setObject:doc forKey:documentId];
+		}
 	}
+
 	return doc;
 }
 
 -(BOOL)deleteDocumentWithId:(NSString *)documentId error:(NSError **)error
 {
 	if (![self verifyEnvironment:error]) return NO;
-	BOOL deleted = NO;
-	NSNumber* bucket = [self bucketForDocumentId:documentId];
-	NSMutableDictionary* documentsInBucket = [self documentsInBucket:bucket error:error];
-	if (documentsInBucket) {
-		id<BRDocument> doc = [documentsInBucket objectForKey:documentId];
-		if (doc) {
-			[documentsInBucket removeObjectForKey:documentId];
-			deleted = [self saveDocuments:documentsInBucket inBucket:bucket error:error];
-		} else if (error) {
-			*error = [self notFoundError:documentId];
-		}
+	BOOL deleted = [_storage deleteDocumentWithId:documentId error:error];
+	if (!deleted && error && (*error == nil)) {
+		*error = [self notFoundError:documentId];
+	}
+	if (deleted) {
+		[_documentsById removeObjectForKey:documentId];
 	}
 	return deleted;
 }
@@ -216,33 +207,34 @@ static BOOL BRIsMutable(id<BRDocument> document);
 -(NSSet*)findDocumentsUsingPredicate:(NSPredicate*)predicate error:(NSError**)error
 {
 	if (![self verifyEnvironment:error]) return nil;
-	BOOL success = YES;
-	NSMutableSet* matchingDocuments = [NSMutableSet set];
-	for (NSUInteger bucket = 0; bucket < _bucketCount; ++bucket) {
-		NSDictionary* documentsInBucket = [self documentsInBucket:[NSNumber numberWithUnsignedInt:bucket] error:error];
-		if (!documentsInBucket) {
-			// an error occured
-			success = NO;
-			break;
-		} else {
-			for (id value in [documentsInBucket allValues]) {
-				@try {
-					if ([predicate evaluateWithObject:value]) {
-						[matchingDocuments addObject:value];
-					}
+	NSMutableSet* matchingDocuments = nil;
+	NSSet* allDocs = [_storage allDocuments:error];
+	if (allDocs) {
+		matchingDocuments = [NSMutableSet set];
+		for (NSDictionary* dictionary in allDocs) {
+			NSString* documentId = [dictionary objectForKey:BRDocIdKey];
+			id<BRDocument> document = [_documentsById objectForKey:documentId];
+			if (!document) {
+				document = [self translateToDocument:dictionary];
+				[_documentsById setObject:document forKey:documentId];
+			}
+			@try {
+				if ([predicate evaluateWithObject:document]) {
+					[matchingDocuments addObject:document];
 				}
-				@catch (NSException* e) {
-					// ignore
-				}
-			};
+			}
+			@catch (NSException* e) {
+				// ignore
+			}
 		}
 	}
-	return success ? matchingDocuments : nil;
+	return matchingDocuments;
 }
 
 -(void)environmentChanged
 {
 	_environmentVerified = NO;
+	[_storage release], _storage = nil;
 }
 
 #pragma mark Private implementation
@@ -253,113 +245,8 @@ static BOOL BRIsMutable(id<BRDocument> document);
 	NSURL* url = [NSURL URLWithString:self.path];
 	[url setResourceValue:[NSNumber numberWithBool:isBundle] forKey:NSURLIsPackageKey error:nil];
 #endif
-//	const char* pathFSR = [self.path fileSystemRepresentation];
-//	FSRef ref;
-//	OSStatus err = FSPathMakeRef((const UInt8*)pathFSR, &ref, /*isDirectory*/ NULL);
-//	if (err == noErr) {
-//		struct FSCatalogInfo catInfo;
-//		union FinderInfoTransmuter finderInfoPointers = { .bytes = catInfo.finderInfo };
-//		err = FSGetCatalogInfo(
-//			&ref,
-//			kFSCatInfoFinderInfo,
-//			&catInfo,
-//			/*outName*/ NULL,
-//			/*FSSpec*/ NULL,
-//			/*parentRef*/ NULL);
-//		if (err == noErr) {
-//			if (isBundle) {
-//				finderInfoPointers.finderInfo->finderFlags |= kHasBundle;
-//			} else {
-//				finderInfoPointers.finderInfo->finderFlags &= ~kHasBundle;
-//			}
-//			FSSetCatalogInfo(
-//				&ref,
-//				kFSCatInfoFinderInfo,
-//				&catInfo);
-//		}
-//	}
 }
 
--(NSString*)pathForBucket:(NSNumber*)bucket
-{
-	NSString* fileName = [NSString stringWithFormat:@"docs%@", bucket];
-	return [[_path stringByAppendingPathComponent:fileName] stringByAppendingPathExtension:BRDocExtension];
-}
-
--(NSMutableDictionary*)documentsInBucket:(NSNumber *)bucket error:(NSError**)error
-{
-	NSMutableDictionary* documentsInBucket = [_documentsInBucket objectForKey:bucket];
-	if (documentsInBucket == nil) {
-		NSString* bucketFile = [self pathForBucket:bucket];
-		if ([[NSFileManager defaultManager] fileExistsAtPath:bucketFile]) {
-			NSString* serializedJson = [NSString stringWithContentsOfFile:bucketFile encoding:NSUTF8StringEncoding error:error];
-			documentsInBucket = [self deserializeDocuments:serializedJson error:error];
-		} else {
-			documentsInBucket = [NSMutableDictionary dictionary];
-		}
-		[_documentsInBucket setObject:documentsInBucket forKey:bucket];
-	}
-	return documentsInBucket;
-}
-
--(BOOL)saveDocuments:(NSMutableDictionary*)documents inBucket:(NSNumber*)bucket error:(NSError**)error
-{
-	BOOL saved = NO;
-	NSString* bucketFile = [self pathForBucket:bucket];
-	if ([documents count] > 0) {
-		NSString* serializedJson = [self serializeDocuments:documents error:error];
-		if (serializedJson != nil) {
-			saved = [serializedJson 
-				writeToFile:bucketFile
-				atomically:NO 
-				encoding:NSUTF8StringEncoding 
-				error:error];
-		}
-	} else {
-		// no documents in the file, delete the file instead
-		if ([[NSFileManager defaultManager] fileExistsAtPath:bucketFile]) {
-			saved = [[NSFileManager defaultManager] removeItemAtPath:bucketFile error:error];
-		} else {
-			// nothing to save
-			saved = YES;
-		}
-	}
-	return saved;
-}
-				 
-
--(NSNumber*)bucketForDocumentId:(NSString *)documentId
-{
-	NSUInteger bucketForDocument = [documentId documentIdHash] % _bucketCount;
-	return [NSNumber numberWithUnsignedInt:bucketForDocument];
-}
-
--(NSString*)serializeDocuments:(NSDictionary*)documents error:(NSError**)error
-{
-	NSMutableArray* translatedDocuments = [NSMutableArray arrayWithCapacity:[documents count]];
-	for (id<BRDocument> document in [documents allValues]) {
-		NSDictionary* documentDictionary = [self translateToDictionary:document];
-		[translatedDocuments addObject:documentDictionary];
-	};
-	return [_json stringWithObject:translatedDocuments error:error];
-}
-
--(NSMutableDictionary*)deserializeDocuments:(NSString *)documentData error:(NSError **)error
-{
-	NSMutableDictionary* translatedDocuments = nil;
-	NSArray* untranslatedDocuments = [_json objectWithString:documentData error:error];
-	if (untranslatedDocuments) {
-		translatedDocuments = [NSMutableDictionary dictionaryWithCapacity:[untranslatedDocuments count]];
-		for (NSDictionary* documentDictionary in untranslatedDocuments) {
-			id<BRDocument> document = [self translateToDocument:documentDictionary];
-			if ([document respondsToSelector:@selector(setIsDocumentEdited:)]) {
-				document.isDocumentEdited = NO;
-			}
-			[translatedDocuments setObject:document forKey:document.documentId];
-		}
-	}
-	return translatedDocuments;
-}
 
 -(NSDictionary*)translateToDictionary:(id<BRDocument>)document
 {
@@ -383,6 +270,9 @@ static BOOL BRIsMutable(id<BRDocument> document);
 			Class docClass = NSClassFromString(docType);
 			if (docClass != nil) {
 				document = [[[docClass alloc] initWithDocumentDictionary:dictionary] autorelease];
+				if ([document respondsToSelector:@selector(setIsDocumentEdited:)]) {
+					[document setIsDocumentEdited:NO];
+				}
 			} else {
 				NSLog(@"BRDocBase: unknown document type: %@", docType);
 				document = dictionary;
@@ -434,9 +324,8 @@ static BOOL BRIsMutable(id<BRDocument> document);
 		
 	}
 
-	// setup any configuration
-	_bucketCount = [[self.configuration objectForKey:BRDocBaseConfigBucketCount] intValue];
-	_bucketCount = _bucketCount <= 0 ? BRDocDefaultBucketCount : _bucketCount;
+	// setup the storage
+	_storage = [[BRDocBaseBucketStorage alloc] initWithConfiguration:self.configuration path:_path json:_json];
 	
 	return YES;
 }
@@ -483,31 +372,6 @@ static BOOL BRIsMutable(id<BRDocument> document);
 
 @end
 
-#pragma mark -
-#pragma mark String extensions
-
-@implementation NSString(BRDocBase_String)
-
-#define FNV_32_PRIME ((Fnv32_t)0x01000193)
-
--(NSUInteger)documentIdHash
-{
-	NSUInteger hval = 2166136261;
-	const NSUInteger fnvPrime = 0x01000193;
-    const unsigned char *s = (const unsigned char *)[self UTF8String];	/* unsigned string */
-	
-    /*
-     * FNV-1 hash each octet in the buffer
-     */
-    while (*s) {
-		
-		hval *= fnvPrime;
-		hval ^= (NSUInteger)*s++;
-    }
-    return hval;
-}
-
-@end
 
 BOOL BRIsMutable(id<BRDocument> document)
 {
