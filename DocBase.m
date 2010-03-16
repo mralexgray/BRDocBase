@@ -10,23 +10,21 @@
 #import "DocBaseBucketStorage.h"
 #import <JSON/JSON.h>
 
-union FinderInfoTransmuter {
-	UInt8 *bytes;
-	struct FileInfo *finderInfo;
-};
-
 #pragma mark --
 #pragma mark Constants
 NSString* const BRDocIdKey = @"_id";
 NSString* const BRDocRevKey = @"_rev";
 NSString* const BRDocTypeKey = @"_type";
 NSString* const BRDocBaseExtension = @"docbase";
+NSString* const BRDocBaseConfigStorageType = @"storageType";
+NSString* const BRDocBaseDefaultStorageType = @"BRDocBaseBucketStorage";
 
 #pragma mark error codes 
 NSString* const BRDocBaseErrorDomain = @"com.blueropesoftware.docbase.ErrorDomain";
 const NSInteger BRDocBaseErrorNotFound = 1;
 const NSInteger BRDocBaseErrorNewDocumentNotSaved = 2;
 const NSInteger BRDocBaseErrorConfigurationMismatch = 3;
+const NSInteger BRDocBaseErrorUnknownStorageType = 4;
 
 #pragma mark --
 #pragma mark Helper functions
@@ -64,6 +62,7 @@ static BOOL BRIsMutable(id<BRDocument> document);
 {
 	return [NSDictionary dictionaryWithObjectsAndKeys:
 		[NSNumber numberWithInt:BRDocDefaultBucketCount], BRDocBaseConfigBucketCount,
+		BRDocBaseDefaultStorageType, BRDocBaseConfigStorageType,
 		nil];
 }
 
@@ -325,7 +324,21 @@ static BOOL BRIsMutable(id<BRDocument> document);
 	}
 
 	// setup the storage
-	_storage = [[BRDocBaseBucketStorage alloc] initWithConfiguration:self.configuration path:_path json:_json];
+	NSString* storageType = [self.configuration objectForKey:BRDocBaseConfigStorageType];
+	if (!storageType) storageType = BRDocBaseDefaultStorageType;
+	Class storageClass = NSClassFromString(storageType);
+	if ((storageClass == nil) ||
+		(![storageClass conformsToProtocol:@protocol(BRDocBaseStorage)])) {
+		if (error) {
+			*error = [[[NSError alloc] 
+				initWithDomain:BRDocBaseErrorDomain 
+				code:BRDocBaseErrorUnknownStorageType 
+				userInfo:nil] 
+				autorelease];
+		}
+		return NO;
+	}
+	_storage = [[storageClass alloc] initWithConfiguration:self.configuration path:_path json:_json];
 	
 	return YES;
 }

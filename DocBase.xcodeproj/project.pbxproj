@@ -43,6 +43,9 @@
 		55B4C9BA1088A50300869682 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55B4C9B91088A50300869682 /* Cocoa.framework */; };
 		55B4C9BF1088A57C00869682 /* TestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B4C9BD1088A57C00869682 /* TestCase.m */; };
 		55B4C9C01088A57C00869682 /* TestMain.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B4C9BE1088A57C00869682 /* TestMain.m */; };
+		55D200AF114ED17F00D91061 /* DocBaseFileStorage.h in Headers */ = {isa = PBXBuildFile; fileRef = 55D200AD114ED17F00D91061 /* DocBaseFileStorage.h */; };
+		55D200B0114ED17F00D91061 /* DocBaseFileStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 55D200AE114ED17F00D91061 /* DocBaseFileStorage.m */; };
+		55D200C4114ED72000D91061 /* DocBaseConfigurationTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 55D200C3114ED72000D91061 /* DocBaseConfigurationTest.m */; };
 		55E9DD8011317D7E0077865A /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55E9DD7F11317D7E0077865A /* Carbon.framework */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
@@ -138,6 +141,9 @@
 		55B4C9BC1088A57C00869682 /* TestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestCase.h; sourceTree = "<group>"; };
 		55B4C9BD1088A57C00869682 /* TestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestCase.m; sourceTree = "<group>"; };
 		55B4C9BE1088A57C00869682 /* TestMain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestMain.m; sourceTree = "<group>"; };
+		55D200AD114ED17F00D91061 /* DocBaseFileStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DocBaseFileStorage.h; sourceTree = "<group>"; };
+		55D200AE114ED17F00D91061 /* DocBaseFileStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DocBaseFileStorage.m; sourceTree = "<group>"; };
+		55D200C3114ED72000D91061 /* DocBaseConfigurationTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DocBaseConfigurationTest.m; sourceTree = "<group>"; };
 		55E9DD7F11317D7E0077865A /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 		8D1107310486CEB800E47090 /* DocBase-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "DocBase-Info.plist"; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* DocBase.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DocBase.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -185,6 +191,8 @@
 				551872B8114D0DE5006E0250 /* DocBaseStorage.h */,
 				551872BC114D0E61006E0250 /* DocBaseBucketStorage.h */,
 				551872BD114D0E61006E0250 /* DocBaseBucketStorage.m */,
+				55D200AD114ED17F00D91061 /* DocBaseFileStorage.h */,
+				55D200AE114ED17F00D91061 /* DocBaseFileStorage.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -279,6 +287,7 @@
 				553756E2111E0F880015B1D7 /* DocBaseMigratorTest.m */,
 				553756E6111E10330015B1D7 /* AbstractDocBaseTest.h */,
 				553756E7111E10330015B1D7 /* AbstractDocBaseTest.m */,
+				55D200C3114ED72000D91061 /* DocBaseConfigurationTest.m */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -293,6 +302,7 @@
 				55A9A80910C5A86600CAF697 /* DocBase.h in Headers */,
 				553756DF111E0EB60015B1D7 /* DocBaseMigrator.h in Headers */,
 				551872BE114D0E61006E0250 /* DocBaseBucketStorage.h in Headers */,
+				55D200AF114ED17F00D91061 /* DocBaseFileStorage.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -394,6 +404,7 @@
 				55A9A7F910C5A82200CAF697 /* DocBaseTest.m in Sources */,
 				553756E3111E0F880015B1D7 /* DocBaseMigratorTest.m in Sources */,
 				553756E8111E10330015B1D7 /* AbstractDocBaseTest.m in Sources */,
+				55D200C4114ED72000D91061 /* DocBaseConfigurationTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -404,6 +415,7 @@
 				55A9A80A10C5A86600CAF697 /* DocBase.m in Sources */,
 				553756E0111E0EB60015B1D7 /* DocBaseMigrator.m in Sources */,
 				551872BF114D0E61006E0250 /* DocBaseBucketStorage.m in Sources */,
+				55D200B0114ED17F00D91061 /* DocBaseFileStorage.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

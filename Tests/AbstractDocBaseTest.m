@@ -12,6 +12,7 @@
 NSString* const TestDocBaseName = @"doc_base_test";
 
 @implementation BRAbstractDocBaseTest : BRTestCase
+
 -(void)setup
 {
 	// cleanup any old documents

@@ -10,15 +10,21 @@
 #import "AbstractDocBaseTest.h"
 #import "DocBase.h"
 #import "DocBaseBucketStorage.h"
+#import "DocBaseFileStorage.h"
 
-@interface DocBaseTest : BRAbstractDocBaseTest {
+@interface AbstractDocBaseStorageTest : BRAbstractDocBaseTest {
 
 }
 
 @end
 
 
-@implementation DocBaseTest
+@implementation AbstractDocBaseStorageTest
+
++(BOOL)isAbstract
+{
+	return YES;
+}
 
 -(void)testSave
 {
@@ -204,6 +210,21 @@
 	BRAssertTrue(!doc.isDocumentEdited);
 }
 
+@end
+
+@interface BRDocBaseBucketStorageTest : AbstractDocBaseStorageTest
+{
+}
+
+@end
+
+@implementation BRDocBaseBucketStorageTest
+
++(BOOL)isAbstract
+{
+	return NO;
+}
+
 -(void)testDocumentIdHash
 {
 	NSString* test = @"some random string";
@@ -212,38 +233,24 @@
 	BRAssertTrue([test documentIdHash] != [test2 documentIdHash]);
 }
 
--(void)testConfiguration
-{
-	TestDocument* document = [TestDocument testDocumentWithName:@"test" number:5];	
-	BRAssertNotNil([BRDocBase defaultConfiguration]);
-	
-	// test default configuration
-	BRDocBase* docBase = [self createDocBase];
-	BRAssertNil(docBase.configuration);
-	[docBase saveDocument:document error:nil];	// make sure environment is initied
-	BRAssertNotNil(docBase.configuration);
-	BRAssertTrue([docBase.configuration isEqualToDictionary:[BRDocBase defaultConfiguration]]);
-	
-	// test custom configuration
-	[self deleteDocBase];
-	NSDictionary* configuration = [NSDictionary dictionaryWithObjectsAndKeys:
-		[NSNumber numberWithInt:55], BRDocBaseConfigBucketCount,
-		nil];
-	docBase = [self createDocBaseWithConfiguration:configuration];
-	BRAssertTrue([configuration isEqualToDictionary:docBase.configuration]);
-	[docBase saveDocument:document error:nil];	// make sure config is writting out
-	docBase = [self createDocBase];
-	[docBase documentWithId:document.documentId error:nil];	// make sure environment is inited
-	BRAssertTrue([configuration isEqualToDictionary:docBase.configuration]);
-	
-	// test config mismatch
-	docBase = [self createDocBaseWithConfiguration:[BRDocBase defaultConfiguration]];
-	NSError* error = nil;
-	BRAssertTrue(![docBase documentWithId:document.documentId error:&error]);
-	BRAssertNotNil(error);
-	BRAssertTrue([error code] == BRDocBaseErrorConfigurationMismatch);
-}
-
-
 @end
 
+@interface BRDocBaseFileStorageTest : AbstractDocBaseStorageTest
+{
+}
+@end
+
+@implementation BRDocBaseFileStorageTest
++(BOOL)isAbstract
+{
+	return NO;
+}
+-(BRDocBase*)createDocBase
+{
+	NSDictionary* configuration = [NSDictionary 
+		dictionaryWithObject:NSStringFromClass([BRDocBaseFileStorage class]) 
+		forKey:BRDocBaseConfigStorageType];
+	return [BRDocBase docBaseWithPath:self.docBasePath configuration:configuration];
+}
+
+@end

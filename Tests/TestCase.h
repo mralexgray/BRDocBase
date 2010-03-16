@@ -18,8 +18,11 @@
 @interface BRTestCase : NSObject {
 }
 
++(BOOL)isAbstract;
+
 -(void)setup;
 -(void)tearDown;
+
 
 -(void)assert:(id)expected equalTo:(id)result file:(const char*)file line:(int)line;
 -(void)assert:(id)expected notEqualTo:(id)result file:(const char*)file line:(int)line;

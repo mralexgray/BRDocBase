@@ -11,6 +11,11 @@
 
 @implementation BRTestCase
 
++(BOOL)isAbstract
+{
+	return NO;
+}
+
 -(void)setup
 {
 }

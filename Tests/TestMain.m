@@ -25,7 +25,9 @@ int main(int argc, char *argv[])
 			Class superClass = class_getSuperclass(classes[i]);
 			while (superClass != nil) {
 				if (superClass == [BRTestCase class]) {
-					BRRunTests(classes[i], &testResults);
+					if (![classes[i] isAbstract]) {
+						BRRunTests(classes[i], &testResults);
+					}
 					superClass = nil;
 				} else {
 					superClass = class_getSuperclass(superClass);

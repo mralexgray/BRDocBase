@@ -11,6 +11,8 @@
 extern NSString* const BRDocIdKey;
 extern NSString* const BRDocRevKey;
 extern NSString* const BRDocTypeKey;
+extern NSString* const BRDocBaseConfigStorageType;
+extern NSString* const BRDocBaseDefaultStorageType;
 
 extern NSString* const BRDocBaseExtension;
 
@@ -19,6 +21,7 @@ extern NSString* const BRDocBaseErrorDomain;
 extern const NSInteger BRDocBaseErrorNotFound;
 extern const NSInteger BRDocBaseErrorNewDocumentNotSaved;
 extern const NSInteger BRDocBaseErrorConfigurationMismatch;
+extern const NSInteger BRDocBaseErrorUnknownStorageType;
 
 @protocol BRDocBaseStorage;
 @class SBJSON;
