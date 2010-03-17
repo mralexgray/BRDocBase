@@ -257,6 +257,7 @@ static BOOL BRIsMutable(id<BRDocument> document);
 		[mutableDictionary setObject:NSStringFromClass([document class]) forKey:BRDocTypeKey];
 		documentDictionary = mutableDictionary;
 	}
+	NSAssert([documentDictionary objectForKey:BRDocIdKey], @"Document Dictionary has no _id set");
 	return documentDictionary;
 }
 
