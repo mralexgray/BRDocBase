@@ -175,7 +175,11 @@ static NSString* const BRDocExtension = @"doc.js";
 		documentsById = [NSMutableDictionary dictionaryWithCapacity:[documents count]];
 		for (NSDictionary* documentDictionary in documents) {
 			NSString* documentId = [documentDictionary objectForKey:BRDocIdKey];
-			[documentsById setObject:documentDictionary forKey:documentId];
+			if (documentId) {
+				[documentsById setObject:documentDictionary forKey:documentId];
+			} else {
+				NSLog(@"discarding document due to lack of document id:\n5@", documentDictionary);
+			}
 		}
 	}
 	return documentsById;

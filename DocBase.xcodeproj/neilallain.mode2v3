@@ -204,7 +204,7 @@
 				<key>PBXProjectModuleGUID</key>
 				<string>55D202041150F62F00D91061</string>
 				<key>PBXProjectModuleLabel</key>
-				<string>DocBaseStorage.h</string>
+				<string>DocBase.m</string>
 				<key>PBXSplitModuleInNavigatorKey</key>
 				<dict>
 					<key>Split0</key>
@@ -212,11 +212,11 @@
 						<key>PBXProjectModuleGUID</key>
 						<string>55D202141150FE5600D91061</string>
 						<key>PBXProjectModuleLabel</key>
-						<string>DocBaseStorage.h</string>
+						<string>DocBase.m</string>
 						<key>_historyCapacity</key>
 						<integer>0</integer>
 						<key>bookmark</key>
-						<string>55613E101151004000F47E1D</string>
+						<string>55613E381151029800F47E1D</string>
 						<key>history</key>
 						<array>
 							<string>55D202151150FE5600D91061</string>
@@ -224,7 +224,8 @@
 							<string>55613E0D1151004000F47E1D</string>
 							<string>55613E0E1151004000F47E1D</string>
 							<string>55613E0F1151004000F47E1D</string>
-							<string>55613E061150FFED00F47E1D</string>
+							<string>55613E371151029800F47E1D</string>
+							<string>55613E30115101B900F47E1D</string>
 						</array>
 					</dict>
 					<key>SplitCount</key>
@@ -318,13 +319,13 @@
 									<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 									<array>
 										<array>
-											<integer>18</integer>
+											<integer>15</integer>
 											<integer>11</integer>
 											<integer>0</integer>
 										</array>
 									</array>
 									<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
-									<string>{{0, 155}, {429, 333}}</string>
+									<string>{{0, 166}, {429, 333}}</string>
 								</dict>
 								<key>PBXTopSmartGroupGIDs</key>
 								<array/>
@@ -486,8 +487,8 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>55613E0B1151004000F47E1D</string>
-				<string>55613E0C1151004000F47E1D</string>
+				<string>55613E351151029800F47E1D</string>
+				<string>55613E361151029800F47E1D</string>
 				<string>1C9437FD063B20B00039CFAC</string>
 				<string>1C9437FE063B20B00039CFAC</string>
 				<string>1C9437FF063B20B00039CFAC</string>
@@ -526,8 +527,11 @@
 	<integer>0</integer>
 	<key>WindowOrderList</key>
 	<array>
+		<string>55613E411151029800F47E1D</string>
+		<string>55613E421151029800F47E1D</string>
 		<string>1C530D52069F1CE1000CFCEE</string>
 		<string>1C530D54069F1CE1000CFCEE</string>
+		<string>1C530D5B069F1CE1000CFCEE</string>
 		<string>55D202041150F62F00D91061</string>
 		<string>/Users/neilallain/projects/Library/BRDocBase/DocBase.xcodeproj</string>
 	</array>
@@ -746,7 +750,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1C530D52069F1CE1000CFCEE</string>
-				<string>55613E111151004000F47E1D</string>
+				<string>55613E391151029800F47E1D</string>
 				<string>1CD0528F0623707200166675</string>
 				<string>XCMainBuildResultsModuleGUID</string>
 			</array>
@@ -868,13 +872,13 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1C530D54069F1CE1000CFCEE</string>
-				<string>55613E121151004000F47E1D</string>
+				<string>55613E3A1151029800F47E1D</string>
 				<string>1C162984064C10D400B95A72</string>
-				<string>55613E131151004000F47E1D</string>
-				<string>55613E141151004000F47E1D</string>
-				<string>55613E151151004000F47E1D</string>
-				<string>55613E161151004000F47E1D</string>
-				<string>55613E171151004000F47E1D</string>
+				<string>55613E3B1151029800F47E1D</string>
+				<string>55613E3C1151029800F47E1D</string>
+				<string>55613E3D1151029800F47E1D</string>
+				<string>55613E3E1151029800F47E1D</string>
+				<string>55613E3F1151029800F47E1D</string>
 			</array>
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.debugV3</string>
@@ -1030,7 +1034,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1C530D5B069F1CE1000CFCEE</string>
-				<string>55D20061114EB9F200D91061</string>
+				<string>55613E401151029800F47E1D</string>
 				<string>1C78EAAC065D492600B07095</string>
 			</array>
 			<key>ToolbarConfiguration</key>
