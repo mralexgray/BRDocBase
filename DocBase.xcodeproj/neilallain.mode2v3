@@ -216,7 +216,7 @@
 						<key>_historyCapacity</key>
 						<integer>0</integer>
 						<key>bookmark</key>
-						<string>55613DD71150FF0800F47E1D</string>
+						<string>55613DE11150FF3400F47E1D</string>
 						<key>history</key>
 						<array>
 							<string>55D202151150FE5600D91061</string>
@@ -525,8 +525,8 @@
 	<array>
 		<string>1C530D52069F1CE1000CFCEE</string>
 		<string>1C530D54069F1CE1000CFCEE</string>
-		<string>/Users/neilallain/projects/Library/BRDocBase/DocBase.xcodeproj</string>
 		<string>55D202041150F62F00D91061</string>
+		<string>/Users/neilallain/projects/Library/BRDocBase/DocBase.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
 	<string>1449 202 446 419 0 0 1920 1178 </string>
