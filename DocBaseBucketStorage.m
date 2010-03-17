@@ -178,7 +178,7 @@ static NSString* const BRDocExtension = @"doc.js";
 			if (documentId) {
 				[documentsById setObject:documentDictionary forKey:documentId];
 			} else {
-				NSLog(@"discarding document due to lack of document id:\n5@", documentDictionary);
+				NSLog(@"discarding document due to lack of document id:\n%@", documentDictionary);
 			}
 		}
 	}
