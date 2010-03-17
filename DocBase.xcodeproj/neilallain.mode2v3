@@ -204,7 +204,7 @@
 				<key>PBXProjectModuleGUID</key>
 				<string>55EDCF8D1148655000042507</string>
 				<key>PBXProjectModuleLabel</key>
-				<string>DocBaseFileStorage.m</string>
+				<string>DocBaseSqlStorage.m</string>
 				<key>PBXSplitModuleInNavigatorKey</key>
 				<dict>
 					<key>Split0</key>
@@ -212,18 +212,15 @@
 						<key>PBXProjectModuleGUID</key>
 						<string>55EDCF9C1148683D00042507</string>
 						<key>PBXProjectModuleLabel</key>
-						<string>DocBaseFileStorage.m</string>
+						<string>DocBaseSqlStorage.m</string>
 						<key>_historyCapacity</key>
 						<integer>0</integer>
 						<key>bookmark</key>
-						<string>55D2014A114F016300D91061</string>
+						<string>55D201FF1150EF8500D91061</string>
 						<key>history</key>
 						<array>
 							<string>55D2000F114EA98200D91061</string>
-							<string>55D20088114ECBA700D91061</string>
 							<string>55D20089114ECBA700D91061</string>
-							<string>55D200CA114EDCCD00D91061</string>
-							<string>55D200CB114EDCCD00D91061</string>
 							<string>55D200CF114EDCCD00D91061</string>
 							<string>55D200D0114EDCCD00D91061</string>
 							<string>55D200D1114EDCCD00D91061</string>
@@ -232,8 +229,13 @@
 							<string>55D20105114EEC5E00D91061</string>
 							<string>55D20129114EF47F00D91061</string>
 							<string>55D20147114F016300D91061</string>
-							<string>55D20148114F016300D91061</string>
-							<string>55D20149114F016300D91061</string>
+							<string>55D201CB11502EF800D91061</string>
+							<string>55D201CC11502EF800D91061</string>
+							<string>55D201CD11502EF800D91061</string>
+							<string>55D201CE11502EF800D91061</string>
+							<string>55D201FC1150EF8500D91061</string>
+							<string>55D201FD1150EF8500D91061</string>
+							<string>55D201FE1150EF8500D91061</string>
 						</array>
 					</dict>
 					<key>SplitCount</key>
@@ -249,7 +251,7 @@
 				<key>PBXModuleWindowStatusBarHidden2</key>
 				<false/>
 				<key>RubberWindowFrame</key>
-				<string>634 327 1022 746 0 0 1920 1178 </string>
+				<string>633 325 1022 746 0 0 1920 1178 </string>
 			</dict>
 		</dict>
 	</array>
@@ -319,7 +321,6 @@
 									<key>PBXSmartGroupTreeModuleOutlineStateExpansionKey</key>
 									<array>
 										<string>29B97314FDCFA39411CA2CEA</string>
-										<string>55B4C99D1088A42F00869682</string>
 										<string>080E96DDFE201D6D7F000001</string>
 										<string>29B97315FDCFA39411CA2CEA</string>
 										<string>19C28FACFE9D520D11CA2CBB</string>
@@ -327,13 +328,13 @@
 									<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 									<array>
 										<array>
-											<integer>22</integer>
-											<integer>11</integer>
+											<integer>16</integer>
+											<integer>3</integer>
 											<integer>0</integer>
 										</array>
 									</array>
 									<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
-									<string>{{0, 178}, {429, 333}}</string>
+									<string>{{0, 0}, {429, 333}}</string>
 								</dict>
 								<key>PBXTopSmartGroupGIDs</key>
 								<array/>
@@ -395,7 +396,7 @@
 									<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 									<array>
 										<array>
-											<integer>3</integer>
+											<integer>2</integer>
 											<integer>0</integer>
 										</array>
 									</array>
@@ -540,9 +541,9 @@
 		<string>55D20063114EB9F200D91061</string>
 		<string>1C530D52069F1CE1000CFCEE</string>
 		<string>/Users/neilallain/projects/Library/BRDocBase/DocBase.xcodeproj</string>
+		<string>55EDCF8D1148655000042507</string>
 		<string>1C530D54069F1CE1000CFCEE</string>
 		<string>1C530D5B069F1CE1000CFCEE</string>
-		<string>55EDCF8D1148655000042507</string>
 	</array>
 	<key>WindowString</key>
 	<string>1449 202 446 419 0 0 1920 1178 </string>
@@ -703,7 +704,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CD0528F0623707200166675</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>DocBaseTest.m</string>
+								<string>DocBaseSqlStorage.m</string>
 								<key>StatusBarVisibility</key>
 								<true/>
 							</dict>
@@ -774,7 +775,7 @@
 			<key>WindowToolGUID</key>
 			<string>1C530D52069F1CE1000CFCEE</string>
 			<key>WindowToolIsVisible</key>
-			<true/>
+			<false/>
 		</dict>
 		<dict>
 			<key>FirstTimeWindowDisplayed</key>

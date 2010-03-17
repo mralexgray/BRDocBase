@@ -46,6 +46,10 @@
 		55D200AF114ED17F00D91061 /* DocBaseFileStorage.h in Headers */ = {isa = PBXBuildFile; fileRef = 55D200AD114ED17F00D91061 /* DocBaseFileStorage.h */; };
 		55D200B0114ED17F00D91061 /* DocBaseFileStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 55D200AE114ED17F00D91061 /* DocBaseFileStorage.m */; };
 		55D200C4114ED72000D91061 /* DocBaseConfigurationTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 55D200C3114ED72000D91061 /* DocBaseConfigurationTest.m */; };
+		55D2018B114F075C00D91061 /* DocBaseSqlStorage.h in Headers */ = {isa = PBXBuildFile; fileRef = 55D20189114F075C00D91061 /* DocBaseSqlStorage.h */; };
+		55D2018C114F075C00D91061 /* DocBaseSqlStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 55D2018A114F075C00D91061 /* DocBaseSqlStorage.m */; };
+		55D201D9115039BC00D91061 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 55D201D8115039BC00D91061 /* libsqlite3.dylib */; };
+		55D201DC115039E200D91061 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 55D201D8115039BC00D91061 /* libsqlite3.dylib */; };
 		55E9DD8011317D7E0077865A /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55E9DD7F11317D7E0077865A /* Carbon.framework */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
@@ -144,6 +148,9 @@
 		55D200AD114ED17F00D91061 /* DocBaseFileStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DocBaseFileStorage.h; sourceTree = "<group>"; };
 		55D200AE114ED17F00D91061 /* DocBaseFileStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DocBaseFileStorage.m; sourceTree = "<group>"; };
 		55D200C3114ED72000D91061 /* DocBaseConfigurationTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DocBaseConfigurationTest.m; sourceTree = "<group>"; };
+		55D20189114F075C00D91061 /* DocBaseSqlStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DocBaseSqlStorage.h; sourceTree = "<group>"; };
+		55D2018A114F075C00D91061 /* DocBaseSqlStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DocBaseSqlStorage.m; sourceTree = "<group>"; };
+		55D201D8115039BC00D91061 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		55E9DD7F11317D7E0077865A /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 		8D1107310486CEB800E47090 /* DocBase-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "DocBase-Info.plist"; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* DocBase.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DocBase.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -157,6 +164,7 @@
 				55B4C9B81088A4F000869682 /* libBRDocBase.a in Frameworks */,
 				55B4C9BA1088A50300869682 /* Cocoa.framework in Frameworks */,
 				55E9DD8011317D7E0077865A /* Carbon.framework in Frameworks */,
+				55D201DC115039E200D91061 /* libsqlite3.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -164,6 +172,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55D201D9115039BC00D91061 /* libsqlite3.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -193,6 +202,8 @@
 				551872BD114D0E61006E0250 /* DocBaseBucketStorage.m */,
 				55D200AD114ED17F00D91061 /* DocBaseFileStorage.h */,
 				55D200AE114ED17F00D91061 /* DocBaseFileStorage.m */,
+				55D20189114F075C00D91061 /* DocBaseSqlStorage.h */,
+				55D2018A114F075C00D91061 /* DocBaseSqlStorage.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -237,6 +248,7 @@
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 				55B4C9B91088A50300869682 /* Cocoa.framework */,
+				55D201D8115039BC00D91061 /* libsqlite3.dylib */,
 			);
 			name = DocBase;
 			sourceTree = "<group>";
@@ -303,6 +315,7 @@
 				553756DF111E0EB60015B1D7 /* DocBaseMigrator.h in Headers */,
 				551872BE114D0E61006E0250 /* DocBaseBucketStorage.h in Headers */,
 				55D200AF114ED17F00D91061 /* DocBaseFileStorage.h in Headers */,
+				55D2018B114F075C00D91061 /* DocBaseSqlStorage.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -416,6 +429,7 @@
 				553756E0111E0EB60015B1D7 /* DocBaseMigrator.m in Sources */,
 				551872BF114D0E61006E0250 /* DocBaseBucketStorage.m in Sources */,
 				55D200B0114ED17F00D91061 /* DocBaseFileStorage.m in Sources */,
+				55D2018C114F075C00D91061 /* DocBaseSqlStorage.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

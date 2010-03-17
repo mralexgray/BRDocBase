@@ -11,6 +11,7 @@
 #import "DocBase.h"
 #import "DocBaseBucketStorage.h"
 #import "DocBaseFileStorage.h"
+#import "DocBaseSqlStorage.h"
 
 @interface AbstractDocBaseStorageTest : BRAbstractDocBaseTest {
 
@@ -250,6 +251,26 @@
 	NSDictionary* configuration = [NSDictionary 
 		dictionaryWithObject:NSStringFromClass([BRDocBaseFileStorage class]) 
 		forKey:BRDocBaseConfigStorageType];
+	return [BRDocBase docBaseWithPath:self.docBasePath configuration:configuration];
+}
+
+@end
+
+@interface BRDocBaseSqlStorageTest : AbstractDocBaseStorageTest
+{
+}
+@end
+
+@implementation BRDocBaseSqlStorageTest
++(BOOL)isAbstract
+{
+	return NO;
+}
+-(BRDocBase*)createDocBase
+{
+	NSDictionary* configuration = [NSDictionary 
+								   dictionaryWithObject:NSStringFromClass([BRDocBaseSqlStorage class]) 
+								   forKey:BRDocBaseConfigStorageType];
 	return [BRDocBase docBaseWithPath:self.docBasePath configuration:configuration];
 }
 
