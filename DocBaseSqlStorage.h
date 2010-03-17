@@ -6,7 +6,7 @@
 //  Copyright 2010 Blue Rope Software. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
+#import <Foundation/Foundation.h>
 #import "DocBaseStorage.h"
 #import <sqlite3.h>
 
