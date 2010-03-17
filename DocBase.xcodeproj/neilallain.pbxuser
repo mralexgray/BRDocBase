@@ -18,10 +18,10 @@
 			553F9D1D10E17B7A00F0C97C /* objc_exception_throw */,
 			55E9DAB9112DC6C00077865A /* DocBaseMigrator.m:83 */,
 			55D201E91150ECB700D91061 /* DocBaseSqlStorage.m:131 */,
-			55D201ED1150ECBF00D91061 /* DocBaseSqlStorage.m:175 */,
-			55D201EF1150ECC700D91061 /* DocBaseSqlStorage.m:191 */,
-			55D201F11150ECD900D91061 /* DocBaseSqlStorage.m:209 */,
-			55D201F31150ECDA00D91061 /* DocBaseSqlStorage.m:216 */,
+			55D201ED1150ECBF00D91061 /* DocBaseSqlStorage.m:166 */,
+			55D201EF1150ECC700D91061 /* DocBaseSqlStorage.m:182 */,
+			55D201F11150ECD900D91061 /* DocBaseSqlStorage.m:200 */,
+			55D201F31150ECDA00D91061 /* DocBaseSqlStorage.m:207 */,
 			55D201F61150EF3200D91061 /* DocBaseSqlStorage.m:66 */,
 		);
 		codeSenseManager = 55B4C99F1088A43000869682 /* Code sense */;
@@ -320,9 +320,9 @@
 	};
 	55A9A7F810C5A82200CAF697 /* DocBaseTest.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {963, 3484}}";
-			sepNavSelRange = "{6287, 0}";
-			sepNavVisRange = "{5070, 1913}";
+			sepNavIntBoundsRect = "{{0, 0}, {1297, 3458}}";
+			sepNavSelRange = "{8052, 0}";
+			sepNavVisRange = "{6794, 1551}";
 		};
 	};
 	55A9A80710C5A86600CAF697 /* DocBase.h */ = {
@@ -1245,7 +1245,7 @@
 		fRef = 55D2018A114F075C00D91061 /* DocBaseSqlStorage.m */;
 		fallbackIsa = XCBuildMessageTextBookmark;
 		rLen = 1;
-		rLoc = 231;
+		rLoc = 222;
 		rType = 1;
 	};
 	55D201C01150289E00D91061 /* PBXTextBookmark */ = {
@@ -1253,7 +1253,7 @@
 		fRef = 55D2018A114F075C00D91061 /* DocBaseSqlStorage.m */;
 		name = "DocBaseSqlStorage.m: 185";
 		rLen = 0;
-		rLoc = 6724;
+		rLoc = 6615;
 		rType = 0;
 		vrLen = 1131;
 		vrLoc = 1735;
@@ -1333,7 +1333,7 @@
 		fRef = 55D2018A114F075C00D91061 /* DocBaseSqlStorage.m */;
 		name = "DocBaseSqlStorage.m: 231";
 		rLen = 0;
-		rLoc = 6724;
+		rLoc = 6615;
 		rType = 0;
 		vrLen = 1132;
 		vrLoc = 1530;
@@ -1356,7 +1356,7 @@
 		originalNumberOfMultipleMatches = 1;
 		state = 1;
 	};
-	55D201ED1150ECBF00D91061 /* DocBaseSqlStorage.m:175 */ = {
+	55D201ED1150ECBF00D91061 /* DocBaseSqlStorage.m:166 */ = {
 		isa = PBXFileBreakpoint;
 		actions = (
 		);
@@ -1368,13 +1368,13 @@
 		functionName = "-executeQuery:error:";
 		hitCount = 1;
 		ignoreCount = 0;
-		lineNumber = 175;
+		lineNumber = 166;
 		location = Tests;
 		modificationTime = 290516727.910665;
 		originalNumberOfMultipleMatches = 1;
 		state = 1;
 	};
-	55D201EF1150ECC700D91061 /* DocBaseSqlStorage.m:191 */ = {
+	55D201EF1150ECC700D91061 /* DocBaseSqlStorage.m:182 */ = {
 		isa = PBXFileBreakpoint;
 		actions = (
 		);
@@ -1386,13 +1386,13 @@
 		functionName = "-executeStatement:error:";
 		hitCount = 1;
 		ignoreCount = 0;
-		lineNumber = 191;
+		lineNumber = 182;
 		location = Tests;
 		modificationTime = 290516808.762573;
 		originalNumberOfMultipleMatches = 1;
 		state = 1;
 	};
-	55D201F11150ECD900D91061 /* DocBaseSqlStorage.m:209 */ = {
+	55D201F11150ECD900D91061 /* DocBaseSqlStorage.m:200 */ = {
 		isa = PBXFileBreakpoint;
 		actions = (
 		);
@@ -1404,13 +1404,13 @@
 		functionName = "BRCheckDocumentTableCallback()";
 		hitCount = 0;
 		ignoreCount = 0;
-		lineNumber = 209;
+		lineNumber = 200;
 		location = Tests;
 		modificationTime = 290516223.887628;
 		originalNumberOfMultipleMatches = 1;
 		state = 1;
 	};
-	55D201F31150ECDA00D91061 /* DocBaseSqlStorage.m:216 */ = {
+	55D201F31150ECDA00D91061 /* DocBaseSqlStorage.m:207 */ = {
 		isa = PBXFileBreakpoint;
 		actions = (
 		);
@@ -1422,7 +1422,7 @@
 		functionName = "BRFindDocumentsCallback()";
 		hitCount = 0;
 		ignoreCount = 0;
-		lineNumber = 216;
+		lineNumber = 207;
 		location = Tests;
 		modificationTime = 290516223.926196;
 		originalNumberOfMultipleMatches = 1;

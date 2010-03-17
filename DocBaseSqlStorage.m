@@ -146,18 +146,9 @@ static int BRFindDocumentsCallback(void* instance, int columnCount, char** colum
 		return NO;
 	}
 	if (!self.tableVerified) {
-		err = sqlite3_exec(
-			_db, 
-			"create table documents (documentId TEXT PRIMARY KEY, data TEXT)", 
-			NULL,
-			NULL, 
-			NULL);
-		if (err != SQLITE_OK) {
-			if (error) *error = [self errorForDocumentId:nil withSqliteCode:err];
-			return NO;			
-		}
+		self.tableVerified = [self executeStatement:@"create table documents (documentId TEXT PRIMARY KEY, data TEXT)" error:error];
 	}
-	return YES;
+	return self.tableVerified;
 }
 
 -(NSDictionary*)translateToDictionary:(NSString *)documentData error:(NSError**)error
