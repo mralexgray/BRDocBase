@@ -28,7 +28,6 @@ const NSInteger BRDocBaseErrorUnknownStorageType = 4;
 
 #pragma mark --
 #pragma mark Helper functions
-static BOOL BRIsMutable(id<BRDocument> document);
 
 #pragma mark --
 #pragma mark Private interface
@@ -153,10 +152,8 @@ static BOOL BRIsMutable(id<BRDocument> document);
 	}
 	// assign id if needed
 	if (documentId == nil) {
-		if (BRIsMutable(document)) {
-			documentId = [BRDocBase generateId];
-			[document setDocumentId:documentId];
-		}
+		documentId = [BRDocBase generateId];
+		[document setDocumentId:documentId];
 	}
 	
 	// save the document
@@ -275,10 +272,10 @@ static BOOL BRIsMutable(id<BRDocument> document);
 				}
 			} else {
 				NSLog(@"BRDocBase: unknown document type: %@", docType);
-				document = dictionary;
+				document = [dictionary mutableCopy];
 			}
 		} else {
-			document = dictionary;
+			document = [dictionary mutableCopy];
 		}
 	}
 	return document;
@@ -360,7 +357,7 @@ static BOOL BRIsMutable(id<BRDocument> document);
 #pragma mark --
 #pragma mark Dictionary extensions
 
-@implementation NSDictionary(BRDocument_Dictionary)
+@implementation NSMutableDictionary(BRDocument_Dictionary)
 
 -(id)initWithDocumentDictionary:(NSDictionary*)dictionary
 {
@@ -387,7 +384,3 @@ static BOOL BRIsMutable(id<BRDocument> document);
 @end
 
 
-BOOL BRIsMutable(id<BRDocument> document)
-{
-	return [document respondsToSelector:@selector(setDocumentId:)];
-}

@@ -44,7 +44,7 @@ extern const NSInteger BRDocBaseErrorUnknownStorageType;
 @end
 
 // Dictionaries are valid document objects
-@interface NSDictionary(BRDocument_Dictionary)<BRDocument>
+@interface NSMutableDictionary(BRDocument_Dictionary)<BRDocument>
 @end
 
 

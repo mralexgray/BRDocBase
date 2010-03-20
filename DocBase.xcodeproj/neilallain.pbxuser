@@ -30,8 +30,8 @@
 			55B4C9AB1088A4AC00869682 /* Tests */,
 		);
 		perUserDictionary = {
-			PBXPerProjectTemplateStateSaveDate = 290521772;
-			PBXWorkspaceStateSaveDate = 290521772;
+			PBXPerProjectTemplateStateSaveDate = 290816998;
+			PBXWorkspaceStateSaveDate = 290816998;
 		};
 		perUserProjectItems = {
 			55613DD61150FF0800F47E1D = 55613DD61150FF0800F47E1D /* PBXTextBookmark */;
@@ -184,7 +184,7 @@
 		fRef = 55A9A80810C5A86600CAF697 /* DocBase.m */;
 		name = "DocBase.m: 260";
 		rLen = 0;
-		rLoc = 7448;
+		rLoc = 7361;
 		rType = 0;
 		vrLen = 2020;
 		vrLoc = 6162;
@@ -201,7 +201,7 @@
 		fRef = 55A9A7F810C5A82200CAF697 /* DocBaseTest.m */;
 		name = DocBase;
 		rLen = 0;
-		rLoc = 8345;
+		rLoc = 7908;
 		rType = 0;
 		vrLen = 1360;
 		vrLoc = 2654;
@@ -215,17 +215,17 @@
 	};
 	55A9A80710C5A86600CAF697 /* DocBase.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {963, 1313}}";
-			sepNavSelRange = "{489, 47}";
-			sepNavVisRange = "{277, 1531}";
+			sepNavIntBoundsRect = "{{0, 0}, {963, 1274}}";
+			sepNavSelRange = "{1449, 0}";
+			sepNavVisRange = "{240, 1613}";
 			sepNavWindowFrame = "{{384, 97}, {1022, 802}}";
 		};
 	};
 	55A9A80810C5A86600CAF697 /* DocBase.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1297, 5083}}";
+			sepNavIntBoundsRect = "{{0, 0}, {963, 5057}}";
 			sepNavSelRange = "{7448, 0}";
-			sepNavVisRange = "{4366, 2136}";
+			sepNavVisRange = "{4995, 1506}";
 			sepNavWindowFrame = "{{384, 97}, {1022, 802}}";
 		};
 	};
@@ -482,7 +482,7 @@
 		fRef = 55A9A7F810C5A82200CAF697 /* DocBaseTest.m */;
 		name = "DocBaseTest.m: 268";
 		rLen = 0;
-		rLoc = 8052;
+		rLoc = 7615;
 		rType = 0;
 		vrLen = 1551;
 		vrLoc = 6794;

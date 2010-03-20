@@ -30,13 +30,13 @@
 -(void)testSave
 {
 	BRDocBase* docBase = [self createDocBase];
-	NSDictionary* document = [NSDictionary dictionaryWithObjectsAndKeys:
+	NSMutableDictionary* document = [NSMutableDictionary dictionaryWithObjectsAndKeys:
 							  @"testdoc", BRDocIdKey,
 							  @"testname", @"name",
 							  nil];
 	BRAssertEqual(@"testdoc", [docBase saveDocument:document error:nil]);
 	docBase = [self createDocBase];
-	document = (NSDictionary*)[docBase documentWithId:@"testdoc" error:nil];
+	document = (NSMutableDictionary*)[docBase documentWithId:@"testdoc" error:nil];
 	BRAssertEqual(@"testdoc", [document objectForKey:BRDocIdKey]);
 	BRAssertEqual(@"testname", [document objectForKey:@"name"]);
 }
@@ -51,23 +51,6 @@
 	BRAssertNotNil(docId);
 	BRAssertEqual(document, [docBase documentWithId:docId error:nil]);
 	BRAssertEqual(docId, [document documentId]);
-}
-
--(void)testAddImmutableDocumentError
-{
-	BRDocBase* docBase = [self createDocBase];
-	NSDictionary* document = [NSDictionary dictionaryWithObjectsAndKeys:
-								 @"testname", @"name",
-								 nil];
-	@try {
-		[docBase saveDocument:document error:nil];
-		BRFail(@"exception should be thrown when trying to add an immutable document without an id");
-	}
-	@catch (NSException * e) {
-		if ([e isKindOfClass:[BRTestFailureException class]]) {
-			@throw;
-		}
-	}
 }
 
 -(void)testGenerateId
