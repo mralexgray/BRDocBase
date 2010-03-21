@@ -9,6 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "AbstractDocBaseTest.h"
 #import "DocBase.h"
+#import "DocBaseDictionaryExtensions.h"
 #import "DocBaseBucketStorage.h"
 #import "DocBaseFileStorage.h"
 #import "DocBaseSqlStorage.h"
@@ -30,6 +31,7 @@
 -(void)testSave
 {
 	BRDocBase* docBase = [self createDocBase];
+	NSDate* start = [NSDate date];
 	NSMutableDictionary* document = [NSMutableDictionary dictionaryWithObjectsAndKeys:
 							  @"testdoc", BRDocIdKey,
 							  @"testname", @"name",
@@ -39,6 +41,11 @@
 	document = (NSMutableDictionary*)[docBase documentWithId:@"testdoc" error:nil];
 	BRAssertEqual(@"testdoc", [document objectForKey:BRDocIdKey]);
 	BRAssertEqual(@"testname", [document objectForKey:@"name"]);
+	NSDate* modificationDate = document.modificationDate;
+	BRAssertNotNil(modificationDate);
+	NSDate* finish = [NSDate date];
+	BRAssertTrue([modificationDate laterDate:start] == modificationDate);
+	BRAssertTrue([modificationDate earlierDate:finish] == modificationDate);
 }
 
 -(void)testAddDocumentWihoutId

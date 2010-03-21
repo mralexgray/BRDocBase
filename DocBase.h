@@ -11,6 +11,7 @@
 extern NSString* const BRDocIdKey;
 extern NSString* const BRDocRevKey;
 extern NSString* const BRDocTypeKey;
+extern NSString* const BRDocModificationDateKey;
 extern NSString* const BRDocBaseConfigStorageType;
 extern NSString* const BRDocBaseDefaultStorageType;
 
@@ -32,19 +33,21 @@ extern const NSInteger BRDocBaseErrorUnknownStorageType;
 @required
 @property (readwrite, copy) NSString* documentId;
 -(NSDictionary*)documentDictionary;
--(id)initWithDocumentDictionary:(NSDictionary*)dictionary;
+-(id)initWithDocumentDictionary:(NSMutableDictionary*)dictionary;
 @optional
 
 // If implemented, documents will only be saved if they have changes.
 // The flag will be cleared once the document has been saved.
-// This flag will be ignored if the document was not originally retrieved
-// from the document database or has not been saved previously.
+// It should be set to true for any new documents.  If a document
+// has not been properly ided, and this is not set for a save,
+// an error will occur.
 @property (readwrite, assign) BOOL isDocumentEdited;
 
-@end
+// If implemented, this will be set to the current date (UTC) when
+// a document is saved.  It's document dictionary value should
+// be stored using the BRDocModificationDateKey constant
+@property (readwrite, retain) NSDate* modificationDate;
 
-// Dictionaries are valid document objects
-@interface NSMutableDictionary(BRDocument_Dictionary)<BRDocument>
 @end
 
 

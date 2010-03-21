@@ -74,7 +74,7 @@ NSString* const TestDocBaseName = @"doc_base_test";
 	return self;
 }
 
--(id)initWithDocumentDictionary:(NSDictionary *)dictionary
+-(id)initWithDocumentDictionary:(NSMutableDictionary *)dictionary
 {
 	self = [self init];
 	_documentId = [[dictionary objectForKey:BRDocIdKey] copy];

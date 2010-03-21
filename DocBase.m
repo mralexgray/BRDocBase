@@ -8,6 +8,9 @@
 
 #import "DocBase.h"
 #import "DocBaseBucketStorage.h"
+#import "DocBaseDateExtensions.h"
+#import "DocBaseDictionaryExtensions.h"
+
 #import <JSON/JSON.h>
 
 #pragma mark --
@@ -15,6 +18,7 @@
 NSString* const BRDocIdKey = @"_id";
 NSString* const BRDocRevKey = @"_rev";
 NSString* const BRDocTypeKey = @"_type";
+NSString* const BRDocModificationDateKey = @"_modificationDate";
 NSString* const BRDocBaseExtension = @"docbase";
 NSString* const BRDocBaseConfigStorageType = @"storageType";
 NSString* const BRDocBaseDefaultStorageType = @"BRDocBaseBucketStorage";
@@ -156,6 +160,10 @@ const NSInteger BRDocBaseErrorUnknownStorageType = 4;
 		[document setDocumentId:documentId];
 	}
 	
+	// set modification date if needed
+	if ([document respondsToSelector:@selector(setModificationDate:)]) {
+		document.modificationDate = [NSDate date];
+	}
 	// save the document
 	NSDictionary* dictionary = [self translateToDictionary:document];
 	BOOL saved = [_storage saveDocument:dictionary withDocumentId:documentId error:error];
@@ -353,34 +361,5 @@ const NSInteger BRDocBaseErrorUnknownStorageType = 4;
 
 @end
 
-
-#pragma mark --
-#pragma mark Dictionary extensions
-
-@implementation NSMutableDictionary(BRDocument_Dictionary)
-
--(id)initWithDocumentDictionary:(NSDictionary*)dictionary
-{
-	return [self initWithDictionary:dictionary];
-}
-
--(NSString*)documentId
-{
-	return [self objectForKey:BRDocIdKey];
-}
-
-
--(void)setDocumentId:(NSString*)documentId
-{
-	NSMutableDictionary* mutable = (NSMutableDictionary*)self;
-	[mutable setObject:documentId forKey:BRDocIdKey];
-}
-
--(NSDictionary*)documentDictionary
-{
-	return self;
-}
-
-@end
 
 

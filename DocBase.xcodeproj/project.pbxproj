@@ -50,6 +50,11 @@
 		55D2018C114F075C00D91061 /* DocBaseSqlStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 55D2018A114F075C00D91061 /* DocBaseSqlStorage.m */; };
 		55D201D9115039BC00D91061 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 55D201D8115039BC00D91061 /* libsqlite3.dylib */; };
 		55D201DC115039E200D91061 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 55D201D8115039BC00D91061 /* libsqlite3.dylib */; };
+		55E00AA41156941B00C5D7EB /* DocBaseDateExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 55E00AA21156941B00C5D7EB /* DocBaseDateExtensions.h */; };
+		55E00AA51156941B00C5D7EB /* DocBaseDateExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 55E00AA31156941B00C5D7EB /* DocBaseDateExtensions.m */; };
+		55E00AB611569A8200C5D7EB /* DocBaseDateExtensionsTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 55E00AB511569A8200C5D7EB /* DocBaseDateExtensionsTest.m */; };
+		55E00AEF1156A3EE00C5D7EB /* DocBaseDictionaryExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 55E00AED1156A3EE00C5D7EB /* DocBaseDictionaryExtensions.h */; };
+		55E00AF01156A3EE00C5D7EB /* DocBaseDictionaryExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 55E00AEE1156A3EE00C5D7EB /* DocBaseDictionaryExtensions.m */; };
 		55E9DD8011317D7E0077865A /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55E9DD7F11317D7E0077865A /* Carbon.framework */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
@@ -151,6 +156,11 @@
 		55D20189114F075C00D91061 /* DocBaseSqlStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DocBaseSqlStorage.h; sourceTree = "<group>"; };
 		55D2018A114F075C00D91061 /* DocBaseSqlStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DocBaseSqlStorage.m; sourceTree = "<group>"; };
 		55D201D8115039BC00D91061 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		55E00AA21156941B00C5D7EB /* DocBaseDateExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DocBaseDateExtensions.h; sourceTree = "<group>"; };
+		55E00AA31156941B00C5D7EB /* DocBaseDateExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DocBaseDateExtensions.m; sourceTree = "<group>"; };
+		55E00AB511569A8200C5D7EB /* DocBaseDateExtensionsTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DocBaseDateExtensionsTest.m; sourceTree = "<group>"; };
+		55E00AED1156A3EE00C5D7EB /* DocBaseDictionaryExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DocBaseDictionaryExtensions.h; sourceTree = "<group>"; };
+		55E00AEE1156A3EE00C5D7EB /* DocBaseDictionaryExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DocBaseDictionaryExtensions.m; sourceTree = "<group>"; };
 		55E9DD7F11317D7E0077865A /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 		8D1107310486CEB800E47090 /* DocBase-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "DocBase-Info.plist"; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* DocBase.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DocBase.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -204,6 +214,10 @@
 				55D200AE114ED17F00D91061 /* DocBaseFileStorage.m */,
 				55D20189114F075C00D91061 /* DocBaseSqlStorage.h */,
 				55D2018A114F075C00D91061 /* DocBaseSqlStorage.m */,
+				55E00AA21156941B00C5D7EB /* DocBaseDateExtensions.h */,
+				55E00AA31156941B00C5D7EB /* DocBaseDateExtensions.m */,
+				55E00AED1156A3EE00C5D7EB /* DocBaseDictionaryExtensions.h */,
+				55E00AEE1156A3EE00C5D7EB /* DocBaseDictionaryExtensions.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -300,6 +314,7 @@
 				553756E6111E10330015B1D7 /* AbstractDocBaseTest.h */,
 				553756E7111E10330015B1D7 /* AbstractDocBaseTest.m */,
 				55D200C3114ED72000D91061 /* DocBaseConfigurationTest.m */,
+				55E00AB511569A8200C5D7EB /* DocBaseDateExtensionsTest.m */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -316,6 +331,8 @@
 				551872BE114D0E61006E0250 /* DocBaseBucketStorage.h in Headers */,
 				55D200AF114ED17F00D91061 /* DocBaseFileStorage.h in Headers */,
 				55D2018B114F075C00D91061 /* DocBaseSqlStorage.h in Headers */,
+				55E00AA41156941B00C5D7EB /* DocBaseDateExtensions.h in Headers */,
+				55E00AEF1156A3EE00C5D7EB /* DocBaseDictionaryExtensions.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -418,6 +435,7 @@
 				553756E3111E0F880015B1D7 /* DocBaseMigratorTest.m in Sources */,
 				553756E8111E10330015B1D7 /* AbstractDocBaseTest.m in Sources */,
 				55D200C4114ED72000D91061 /* DocBaseConfigurationTest.m in Sources */,
+				55E00AB611569A8200C5D7EB /* DocBaseDateExtensionsTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -430,6 +448,8 @@
 				551872BF114D0E61006E0250 /* DocBaseBucketStorage.m in Sources */,
 				55D200B0114ED17F00D91061 /* DocBaseFileStorage.m in Sources */,
 				55D2018C114F075C00D91061 /* DocBaseSqlStorage.m in Sources */,
+				55E00AA51156941B00C5D7EB /* DocBaseDateExtensions.m in Sources */,
+				55E00AF01156A3EE00C5D7EB /* DocBaseDictionaryExtensions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -520,10 +540,12 @@
 					"\"$(SRCROOT)/build/Debug\"",
 				);
 				OTHER_LDFLAGS = (
+					"-ObjC",
 					"-framework",
 					Foundation,
 					"-framework",
 					AppKit,
+					"-all_load",
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = Tests;
@@ -546,10 +568,12 @@
 					"\"$(SRCROOT)/build/Debug\"",
 				);
 				OTHER_LDFLAGS = (
+					"-ObjC",
 					"-framework",
 					Foundation,
 					"-framework",
 					AppKit,
+					"-all_load",
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = Tests;
