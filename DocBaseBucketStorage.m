@@ -54,7 +54,7 @@ static NSString* const BRDocExtension = @"doc.js";
 #pragma mark -
 #pragma mark BRDocBaseStorage methods
 
--(NSDictionary*)documentWithId:(NSString*)documentId error:(NSError**)error
+-(NSMutableDictionary*)documentWithId:(NSString*)documentId error:(NSError**)error
 {
 	NSNumber* bucket = [self bucketForDocumentId:documentId];
 	return [[self documentsInBucket:bucket error:error] objectForKey:documentId];

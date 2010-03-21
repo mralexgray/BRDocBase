@@ -38,7 +38,7 @@ const NSInteger BRDocBaseErrorUnknownStorageType = 4;
 
 @interface BRDocBase()
 -(NSDictionary*)translateToDictionary:(id<BRDocument>)document;
--(id<BRDocument>)translateToDocument:(NSDictionary*)dictionary;
+-(id<BRDocument>)translateToDocument:(NSMutableDictionary*)dictionary;
 
 -(void)makeBundle:(BOOL)isBundle;
 -(BOOL)readConfiguration:(NSError**)error;
@@ -182,7 +182,7 @@ const NSInteger BRDocBaseErrorUnknownStorageType = 4;
 	if (![self verifyEnvironment:error]) return nil;
 	doc = [_documentsById objectForKey:documentId];
 	if (!doc) {
-		NSDictionary* dictionary = [_storage documentWithId:documentId error:error];
+		NSMutableDictionary* dictionary = [_storage documentWithId:documentId error:error];
 		if (!dictionary && (error) && (*error == nil)) {
 			*error = [self notFoundError:documentId];
 		}
@@ -215,7 +215,7 @@ const NSInteger BRDocBaseErrorUnknownStorageType = 4;
 	NSSet* allDocs = [_storage allDocuments:error];
 	if (allDocs) {
 		matchingDocuments = [NSMutableSet set];
-		for (NSDictionary* dictionary in allDocs) {
+		for (NSMutableDictionary* dictionary in allDocs) {
 			NSString* documentId = [dictionary objectForKey:BRDocIdKey];
 			id<BRDocument> document = [_documentsById objectForKey:documentId];
 			if (!document) {
@@ -266,7 +266,7 @@ const NSInteger BRDocBaseErrorUnknownStorageType = 4;
 	return documentDictionary;
 }
 
--(id<BRDocument>)translateToDocument:(NSDictionary*)dictionary
+-(id<BRDocument>)translateToDocument:(NSMutableDictionary*)dictionary
 {
 	id<BRDocument> document = nil;
 	if (dictionary != nil) {

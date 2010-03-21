@@ -14,7 +14,7 @@
 
 -(id)initWithConfiguration:(NSDictionary*)configuration path:(NSString*)path json:(SBJSON*)json;
 
--(NSDictionary*)documentWithId:(NSString*)documentId error:(NSError**)error;
+-(NSMutableDictionary*)documentWithId:(NSString*)documentId error:(NSError**)error;
 -(NSSet*)allDocuments:(NSError**)error;
 -(BOOL)saveDocument:(NSDictionary*)document withDocumentId:(NSString*)documentId error:(NSError**)error;
 -(BOOL)deleteDocumentWithId:(NSString*)documentId error:(NSError**)error;

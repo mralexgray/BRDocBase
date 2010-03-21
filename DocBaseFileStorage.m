@@ -42,7 +42,7 @@ static NSString* const BRDocBaseFileName = @"docbase_data.js";
 #pragma mark -
 #pragma mark BRDocBaseStorage methods
 
--(NSDictionary*)documentWithId:(NSString*)documentId error:(NSError**)error
+-(NSMutableDictionary*)documentWithId:(NSString*)documentId error:(NSError**)error
 {
 	if ([self readFromFile:error]) {
 		return [_documents objectForKey:documentId];

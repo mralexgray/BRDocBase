@@ -52,9 +52,9 @@
 	};
 	551872B8114D0DE5006E0250 /* DocBaseStorage.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1297, 958}}";
-			sepNavSelRange = "{172, 0}";
-			sepNavVisRange = "{0, 630}";
+			sepNavIntBoundsRect = "{{0, 0}, {963, 674}}";
+			sepNavSelRange = "{340, 0}";
+			sepNavVisRange = "{0, 637}";
 		};
 	};
 	551872BC114D0E61006E0250 /* DocBaseBucketStorage.h */ = {
@@ -66,9 +66,9 @@
 	};
 	551872BD114D0E61006E0250 /* DocBaseBucketStorage.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {963, 2769}}";
-			sepNavSelRange = "{3928, 88}";
-			sepNavVisRange = "{3134, 1857}";
+			sepNavIntBoundsRect = "{{0, 0}, {963, 2782}}";
+			sepNavSelRange = "{1643, 0}";
+			sepNavVisRange = "{973, 1636}";
 		};
 	};
 	553756DD111E0EB60015B1D7 /* DocBaseMigrator.h */ = {
@@ -95,7 +95,7 @@
 	};
 	553756E6111E10330015B1D7 /* AbstractDocBaseTest.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {963, 674}}";
+			sepNavIntBoundsRect = "{{0, 0}, {963, 649}}";
 			sepNavSelRange = "{190, 0}";
 			sepNavVisRange = "{0, 956}";
 		};
@@ -103,8 +103,8 @@
 	553756E7111E10330015B1D7 /* AbstractDocBaseTest.m */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {963, 1404}}";
-			sepNavSelRange = "{552, 86}";
-			sepNavVisRange = "{376, 1203}";
+			sepNavSelRange = "{1638, 0}";
+			sepNavVisRange = "{1217, 1020}";
 			sepNavWindowFrame = "{{38, 65}, {1188, 1087}}";
 		};
 	};
@@ -132,7 +132,7 @@
 		fRef = 55D2018A114F075C00D91061 /* DocBaseSqlStorage.m */;
 		name = "DocBaseSqlStorage.m: 151";
 		rLen = 0;
-		rLoc = 4683;
+		rLoc = 4697;
 		rType = 0;
 		vrLen = 2325;
 		vrLoc = 444;
@@ -186,7 +186,7 @@
 		fRef = 55A9A80810C5A86600CAF697 /* DocBase.m */;
 		name = "DocBase.m: 260";
 		rLen = 0;
-		rLoc = 7655;
+		rLoc = 7676;
 		rType = 0;
 		vrLen = 2020;
 		vrLoc = 6162;
@@ -210,24 +210,24 @@
 	};
 	55A9A7F810C5A82200CAF697 /* DocBaseTest.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1254, 3588}}";
-			sepNavSelRange = "{216, 0}";
-			sepNavVisRange = "{0, 946}";
+			sepNavIntBoundsRect = "{{0, 0}, {963, 3406}}";
+			sepNavSelRange = "{2931, 0}";
+			sepNavVisRange = "{761, 1922}";
 		};
 	};
 	55A9A80710C5A86600CAF697 /* DocBase.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {963, 1248}}";
-			sepNavSelRange = "{1694, 0}";
-			sepNavVisRange = "{703, 1822}";
-			sepNavWindowFrame = "{{384, 97}, {1022, 802}}";
+			sepNavIntBoundsRect = "{{0, 0}, {963, 1170}}";
+			sepNavSelRange = "{1077, 0}";
+			sepNavVisRange = "{703, 1829}";
+			sepNavWindowFrame = "{{109, 183}, {1022, 802}}";
 		};
 	};
 	55A9A80810C5A86600CAF697 /* DocBase.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {963, 4706}}";
-			sepNavSelRange = "{10720, 0}";
-			sepNavVisRange = "{9342, 1379}";
+			sepNavIntBoundsRect = "{{0, 0}, {963, 4849}}";
+			sepNavSelRange = "{1240, 0}";
+			sepNavVisRange = "{284, 1654}";
 			sepNavWindowFrame = "{{384, 97}, {1022, 802}}";
 		};
 	};
@@ -344,9 +344,9 @@
 	};
 	55D200AE114ED17F00D91061 /* DocBaseFileStorage.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {963, 1742}}";
-			sepNavSelRange = "{3013, 0}";
-			sepNavVisRange = "{0, 1111}";
+			sepNavIntBoundsRect = "{{0, 0}, {963, 1859}}";
+			sepNavSelRange = "{947, 0}";
+			sepNavVisRange = "{0, 1121}";
 		};
 	};
 	55D200C3114ED72000D91061 /* DocBaseConfigurationTest.m */ = {
@@ -365,9 +365,9 @@
 	};
 	55D2018A114F075C00D91061 /* DocBaseSqlStorage.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1297, 3302}}";
-			sepNavSelRange = "{4683, 0}";
-			sepNavVisRange = "{444, 2325}";
+			sepNavIntBoundsRect = "{{0, 0}, {963, 3146}}";
+			sepNavSelRange = "{1219, 0}";
+			sepNavVisRange = "{0, 1678}";
 			sepNavWindowFrame = "{{15, 87}, {1356, 1086}}";
 		};
 	};
@@ -538,9 +538,9 @@
 	};
 	55E00AEE1156A3EE00C5D7EB /* DocBaseDictionaryExtensions.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1254, 728}}";
-			sepNavSelRange = "{195, 0}";
-			sepNavVisRange = "{0, 985}";
+			sepNavIntBoundsRect = "{{0, 0}, {1254, 689}}";
+			sepNavSelRange = "{341, 0}";
+			sepNavVisRange = "{151, 1160}";
 		};
 	};
 	55E9DAB9112DC6C00077865A /* DocBaseMigrator.m:83 */ = {

@@ -36,7 +36,7 @@ static int BRFindDocumentsCallback(void* instance, int columnCount, char** colum
 @interface BRDocBaseSqlStorage()
 -(BOOL)openDatabase:(NSError**)error;
 -(NSError*)errorForDocumentId:(NSString*)documentId withSqliteCode:(int)sqliteCode;
--(NSDictionary*)translateToDictionary:(NSString*)documentData error:(NSError**)error;
+-(NSMutableDictionary*)translateToDictionary:(NSString*)documentData error:(NSError**)error;
 -(BRQueryResults*)executeQuery:(NSString*)query error:(NSError**)error;
 -(BOOL)executeStatement:(NSString*)statement error:(NSError**)error;
 @property (nonatomic, assign) BOOL tableVerified;
@@ -70,7 +70,7 @@ static int BRFindDocumentsCallback(void* instance, int columnCount, char** colum
 
 #pragma mark -
 #pragma mark BRDocBaseStorage methods
--(NSDictionary*)documentWithId:(NSString*)documentId error:(NSError**)error
+-(NSMutableDictionary*)documentWithId:(NSString*)documentId error:(NSError**)error
 {
 	if (![self openDatabase:error]) return nil;
 	NSString* query = [NSString stringWithFormat:@"select documentId, data from documents where documentId='%@'", documentId];
@@ -151,7 +151,7 @@ static int BRFindDocumentsCallback(void* instance, int columnCount, char** colum
 	return self.tableVerified;
 }
 
--(NSDictionary*)translateToDictionary:(NSString *)documentData error:(NSError**)error
+-(NSMutableDictionary*)translateToDictionary:(NSString *)documentData error:(NSError**)error
 {
 	return [_json objectWithString:documentData error:error];
 }
