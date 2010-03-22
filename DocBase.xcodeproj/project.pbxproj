@@ -55,6 +55,8 @@
 		55E00AB611569A8200C5D7EB /* DocBaseDateExtensionsTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 55E00AB511569A8200C5D7EB /* DocBaseDateExtensionsTest.m */; };
 		55E00AEF1156A3EE00C5D7EB /* DocBaseDictionaryExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 55E00AED1156A3EE00C5D7EB /* DocBaseDictionaryExtensions.h */; };
 		55E00AF01156A3EE00C5D7EB /* DocBaseDictionaryExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 55E00AEE1156A3EE00C5D7EB /* DocBaseDictionaryExtensions.m */; };
+		55E00BA41156D43300C5D7EB /* AbstractDocBaseFileStorage.h in Headers */ = {isa = PBXBuildFile; fileRef = 55E00BA21156D43300C5D7EB /* AbstractDocBaseFileStorage.h */; };
+		55E00BA51156D43300C5D7EB /* AbstractDocBaseFileStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 55E00BA31156D43300C5D7EB /* AbstractDocBaseFileStorage.m */; };
 		55E9DD8011317D7E0077865A /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55E9DD7F11317D7E0077865A /* Carbon.framework */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
@@ -161,6 +163,8 @@
 		55E00AB511569A8200C5D7EB /* DocBaseDateExtensionsTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DocBaseDateExtensionsTest.m; sourceTree = "<group>"; };
 		55E00AED1156A3EE00C5D7EB /* DocBaseDictionaryExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DocBaseDictionaryExtensions.h; sourceTree = "<group>"; };
 		55E00AEE1156A3EE00C5D7EB /* DocBaseDictionaryExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DocBaseDictionaryExtensions.m; sourceTree = "<group>"; };
+		55E00BA21156D43300C5D7EB /* AbstractDocBaseFileStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AbstractDocBaseFileStorage.h; sourceTree = "<group>"; };
+		55E00BA31156D43300C5D7EB /* AbstractDocBaseFileStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AbstractDocBaseFileStorage.m; sourceTree = "<group>"; };
 		55E9DD7F11317D7E0077865A /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 		8D1107310486CEB800E47090 /* DocBase-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "DocBase-Info.plist"; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* DocBase.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DocBase.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -218,6 +222,8 @@
 				55E00AA31156941B00C5D7EB /* DocBaseDateExtensions.m */,
 				55E00AED1156A3EE00C5D7EB /* DocBaseDictionaryExtensions.h */,
 				55E00AEE1156A3EE00C5D7EB /* DocBaseDictionaryExtensions.m */,
+				55E00BA21156D43300C5D7EB /* AbstractDocBaseFileStorage.h */,
+				55E00BA31156D43300C5D7EB /* AbstractDocBaseFileStorage.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -333,6 +339,7 @@
 				55D2018B114F075C00D91061 /* DocBaseSqlStorage.h in Headers */,
 				55E00AA41156941B00C5D7EB /* DocBaseDateExtensions.h in Headers */,
 				55E00AEF1156A3EE00C5D7EB /* DocBaseDictionaryExtensions.h in Headers */,
+				55E00BA41156D43300C5D7EB /* AbstractDocBaseFileStorage.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -450,6 +457,7 @@
 				55D2018C114F075C00D91061 /* DocBaseSqlStorage.m in Sources */,
 				55E00AA51156941B00C5D7EB /* DocBaseDateExtensions.m in Sources */,
 				55E00AF01156A3EE00C5D7EB /* DocBaseDictionaryExtensions.m in Sources */,
+				55E00BA51156D43300C5D7EB /* AbstractDocBaseFileStorage.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,10 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import "DocBaseStorage.h"
+#import "AbstractDocBaseFileStorage.h"
 
-@interface BRDocBaseFileStorage : NSObject<BRDocBaseStorage> {
-	SBJSON* _json;
-	NSString* _path;
+@interface BRDocBaseFileStorage : BRAbstractDocBaseFileStorage<BRDocBaseStorage> {
 	NSMutableDictionary* _documents;
 }
 

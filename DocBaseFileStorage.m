@@ -23,18 +23,9 @@ static NSString* const BRDocBaseFileName = @"docbase_data.js";
 
 #pragma mark -
 #pragma mark Initialization
--(id)initWithConfiguration:(NSDictionary*)configuration path:(NSString*)path json:(SBJSON*)json
-{
-	self = [super init];
-	_path = [path retain];
-	_json = [json retain];
-	return self;
-}
 
 -(void)dealloc
 {
-	[_path release], _path = nil;
-	[_json release], _json = nil;
 	[_documents release], _documents = nil;
 	[super dealloc];
 }
@@ -63,6 +54,7 @@ static NSString* const BRDocBaseFileName = @"docbase_data.js";
 	if (![self readFromFile:error]) {
 		return NO;
 	}
+	// save the document to a copy in case there's an error
 	NSMutableDictionary* documents = [[_documents mutableCopy] autorelease];
 	[documents setObject:document forKey:documentId];
 	if (![self writeToFile:documents error:error]) {
@@ -73,7 +65,7 @@ static NSString* const BRDocBaseFileName = @"docbase_data.js";
 	return YES;
 }
 
--(BOOL)deleteDocumentWithId:(NSString*)documentId error:(NSError**)error
+-(BOOL)deleteDocumentWithId:(NSString*)documentId date:(NSDate*)date error:(NSError**)error
 {
 	if (![self readFromFile:error]) {
 		return NO;
@@ -81,6 +73,10 @@ static NSString* const BRDocBaseFileName = @"docbase_data.js";
 	if (![_documents objectForKey:documentId]) {
 		return NO;
 	}
+	if (![self deletedDocumentId:documentId date:date error:error]) {
+		return NO;
+	}
+	// remove the document from a copy in case there's an error
 	NSMutableDictionary* documents = [[_documents mutableCopy] autorelease];
 	[documents removeObjectForKey:documentId];
 	if (![self writeToFile:documents error:error]) {
@@ -99,13 +95,9 @@ static NSString* const BRDocBaseFileName = @"docbase_data.js";
 	if (_documents) {
 		return YES;
 	}
-	NSString* filePath = [_path stringByAppendingPathComponent:BRDocBaseFileName];
+	NSString* filePath = [self.path stringByAppendingPathComponent:BRDocBaseFileName];
 	if ([[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
-		NSString* serializedDocuments = [NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:error];
-		if (!serializedDocuments) {
-			return NO;
-		}
-		NSArray* documents = [_json objectWithString:serializedDocuments error:error];
+		NSArray* documents = [self readJsonFile:filePath error:error];
 		if (!documents) {
 			return NO;
 		}
@@ -122,12 +114,8 @@ static NSString* const BRDocBaseFileName = @"docbase_data.js";
 
 -(BOOL)writeToFile:(NSDictionary*)documents error:(NSError**)error
 {
-	NSString* serializedDocuments = [_json stringWithObject:[documents allValues] error:error];
-	if (!serializedDocuments) {
-		return NO;
-	}
-	NSString* filePath = [_path stringByAppendingPathComponent:BRDocBaseFileName];
-	return [serializedDocuments writeToFile:filePath atomically:YES encoding:NSUTF8StringEncoding error:error];
+	NSString* filePath = [self.path stringByAppendingPathComponent:BRDocBaseFileName];
+	return [self writeJson:[documents allValues] toFile:filePath error:error];
 }
 
 @end

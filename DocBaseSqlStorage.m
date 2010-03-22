@@ -8,13 +8,16 @@
 
 #import "DocBaseSqlStorage.h"
 #import "DocBase.h"
+#import "DocBaseDateExtensions.h"
 #import <JSON/JSON.h>
 
 const NSInteger BRDocBaseErrorSqlite = 1000;
 
 static NSString* const BRDocBaseSqliteDbName = @"docbase_data.db";
 
-static int BRCheckDocumentTableCallback(void* instance,int columnCount,char** columnValues,char** columnNames);
+typedef int(*BRSqlCallback)(void*,int,char**,char**);
+
+static int BRSelectSingleColumnCallback(void* instance,int columnCount,char** columnValues,char** columnNames);
 static int BRFindDocumentsCallback(void* instance, int columnCount, char** columnValues, char** columnNames);
 
 @interface BRQueryResults : NSObject
@@ -37,9 +40,11 @@ static int BRFindDocumentsCallback(void* instance, int columnCount, char** colum
 -(BOOL)openDatabase:(NSError**)error;
 -(NSError*)errorForDocumentId:(NSString*)documentId withSqliteCode:(int)sqliteCode;
 -(NSMutableDictionary*)translateToDictionary:(NSString*)documentData error:(NSError**)error;
--(BRQueryResults*)executeQuery:(NSString*)query error:(NSError**)error;
+-(BRQueryResults*)executeDocumentQuery:(NSString*)query error:(NSError**)error;
+-(BRQueryResults*)executeSingleColumnQuery:(NSString*)query error:(NSError**)error;
+-(BRQueryResults*)executeQuery:(NSString*)query callback:(BRSqlCallback)callback error:(NSError**)error;
 -(BOOL)executeStatement:(NSString*)statement error:(NSError**)error;
-@property (nonatomic, assign) BOOL tableVerified;
+-(BOOL)createTable:(NSString*)tableName columns:(NSString*)columns error:(NSError**)error;
 @end
 
 
@@ -74,7 +79,7 @@ static int BRFindDocumentsCallback(void* instance, int columnCount, char** colum
 {
 	if (![self openDatabase:error]) return nil;
 	NSString* query = [NSString stringWithFormat:@"select documentId, data from documents where documentId='%@'", documentId];
-	BRQueryResults* results = [self executeQuery:query error:error];
+	BRQueryResults* results = [self executeDocumentQuery:query error:error];
 	if (results && ([results.results count] >= 1)) {
 		return [results.results objectAtIndex:0];
 	}	
@@ -85,7 +90,7 @@ static int BRFindDocumentsCallback(void* instance, int columnCount, char** colum
 {
 	if (![self openDatabase:error]) return nil;
 	NSString* query = @"select documentId, data from documents";
-	BRQueryResults* results = [self executeQuery:query error:error];
+	BRQueryResults* results = [self executeDocumentQuery:query error:error];
 	return [NSSet setWithArray:results.results];
 }
 
@@ -93,7 +98,7 @@ static int BRFindDocumentsCallback(void* instance, int columnCount, char** colum
 {
 	if (![self openDatabase:error]) return NO;
 	NSString* query = [NSString stringWithFormat:@"select documentId, data from documents where documentId='%@'", documentId];
-	BRQueryResults* results = [self executeQuery:query error:error];
+	BRQueryResults* results = [self executeDocumentQuery:query error:error];
 	if (results == nil) {
 		return NO;
 	}
@@ -114,17 +119,30 @@ static int BRFindDocumentsCallback(void* instance, int columnCount, char** colum
 	return [self executeStatement:stmt error:error];
 }
 
--(BOOL)deleteDocumentWithId:(NSString*)documentId error:(NSError**)error
+-(BOOL)deleteDocumentWithId:(NSString*)documentId date:(NSDate*)date error:(NSError**)error
 {
 	if (![self openDatabase:error]) return NO;
 	NSString* stmt = [NSString stringWithFormat:@"delete from documents where documentId='%@'", documentId];
+	if (![self executeStatement:stmt error:error]) {
+		return NO;
+	}
+	NSString* dbDate = [date docBaseString];
+	stmt = [NSString stringWithFormat:@"insert into deletedDocuments values('%@', datetime('%@'))", documentId, dbDate];
 	return [self executeStatement:stmt error:error];
+}
+
+-(NSSet*)deletedDocumentIdsSinceDate:(NSDate*)date error:(NSError**)error
+{
+	NSString* dbDate = [date docBaseString];
+	NSString* query = [NSString stringWithFormat:@"select documentId from deletedDocuments where deleteDate >= datetime('%@')", dbDate];
+	BRQueryResults* results = [self executeSingleColumnQuery:query error:error];
+	if (results == nil) return nil;
+	return [NSSet setWithArray:results.results];
 }
 
 #pragma mark -
 #pragma mark Private implementation
 
-@synthesize tableVerified = _tableVerified;
 
 -(BOOL)openDatabase:(NSError**)error
 {
@@ -135,20 +153,13 @@ static int BRFindDocumentsCallback(void* instance, int columnCount, char** colum
 		if (error) *error = [self errorForDocumentId:nil withSqliteCode:err];
 		return NO;
 	}
-	err = sqlite3_exec(
-		_db, 
-		"select name from sqlite_master where type='table' and name='documents'", 
-		BRCheckDocumentTableCallback,
-		self, 
-		NULL);
-	if (err != SQLITE_OK) {
-		if (error) *error = [self errorForDocumentId:nil withSqliteCode:err];
+	if (![self createTable:@"documents" columns:@"documentId TEXT PRIMARY KEY, data TEXT" error:error]) {
 		return NO;
 	}
-	if (!self.tableVerified) {
-		self.tableVerified = [self executeStatement:@"create table documents (documentId TEXT PRIMARY KEY, data TEXT)" error:error];
+	if (![self createTable:@"deletedDocuments" columns:@"documentId TEXT, deleteDate DATETIME" error:error]) {
+		return NO;
 	}
-	return self.tableVerified;
+	return YES;
 }
 
 -(NSMutableDictionary*)translateToDictionary:(NSString *)documentData error:(NSError**)error
@@ -161,15 +172,25 @@ static int BRFindDocumentsCallback(void* instance, int columnCount, char** colum
 	return [[[NSError alloc] initWithDomain:BRDocBaseErrorDomain code:BRDocBaseErrorSqlite userInfo:nil] autorelease];	
 }
 
--(BRQueryResults*)executeQuery:(NSString*)query error:(NSError**)error
+-(BRQueryResults*)executeDocumentQuery:(NSString*)query error:(NSError**)error
+{
+	return [self executeQuery:query callback:BRFindDocumentsCallback error:error];
+}
+
+-(BRQueryResults*)executeSingleColumnQuery:(NSString*)query error:(NSError**)error
+{
+	return [self executeQuery:query callback:BRSelectSingleColumnCallback error:error];
+}
+
+-(BRQueryResults*)executeQuery:(NSString*)query callback:(BRSqlCallback)callback error:(NSError**)error
 {
 	BRQueryResults* results = [BRQueryResults queryResultsWithStorage:self error:error];
 	int err = sqlite3_exec(
-		_db, 
-		[query UTF8String], 
-		BRFindDocumentsCallback,
-		results, 
-		NULL);
+						   _db, 
+						   [query UTF8String], 
+						   callback,
+						   results, 
+						   NULL);
 	if (err != SQLITE_OK) {
 		if (error  && (*error == nil)) *error = [self errorForDocumentId:nil withSqliteCode:err];
 		return nil;
@@ -192,13 +213,24 @@ static int BRFindDocumentsCallback(void* instance, int columnCount, char** colum
 	return YES;
 }
 
-
+-(BOOL)createTable:(NSString *)tableName columns:(NSString *)columns error:(NSError **)error
+{
+	NSString* tableQuery = [NSString stringWithFormat:@"select name from sqlite_master where type='table' and name='%@'", tableName];
+	BRQueryResults* results = [self executeSingleColumnQuery:tableQuery error:error];
+	if (results == nil) return NO;
+	if ([results.results count] == 0) {
+		NSString* createStatement = [NSString stringWithFormat:@"create table %@ (%@)", tableName, columns];
+		return [self executeStatement:createStatement error:error];
+	}
+	return YES;
+}
 @end
 
-static int BRCheckDocumentTableCallback(void* instance,int columnCount,char** columnValues,char** columnNames)
+static int BRSelectSingleColumnCallback(void* instance,int columnCount,char** columnValues,char** columnNames)
 {
-	BRDocBaseSqlStorage* storage = (BRDocBaseSqlStorage*)instance;
-	storage.tableVerified = YES;
+	BRQueryResults* results = (BRQueryResults*)instance;
+	NSString* value = [NSString stringWithUTF8String:columnValues[0]];
+	[results.results addObject:value];
 	return 0;
 }
 

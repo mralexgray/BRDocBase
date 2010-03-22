@@ -198,7 +198,8 @@ const NSInteger BRDocBaseErrorUnknownStorageType = 4;
 -(BOOL)deleteDocumentWithId:(NSString *)documentId error:(NSError **)error
 {
 	if (![self verifyEnvironment:error]) return NO;
-	BOOL deleted = [_storage deleteDocumentWithId:documentId error:error];
+	NSDate* date = [NSDate date];
+	BOOL deleted = [_storage deleteDocumentWithId:documentId date:date error:error];
 	if (!deleted && error && (*error == nil)) {
 		*error = [self notFoundError:documentId];
 	}
@@ -233,6 +234,11 @@ const NSInteger BRDocBaseErrorUnknownStorageType = 4;
 		}
 	}
 	return matchingDocuments;
+}
+
+-(NSSet*)deletedDocumentIdsSinceDate:(NSDate *)date error:(NSError **)error
+{
+	return [_storage deletedDocumentIdsSinceDate:date error:error];
 }
 
 -(void)environmentChanged

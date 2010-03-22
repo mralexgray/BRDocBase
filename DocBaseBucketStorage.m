@@ -33,9 +33,7 @@ static NSString* const BRDocExtension = @"doc.js";
 #pragma mark Initialization
 -(id)initWithConfiguration:(NSDictionary*)configuration path:(NSString*)path json:(SBJSON*)json
 {
-	self = [super init];
-	_json = [json retain];
-	_path = [path retain];
+	self = [super initWithConfiguration:configuration path:path json:json];
 	_documentsInBucket = [[NSMutableDictionary alloc] init];
 	_bucketCount = [[configuration objectForKey:BRDocBaseConfigBucketCount] intValue];
 	_bucketCount = _bucketCount <= 0 ? BRDocDefaultBucketCount : _bucketCount;
@@ -45,8 +43,6 @@ static NSString* const BRDocExtension = @"doc.js";
 
 -(void)dealloc
 {
-	[_json release], _json = nil;
-	[_path release], _path = nil;
 	[_documentsInBucket release], _documentsInBucket = nil;
 	[super dealloc];
 }
@@ -89,7 +85,7 @@ static NSString* const BRDocExtension = @"doc.js";
 	return saved;
 }
 
--(BOOL)deleteDocumentWithId:(NSString*)documentId error:(NSError**)error
+-(BOOL)deleteDocumentWithId:(NSString*)documentId date:(NSDate*)date error:(NSError**)error
 {
 	BOOL deleted = NO;
 	NSNumber* bucket = [self bucketForDocumentId:documentId];
@@ -97,13 +93,15 @@ static NSString* const BRDocExtension = @"doc.js";
 	if (documentsInBucket) {
 		NSDictionary* doc = [documentsInBucket objectForKey:documentId];
 		if (doc) {
-			[documentsInBucket removeObjectForKey:documentId];
-			deleted = [self saveDocuments:documentsInBucket inBucket:bucket error:error];
+			if ([self deletedDocumentId:documentId date:date error:error]) {
+				[documentsInBucket removeObjectForKey:documentId];
+				deleted = [self saveDocuments:documentsInBucket inBucket:bucket error:error];
+				// really we need to undo the deleted document id here
+			}
 		}
 	}
 	return deleted;
 }
-
 
 #pragma mark -
 #pragma mark Private Implementation
@@ -111,7 +109,7 @@ static NSString* const BRDocExtension = @"doc.js";
 -(NSString*)pathForBucket:(NSNumber*)bucket
 {
 	NSString* fileName = [NSString stringWithFormat:@"docs%@", bucket];
-	return [[_path stringByAppendingPathComponent:fileName] stringByAppendingPathExtension:BRDocExtension];
+	return [[self.path stringByAppendingPathComponent:fileName] stringByAppendingPathExtension:BRDocExtension];
 }
 
 -(NSMutableDictionary*)documentsInBucket:(NSNumber *)bucket error:(NSError**)error
@@ -164,13 +162,13 @@ static NSString* const BRDocExtension = @"doc.js";
 
 -(NSString*)serializeDocuments:(NSDictionary*)documents error:(NSError**)error
 {
-	return [_json stringWithObject:[documents allValues] error:error];
+	return [self.json stringWithObject:[documents allValues] error:error];
 }
 
 -(NSMutableDictionary*)deserializeDocuments:(NSString *)documentData error:(NSError **)error
 {
 	NSMutableDictionary* documentsById = nil;
-	NSArray* documents = [_json objectWithString:documentData error:error];
+	NSArray* documents = [self.json objectWithString:documentData error:error];
 	if (documents) {
 		documentsById = [NSMutableDictionary dictionaryWithCapacity:[documents count]];
 		for (NSDictionary* documentDictionary in documents) {

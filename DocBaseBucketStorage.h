@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "DocBaseStorage.h"
+#import "AbstractDocBaseFileStorage.h"
 
 // configuration constants
 extern const NSUInteger BRDocDefaultBucketCount;
@@ -18,11 +19,9 @@ extern NSString* const BRDocBaseConfigBucketCount;
 @end
 
 
-@interface BRDocBaseBucketStorage : NSObject<BRDocBaseStorage> {
+@interface BRDocBaseBucketStorage : BRAbstractDocBaseFileStorage<BRDocBaseStorage> {
 	NSUInteger _bucketCount;
 	NSMutableDictionary* _documentsInBucket;
-	NSString* _path;
-	SBJSON* _json;
 }
 
 @end

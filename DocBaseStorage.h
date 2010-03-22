@@ -17,5 +17,6 @@
 -(NSMutableDictionary*)documentWithId:(NSString*)documentId error:(NSError**)error;
 -(NSSet*)allDocuments:(NSError**)error;
 -(BOOL)saveDocument:(NSDictionary*)document withDocumentId:(NSString*)documentId error:(NSError**)error;
--(BOOL)deleteDocumentWithId:(NSString*)documentId error:(NSError**)error;
+-(BOOL)deleteDocumentWithId:(NSString*)documentId date:(NSDate*)date error:(NSError**)error;
+-(NSSet*)deletedDocumentIdsSinceDate:(NSDate*)date error:(NSError**)error;
 @end

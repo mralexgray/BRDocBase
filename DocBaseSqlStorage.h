@@ -16,7 +16,6 @@ extern const NSInteger BRDocBaseErrorSqlite;
 	NSString* _path;
 	SBJSON* _json;
 	sqlite3* _db;
-	BOOL _tableVerified;
 }
 
 @end

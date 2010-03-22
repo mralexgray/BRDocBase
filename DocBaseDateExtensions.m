@@ -9,8 +9,7 @@
 #import "DocBaseDateExtensions.h"
 #import <libkern/OSAtomic.h>
 
-NSString* const BRDocBaseDateFormat = @"yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'SSS ZZZZ";
-
+NSString* const BRDocBaseDateFormat = @"yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'SSS";
 static volatile NSDateFormatter* _docBaseDateFormatter;
 
 @implementation NSDate(BRDocBase_NSDate)
@@ -23,6 +22,9 @@ static volatile NSDateFormatter* _docBaseDateFormatter;
             if (_docBaseDateFormatter == nil) {
                 _docBaseDateFormatter = [[NSDateFormatter alloc] init];
 				[_docBaseDateFormatter setDateFormat:BRDocBaseDateFormat];
+				NSTimeZone* timeZone = [NSTimeZone timeZoneWithName:@"UTC"];
+				NSAssert(timeZone, @"UTC time zone is nil");
+				[_docBaseDateFormatter setTimeZone:timeZone];
                 OSMemoryBarrier();
             }
         }

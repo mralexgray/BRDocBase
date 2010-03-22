@@ -10,6 +10,7 @@
 #import "AbstractDocBaseTest.h"
 #import "DocBase.h"
 #import "DocBaseDictionaryExtensions.h"
+#import "DocBaseDateExtensions.h"
 #import "DocBaseBucketStorage.h"
 #import "DocBaseFileStorage.h"
 #import "DocBaseSqlStorage.h"
@@ -31,7 +32,7 @@
 -(void)testSave
 {
 	BRDocBase* docBase = [self createDocBase];
-	NSDate* start = [NSDate date];
+	NSDate* start = [NSDate dateWithDocBaseString:[[NSDate date] docBaseString]];
 	NSMutableDictionary* document = [NSMutableDictionary dictionaryWithObjectsAndKeys:
 							  @"testdoc", BRDocIdKey,
 							  @"testname", @"name",
@@ -43,7 +44,7 @@
 	BRAssertEqual(@"testname", [document objectForKey:@"name"]);
 	NSDate* modificationDate = document.modificationDate;
 	BRAssertNotNil(modificationDate);
-	NSDate* finish = [NSDate date];
+	NSDate* finish = [NSDate dateWithDocBaseString:[[NSDate date] docBaseString]];
 	BRAssertTrue([modificationDate laterDate:start] == modificationDate);
 	BRAssertTrue([modificationDate earlierDate:finish] == modificationDate);
 }
@@ -130,6 +131,7 @@
 	BRDocBase* docBase = [self createDocBase];
 	NSMutableDictionary* doc = [NSMutableDictionary dictionaryWithObject:@"myname" forKey:@"name"];
 	NSString* docId = [docBase saveDocument:doc error:nil];
+	NSDate* beforeDelete = [NSDate date];
 	BRAssertTrue([docBase deleteDocumentWithId:docId error:nil]);
 	BRAssertNil([docBase documentWithId:docId error:nil]);
 	
@@ -139,6 +141,15 @@
 	BRAssertNotNil(error);
 	BRAssertEqual(BRDocBaseErrorDomain, [error domain]);
 	BRAssertTrue([error code] == BRDocBaseErrorNotFound);
+	NSSet* deletedDocIds = [docBase deletedDocumentIdsSinceDate:beforeDelete error:nil];
+	BRAssertNotNil(deletedDocIds);
+	BRAssertTrue(1 == [deletedDocIds count]);
+	BRAssertTrue([deletedDocIds containsObject:docId]);
+	
+	NSDate* afterDelete = [beforeDelete dateByAddingTimeInterval:2.0];
+	deletedDocIds = [docBase deletedDocumentIdsSinceDate:afterDelete error:nil];
+	BRAssertNotNil(deletedDocIds);
+	BRAssertTrue(0 == [deletedDocIds count]);
 }
 
 -(void)testFindDocuments
