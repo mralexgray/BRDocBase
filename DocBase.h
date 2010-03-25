@@ -58,6 +58,7 @@ extern const NSInteger BRDocBaseErrorUnknownStorageType;
 	id<BRDocBaseStorage> _storage;
 	SBJSON* _json;
 	NSMutableDictionary* _documentsById;
+	BOOL _isRemote;
 }
 
 @property (readonly) NSString* path;

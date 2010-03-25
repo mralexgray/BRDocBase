@@ -43,6 +43,8 @@ const NSInteger BRDocBaseErrorUnknownStorageType = 4;
 -(void)makeBundle:(BOOL)isBundle;
 -(BOOL)readConfiguration:(NSError**)error;
 
+-(BOOL)initializeStorage:(NSError**)error;
+
 -(NSError*)notFoundError:(NSString*)documentId;
 -(NSError*)errorForDocumentId:(NSString*)documentId withCode:(NSInteger)errorCode;
 
@@ -125,14 +127,23 @@ const NSInteger BRDocBaseErrorUnknownStorageType = 4;
 -(BOOL)verifyEnvironment:(NSError **)error
 {
 	if (!_environmentVerified) {
-		if (![[NSFileManager defaultManager] createDirectoryAtPath:self.path 
-									   withIntermediateDirectories:YES 
-														attributes:nil error:error]) {
-			return NO;
-		}
-		[self makeBundle:YES];
-		if (![self readConfiguration:error]) {
-			return NO;
+		_isRemote = [[_configuration objectForKey:BRDocBaseConfigStorageType]
+			isEqualToString:@"BRDocBaseRemoteStorage"];
+		if (!_isRemote) {
+			if (![[NSFileManager defaultManager]
+				createDirectoryAtPath:self.path 
+				withIntermediateDirectories:YES 
+				attributes:nil error:error]) {
+				return NO;
+			}
+			[self makeBundle:YES];
+			if (![self readConfiguration:error]) {
+				return NO;
+			}
+		} else {
+			if (![self initializeStorage:error]) {
+				return NO;
+			}
 		}
 		_environmentVerified = YES;
 	}
@@ -336,6 +347,11 @@ const NSInteger BRDocBaseErrorUnknownStorageType = 4;
 	}
 
 	// setup the storage
+	return [self initializeStorage:error];
+}
+
+-(BOOL)initializeStorage:(NSError **)error
+{
 	NSString* storageType = [self.configuration objectForKey:BRDocBaseConfigStorageType];
 	if (!storageType) storageType = BRDocBaseDefaultStorageType;
 	Class storageClass = NSClassFromString(storageType);
@@ -343,10 +359,10 @@ const NSInteger BRDocBaseErrorUnknownStorageType = 4;
 		(![storageClass conformsToProtocol:@protocol(BRDocBaseStorage)])) {
 		if (error) {
 			*error = [[[NSError alloc] 
-				initWithDomain:BRDocBaseErrorDomain 
-				code:BRDocBaseErrorUnknownStorageType 
-				userInfo:nil] 
-				autorelease];
+					   initWithDomain:BRDocBaseErrorDomain 
+					   code:BRDocBaseErrorUnknownStorageType 
+					   userInfo:nil] 
+					  autorelease];
 		}
 		return NO;
 	}
