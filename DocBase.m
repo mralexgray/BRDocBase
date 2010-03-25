@@ -96,8 +96,10 @@ const NSInteger BRDocBaseErrorUnknownStorageType = 4;
 	_json = [[SBJSON alloc] init];
 	_json.humanReadable = YES;
 	_configuration = [configuration copy];
+	_isRemote = [[_configuration objectForKey:BRDocBaseConfigStorageType]
+		isEqualToString:@"BRDocBaseRemoteStorage"];
 	_environmentVerified = NO;
-	if ([[path pathExtension] caseInsensitiveCompare:BRDocBaseExtension] != 0) {
+	if (!_isRemote && ([[path pathExtension] caseInsensitiveCompare:BRDocBaseExtension] != 0)) {
 		_path = [[path stringByAppendingPathExtension:BRDocBaseExtension] retain];
 	} else {
 		_path = [path copy];
@@ -127,8 +129,6 @@ const NSInteger BRDocBaseErrorUnknownStorageType = 4;
 -(BOOL)verifyEnvironment:(NSError **)error
 {
 	if (!_environmentVerified) {
-		_isRemote = [[_configuration objectForKey:BRDocBaseConfigStorageType]
-			isEqualToString:@"BRDocBaseRemoteStorage"];
 		if (!_isRemote) {
 			if (![[NSFileManager defaultManager]
 				createDirectoryAtPath:self.path 
