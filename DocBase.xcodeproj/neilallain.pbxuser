@@ -18,6 +18,7 @@
 			553F9D1D10E17B7A00F0C97C /* objc_exception_throw */,
 			55E9DAB9112DC6C00077865A /* DocBaseMigrator.m:83 */,
 			55E00C261157B58600C5D7EB /* DocBaseSqlStorage.m:138 */,
+			55E00F82115BCDF000C5D7EB /* DocBase.m:274 */,
 		);
 		codeSenseManager = 55B4C99F1088A43000869682 /* Code sense */;
 		executables = (
@@ -25,8 +26,8 @@
 			55B4C9AB1088A4AC00869682 /* Tests */,
 		);
 		perUserDictionary = {
-			PBXPerProjectTemplateStateSaveDate = 291226868;
-			PBXWorkspaceStateSaveDate = 291226868;
+			PBXPerProjectTemplateStateSaveDate = 291228227;
+			PBXWorkspaceStateSaveDate = 291228227;
 		};
 		perUserProjectItems = {
 			55E00C311157B6D900C5D7EB = 55E00C311157B6D900C5D7EB /* PBXTextBookmark */;
@@ -44,8 +45,12 @@
 			55E00EBE115BA5FC00C5D7EB = 55E00EBE115BA5FC00C5D7EB /* PBXTextBookmark */;
 			55E00EBF115BA5FC00C5D7EB = 55E00EBF115BA5FC00C5D7EB /* PBXTextBookmark */;
 			55E00EC0115BA5FC00C5D7EB = 55E00EC0115BA5FC00C5D7EB /* PBXTextBookmark */;
-			55E00EC1115BA5FC00C5D7EB = 55E00EC1115BA5FC00C5D7EB /* PBXTextBookmark */;
-			55E00EC2115BA5FC00C5D7EB = 55E00EC2115BA5FC00C5D7EB /* PBXTextBookmark */;
+			55E00F2B115BC57000C5D7EB = 55E00F2B115BC57000C5D7EB /* PBXTextBookmark */;
+			55E00F2C115BC57000C5D7EB = 55E00F2C115BC57000C5D7EB /* PBXTextBookmark */;
+			55E00F8A115BCE3900C5D7EB /* PBXTextBookmark */ = 55E00F8A115BCE3900C5D7EB /* PBXTextBookmark */;
+			55E00F8B115BCE3900C5D7EB /* PBXTextBookmark */ = 55E00F8B115BCE3900C5D7EB /* PBXTextBookmark */;
+			55E00F8C115BCE3900C5D7EB /* PBXTextBookmark */ = 55E00F8C115BCE3900C5D7EB /* PBXTextBookmark */;
+			55E00F8D115BCE3900C5D7EB /* PBXTextBookmark */ = 55E00F8D115BCE3900C5D7EB /* PBXTextBookmark */;
 		};
 		sourceControlManager = 55B4C99E1088A43000869682 /* Source Control */;
 		userBookmarkGroup = 556822AA10D5A2B200432B34 /* PBXBookmarkGroup */;
@@ -118,10 +123,10 @@
 		continueAfterActions = 0;
 		countType = 0;
 		delayBeforeContinue = 0;
-		hitCount = 6;
+		hitCount = 0;
 		ignoreCount = 0;
 		location = libobjc.A.dylib;
-		modificationTime = 290961097.578914;
+		modificationTime = 291229179.984441;
 		originalNumberOfMultipleMatches = 1;
 		state = 1;
 		symbolName = objc_exception_throw;
@@ -149,8 +154,8 @@
 	55A9A7F810C5A82200CAF697 /* DocBaseTest.m */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1297, 3549}}";
-			sepNavSelRange = "{5155, 0}";
-			sepNavVisRange = "{6577, 1834}";
+			sepNavSelRange = "{553, 0}";
+			sepNavVisRange = "{0, 2124}";
 		};
 	};
 	55A9A80710C5A86600CAF697 /* DocBase.h */ = {
@@ -163,9 +168,9 @@
 	};
 	55A9A80810C5A86600CAF697 /* DocBase.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1297, 5057}}";
-			sepNavSelRange = "{3827, 0}";
-			sepNavVisRange = "{3163, 2080}";
+			sepNavIntBoundsRect = "{{0, 0}, {1297, 4823}}";
+			sepNavSelRange = "{7927, 0}";
+			sepNavVisRange = "{7462, 2725}";
 			sepNavWindowFrame = "{{384, 97}, {1022, 802}}";
 		};
 	};
@@ -339,9 +344,9 @@
 	};
 	55E00AEE1156A3EE00C5D7EB /* DocBaseDictionaryExtensions.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1254, 689}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1297, 933}}";
 			sepNavSelRange = "{341, 0}";
-			sepNavVisRange = "{151, 1160}";
+			sepNavVisRange = "{0, 1369}";
 		};
 	};
 	55E00BA21156D43300C5D7EB /* AbstractDocBaseFileStorage.h */ = {
@@ -368,11 +373,11 @@
 		delayBeforeContinue = 0;
 		fileReference = 55D2018A114F075C00D91061 /* DocBaseSqlStorage.m */;
 		functionName = "-deletedDocumentIdsSinceDate:error:";
-		hitCount = 1;
+		hitCount = 0;
 		ignoreCount = 0;
 		lineNumber = 138;
-		location = DocBaseServer;
-		modificationTime = 291226869.509184;
+		location = Tests;
+		modificationTime = 291229179.837677;
 		originalNumberOfMultipleMatches = 1;
 		state = 1;
 	};
@@ -540,25 +545,83 @@
 		vrLen = 3037;
 		vrLoc = 429;
 	};
-	55E00EC1115BA5FC00C5D7EB /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 55A9A80810C5A86600CAF697 /* DocBase.m */;
-		name = "DocBase.m: 208";
-		rLen = 0;
-		rLoc = 6192;
-		rType = 0;
-		vrLen = 1822;
-		vrLoc = 1480;
-	};
-	55E00EC2115BA5FC00C5D7EB /* PBXTextBookmark */ = {
+	55E00F2B115BC57000C5D7EB /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 55A9A80810C5A86600CAF697 /* DocBase.m */;
 		name = "DocBase.m: 143";
 		rLen = 0;
-		rLoc = 3827;
+		rLoc = 3841;
 		rType = 0;
-		vrLen = 2080;
+		vrLen = 2079;
 		vrLoc = 3163;
+	};
+	55E00F2C115BC57000C5D7EB /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 55A9A80810C5A86600CAF697 /* DocBase.m */;
+		name = "DocBase.m: 102";
+		rLen = 0;
+		rLoc = 2949;
+		rType = 0;
+		vrLen = 1782;
+		vrLoc = 2192;
+	};
+	55E00F82115BCDF000C5D7EB /* DocBase.m:274 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 55A9A80810C5A86600CAF697 /* DocBase.m */;
+		functionName = "-translateToDictionary:";
+		hitCount = 1;
+		ignoreCount = 0;
+		lineNumber = 274;
+		location = Tests;
+		modificationTime = 291229181.031704;
+		originalNumberOfMultipleMatches = 1;
+		state = 1;
+	};
+	55E00F8A115BCE3900C5D7EB /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 55A9A7F810C5A82200CAF697 /* DocBaseTest.m */;
+		name = "DocBaseTest.m: 32";
+		rLen = 0;
+		rLoc = 553;
+		rType = 0;
+		vrLen = 2124;
+		vrLoc = 0;
+	};
+	55E00F8B115BCE3900C5D7EB /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 55E00AEE1156A3EE00C5D7EB /* DocBaseDictionaryExtensions.m */;
+		name = "DocBaseDictionaryExtensions.m: 14";
+		rLen = 0;
+		rLoc = 341;
+		rType = 0;
+		vrLen = 1369;
+		vrLoc = 0;
+	};
+	55E00F8C115BCE3900C5D7EB /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 55A9A80810C5A86600CAF697 /* DocBase.m */;
+		name = "DocBase.m: 277";
+		rLen = 0;
+		rLoc = 7927;
+		rType = 0;
+		vrLen = 2707;
+		vrLoc = 7317;
+	};
+	55E00F8D115BCE3900C5D7EB /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 55A9A80810C5A86600CAF697 /* DocBase.m */;
+		name = "DocBase.m: 277";
+		rLen = 0;
+		rLoc = 7927;
+		rType = 0;
+		vrLen = 2725;
+		vrLoc = 7462;
 	};
 	55E9DAB9112DC6C00077865A /* DocBaseMigrator.m:83 */ = {
 		isa = PBXFileBreakpoint;
@@ -573,8 +636,8 @@
 		hitCount = 0;
 		ignoreCount = 0;
 		lineNumber = 83;
-		location = DocBaseServer;
-		modificationTime = 291226869.474414;
+		location = Tests;
+		modificationTime = 291229179.795842;
 		originalNumberOfMultipleMatches = 1;
 		state = 1;
 	};

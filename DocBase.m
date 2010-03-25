@@ -271,11 +271,10 @@ const NSInteger BRDocBaseErrorUnknownStorageType = 4;
 
 -(NSDictionary*)translateToDictionary:(id<BRDocument>)document
 {
-	NSDictionary* documentDictionary;
-	if ([document isKindOfClass:[NSDictionary class]]) {
-		documentDictionary = (NSDictionary*)document;
-	} else {
-		NSMutableDictionary* mutableDictionary = [NSMutableDictionary dictionaryWithDictionary:[document documentDictionary]];
+	NSDictionary* documentDictionary = [document documentDictionary];
+	if ((![document isKindOfClass:[NSDictionary class]]) && ([documentDictionary objectForKey:BRDocTypeKey] == nil)) {
+		// add the type key
+		NSMutableDictionary* mutableDictionary = [NSMutableDictionary dictionaryWithDictionary:documentDictionary];
 		[mutableDictionary setObject:NSStringFromClass([document class]) forKey:BRDocTypeKey];
 		documentDictionary = mutableDictionary;
 	}
