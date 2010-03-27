@@ -81,7 +81,11 @@
 		(CFStringRef)@"!*'\"();:@&=+$,/?%#[]% ",
 		kCFStringEncodingUTF8);
 	[dateString autorelease];
-	return [self requestResource:[NSString stringWithFormat:@"deleted?date=%@", dateString] error:error];
+	NSArray* documentIds = [self requestResource:[NSString stringWithFormat:@"deleted?date=%@", dateString] error:error];
+	if (documentIds) {
+		return [NSSet setWithArray:documentIds];
+	}
+	return nil;
 }
 
 #pragma mark -
