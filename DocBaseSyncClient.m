@@ -140,11 +140,17 @@
 
 -(BOOL)saveToLocal:(id<BRDocument>)document error:(NSError**)error
 {
+	if ([document respondsToSelector:@selector(isDocumentEdited)]) {
+		document.isDocumentEdited = YES;
+	}
 	return ([_localDocBase saveDocument:document updateModificationDate:NO error:error] != nil);
 }
 
 -(BOOL)saveToRemote:(id<BRDocument>)document error:(NSError**)error
 {
+	if ([document respondsToSelector:@selector(isDocumentEdited)]) {
+		document.isDocumentEdited = YES;
+	}
 	return ([_remoteDocBase saveDocument:document updateModificationDate:NO error:error] != nil);
 }
 
