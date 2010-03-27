@@ -113,7 +113,7 @@
 	}
 	NSHTTPURLResponse* response = nil;
 	NSData* responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:error];
-	if (responseData && ([response statusCode] == 200)) {
+	if (responseData && ([response statusCode] == 200) && ([responseData length] > 0)) {
 		NSString* responseString = [[[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding] autorelease];
 		return [_json objectWithString:responseString];
 	}
