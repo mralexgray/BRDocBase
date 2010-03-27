@@ -117,6 +117,6 @@
 		NSString* responseString = [[[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding] autorelease];
 		return [_json objectWithString:responseString];
 	}
-	return nil;
+	return [response statusCode] == 200 ? @"SUCCESS" : nil;
 }
 @end

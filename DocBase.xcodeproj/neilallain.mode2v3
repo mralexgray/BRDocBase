@@ -197,73 +197,7 @@
 	<key>Notifications</key>
 	<array/>
 	<key>OpenEditors</key>
-	<array>
-		<dict>
-			<key>Content</key>
-			<dict>
-				<key>PBXProjectModuleGUID</key>
-				<string>55E00B891156BA7700C5D7EB</string>
-				<key>PBXProjectModuleLabel</key>
-				<string>DocBaseRemoteStorage.m</string>
-				<key>PBXSplitModuleInNavigatorKey</key>
-				<dict>
-					<key>Split0</key>
-					<dict>
-						<key>PBXProjectModuleGUID</key>
-						<string>55E00C2E1157B6D900C5D7EB</string>
-						<key>PBXProjectModuleLabel</key>
-						<string>DocBaseRemoteStorage.m</string>
-						<key>_historyCapacity</key>
-						<integer>0</integer>
-						<key>bookmark</key>
-						<string>55E011CF115E7AE100C5D7EB</string>
-						<key>history</key>
-						<array>
-							<string>55E00C311157B6D900C5D7EB</string>
-							<string>55E00C351157B6D900C5D7EB</string>
-							<string>55E00C381157B6D900C5D7EB</string>
-							<string>55E00EBC115BA5FC00C5D7EB</string>
-							<string>55E00EBD115BA5FC00C5D7EB</string>
-							<string>55E00EBE115BA5FC00C5D7EB</string>
-							<string>55E01076115CE02200C5D7EB</string>
-							<string>55E01078115CE02200C5D7EB</string>
-							<string>55E0107A115CE02200C5D7EB</string>
-							<string>55E0107B115CE02200C5D7EB</string>
-							<string>55E0107C115CE02200C5D7EB</string>
-							<string>55E01081115CE02200C5D7EB</string>
-							<string>55E01096115CE10F00C5D7EB</string>
-							<string>55E010C8115CE84500C5D7EB</string>
-							<string>55E010E9115CFAE200C5D7EB</string>
-							<string>55E010EB115CFAE200C5D7EB</string>
-							<string>55E010EC115CFAE200C5D7EB</string>
-							<string>55E01161115D987B00C5D7EB</string>
-							<string>55E01162115D987B00C5D7EB</string>
-							<string>55E01163115D987B00C5D7EB</string>
-							<string>55E01164115D987B00C5D7EB</string>
-							<string>55E01165115D987B00C5D7EB</string>
-							<string>55E01166115D987B00C5D7EB</string>
-							<string>55E01167115D987B00C5D7EB</string>
-							<string>55E01168115D987B00C5D7EB</string>
-							<string>55E01169115D987B00C5D7EB</string>
-						</array>
-					</dict>
-					<key>SplitCount</key>
-					<string>1</string>
-				</dict>
-				<key>StatusBarVisibility</key>
-				<true/>
-			</dict>
-			<key>Geometry</key>
-			<dict>
-				<key>Frame</key>
-				<string>{{0, 20}, {1356, 989}}</string>
-				<key>PBXModuleWindowStatusBarHidden2</key>
-				<false/>
-				<key>RubberWindowFrame</key>
-				<string>56 137 1356 1030 0 0 1920 1178 </string>
-			</dict>
-		</dict>
-	</array>
+	<array/>
 	<key>PerspectiveWidths</key>
 	<array>
 		<integer>-1</integer>
@@ -549,7 +483,6 @@
 		<string>1C530D52069F1CE1000CFCEE</string>
 		<string>1C530D54069F1CE1000CFCEE</string>
 		<string>/Users/neilallain/projects/Library/BRDocBase/DocBase.xcodeproj</string>
-		<string>55E00B891156BA7700C5D7EB</string>
 	</array>
 	<key>WindowString</key>
 	<string>1443 566 446 419 0 0 1920 1178 </string>
