@@ -20,6 +20,8 @@ extern NSString* const TestDocBaseName;
 
 -(BRDocBase*)createDocBase;
 -(BRDocBase*)createDocBaseWithConfiguration:(NSDictionary*)configuration;
+-(BRDocBase*)createDocBaseWithName:(NSString*)name;
+-(void)deleteDocBaseWithName:(NSString*)name;
 -(void)deleteDocBase;
 
 @end
@@ -29,6 +31,7 @@ extern NSString* const TestDocBaseName;
 	NSString* _documentId;
 	NSString* _name;
 	NSInteger _number;
+	NSDate* _modificationDate;
 }
 @property (copy, readwrite) NSString* documentId;
 @property (copy, readwrite) NSString* name;

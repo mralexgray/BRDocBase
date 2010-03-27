@@ -153,6 +153,11 @@ const NSInteger BRDocBaseErrorUnknownStorageType = 4;
 
 -(NSString*)saveDocument:(id<BRDocument>)document error:(NSError**)error
 {
+	return [self saveDocument:document updateModificationDate:YES error:error];
+}
+
+-(NSString*)saveDocument:(id<BRDocument>)document updateModificationDate:(BOOL)updateModificationDate error:(NSError**)error
+{
 	if (![self verifyEnvironment:error]) return nil;
 	NSString* documentId = [document documentId];
 	// check isDocumentEdited
@@ -172,8 +177,8 @@ const NSInteger BRDocBaseErrorUnknownStorageType = 4;
 	}
 	
 	// set modification date if needed
-	if ([document respondsToSelector:@selector(setModificationDate:)]) {
-		document.modificationDate = [NSDate date];
+	if (updateModificationDate && [document respondsToSelector:@selector(setModificationDate:)]) {
+		document.modificationDate = [NSDate docBaseDate];
 	}
 	// save the document
 	NSDictionary* dictionary = [self translateToDictionary:document];
@@ -249,6 +254,8 @@ const NSInteger BRDocBaseErrorUnknownStorageType = 4;
 
 -(NSSet*)deletedDocumentIdsSinceDate:(NSDate *)date error:(NSError **)error
 {
+	if (![self verifyEnvironment:error]) return nil;
+	if (date == nil) date = [NSDate distantPast];
 	return [_storage deletedDocumentIdsSinceDate:date error:error];
 }
 

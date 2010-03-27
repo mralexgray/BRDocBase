@@ -77,6 +77,8 @@ extern const NSInteger BRDocBaseErrorUnknownStorageType;
 -(id)initWithPath:(NSString*)path configuration:(NSDictionary*)configuration;
 /// Save the document to the document database returning the id of the saved document.
 -(NSString*)saveDocument:(id<BRDocument>)document error:(NSError**)error;
+/// Save the document to the document database returning the id of the saved document.
+-(NSString*)saveDocument:(id<BRDocument>)document updateModificationDate:(BOOL)updateModificationDate error:(NSError**)error;
 /// Get the document with the given id.
 -(id<BRDocument>)documentWithId:(NSString*)documentId error:(NSError**)error;
 /// Find documents matching the given predicate

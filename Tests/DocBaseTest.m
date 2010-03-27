@@ -152,6 +152,23 @@
 	BRAssertTrue(0 == [deletedDocIds count]);
 }
 
+-(void)testDeleteAndAddDocument
+{
+	NSDate* beforeDelete = [[NSDate date] dateByAddingTimeInterval:-1.0];
+	BRDocBase* docBase = [self createDocBase];
+	NSMutableDictionary* doc = [NSMutableDictionary dictionaryWithObject:@"myname" forKey:@"name"];
+	NSString* docId = [docBase saveDocument:doc error:nil];
+	BRAssertTrue([docBase deleteDocumentWithId:docId error:nil]);
+	NSSet* deletedDocIds = [docBase deletedDocumentIdsSinceDate:beforeDelete error:nil];
+	BRAssertTrue([deletedDocIds containsObject:docId]);
+	
+	// add the document back
+	BRAssertEqual(docId, [docBase saveDocument:doc error:nil]);
+	
+	deletedDocIds = [docBase deletedDocumentIdsSinceDate:beforeDelete error:nil];
+	BRAssertTrue(![deletedDocIds containsObject:docId]);
+}
+
 -(void)testFindDocuments
 {
 	BRDocBase* docBase = [self createDocBase];

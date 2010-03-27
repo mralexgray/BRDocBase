@@ -7,7 +7,8 @@
 //
 
 #import "AbstractDocBaseTest.h"
-#import "TestCase.h"
+#import "DocBaseDateExtensions.h"
+#import "DocBaseDictionaryExtensions.h"
 
 NSString* const TestDocBaseName = @"doc_base_test";
 
@@ -26,9 +27,14 @@ NSString* const TestDocBaseName = @"doc_base_test";
 #pragma mark --
 #pragma mark Helper methods
 
+-(NSString*)pathForDocBaseWithName:(NSString*)name;
+{
+	return [NSTemporaryDirectory() stringByAppendingPathComponent:name];
+}
+
 -(NSString*)docBasePath
 {
-	return [NSTemporaryDirectory() stringByAppendingPathComponent:TestDocBaseName];
+	return [self pathForDocBaseWithName:TestDocBaseName];
 }
 
 -(BRDocBase*)createDocBase
@@ -36,14 +42,21 @@ NSString* const TestDocBaseName = @"doc_base_test";
 	return [BRDocBase docBaseWithPath:self.docBasePath];
 }
 
+-(BRDocBase*)createDocBaseWithName:(NSString*)name
+{
+	return [BRDocBase docBaseWithPath:[self pathForDocBaseWithName:name]];
+}
+
+
+
 -(BRDocBase*)createDocBaseWithConfiguration:(NSDictionary*)configuration
 {
 	return [BRDocBase docBaseWithPath:self.docBasePath configuration:configuration];
 }
 
--(void)deleteDocBase
+-(void)deleteDocBaseWithName:(NSString*)name
 {
-	NSString* fileName = [self.docBasePath stringByAppendingPathExtension:BRDocBaseExtension];
+	NSString* fileName = [[self pathForDocBaseWithName:name] stringByAppendingPathExtension:BRDocBaseExtension];
 	if ([[NSFileManager defaultManager] fileExistsAtPath:fileName]) {
 		NSError* error;
 		if (![[NSFileManager defaultManager] removeItemAtPath:fileName error:&error]) {
@@ -53,6 +66,11 @@ NSString* const TestDocBaseName = @"doc_base_test";
 	}
 }
 
+-(void)deleteDocBase
+{
+	[self deleteDocBaseWithName:TestDocBaseName];
+}
+
 @end
 
 @implementation TestDocument
@@ -60,6 +78,7 @@ NSString* const TestDocBaseName = @"doc_base_test";
 @synthesize documentId = _documentId;
 @synthesize name = _name;
 @synthesize number = _number;
+@synthesize modificationDate = _modificationDate;
 
 +(id)testDocumentWithName:(NSString*)name number:(NSInteger)number
 {
@@ -80,17 +99,23 @@ NSString* const TestDocBaseName = @"doc_base_test";
 	_documentId = [[dictionary objectForKey:BRDocIdKey] copy];
 	_name = [[dictionary objectForKey:@"name"] copy];
 	_number = [[dictionary objectForKey:@"number"] intValue];
+	_modificationDate = [[NSDate dateWithDocBaseString:[dictionary objectForKey:BRDocModificationDateKey]] retain];
 	return self;
 }
 
 
 -(NSDictionary*)documentDictionary
 {
-	return [NSDictionary dictionaryWithObjectsAndKeys:
-			self.documentId, BRDocIdKey,
-			self.name, @"name",
-			[NSNumber numberWithInt:self.number], @"number",
-			nil];
+//	return [NSDictionary dictionaryWithObjectsAndKeys:
+//			self.documentId, BRDocIdKey,
+//			self.name, @"name",
+//			[NSNumber numberWithInt:self.number], @"number",
+//			[_modificationDate docBaseString], BRDocModificationDateKey,
+//			nil];
+	return [NSMutableDictionary dictionaryWithDocument:self objectsAndKeys:
+		self.name, @"name",
+		[NSNumber numberWithInt:self.number], @"number",
+		nil];
 }
 
 @end

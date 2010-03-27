@@ -49,4 +49,28 @@
 {
 	return self;
 }
+
+
++(NSMutableDictionary*)dictionaryWithDocument:(id<BRDocument>)document objectsAndKeys:(id)firstObject,...
+{
+	NSMutableDictionary* dictionary = [NSMutableDictionary dictionary];
+	[dictionary setObject:document.documentId forKey:BRDocIdKey];
+	[dictionary setObject:[[document class] description] forKey:BRDocTypeKey];
+	if ([document respondsToSelector:@selector(modificationDate)]) {
+		NSString* docBaseDate = [document.modificationDate docBaseString];
+		[dictionary setObject:docBaseDate forKey:BRDocModificationDateKey];
+	}
+	va_list objectsAndKeys;
+	va_start(objectsAndKeys, firstObject);
+	id obj = firstObject;
+	while (obj) {
+		id key = va_arg(objectsAndKeys, id);
+		[dictionary setObject:obj forKey:key];
+		obj = va_arg(objectsAndKeys, id);
+	}
+	va_end(objectsAndKeys);
+	
+	return dictionary;
+}
+
 @end

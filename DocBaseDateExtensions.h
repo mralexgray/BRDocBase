@@ -14,6 +14,8 @@ extern NSString* const BRDocBaseModificationDateFormat;
 
 +(NSDateFormatter*)docBaseFormatter;
 +(id)dateWithDocBaseString:(NSString*)dateString;
++(id)docBaseDate;
++(id)docBaseDateWithDate:(NSDate*)date;
 -(NSString*)docBaseString;
 
 @end

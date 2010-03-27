@@ -8,11 +8,13 @@
 
 #import "DocBaseRemoteStorage.h"
 #import <JSON/JSON.h>
+#import "DocBaseDateExtensions.h"
 
 #pragma mark -
 #pragma mark Private Interface
 @interface BRDocBaseRemoteStorage()
 -(id)requestResource:(NSString*)resource error:(NSError**)error;
+-(id)requestResource:(NSString *)resource method:(NSString*)method body:(id)body error:(NSError **)error;
 @end
 
 @implementation BRDocBaseRemoteStorage
@@ -51,17 +53,35 @@
 
 -(BOOL)saveDocument:(NSDictionary*)document withDocumentId:(NSString*)documentId error:(NSError**)error
 {
-	return NO;
+	id response = [self
+		requestResource:[NSString stringWithFormat:@"document/%@", documentId]
+		method:@"PUT"
+		body:document
+		error:error];
+	return response != nil;
 }
 
 -(BOOL)deleteDocumentWithId:(NSString*)documentId date:(NSDate*)date error:(NSError**)error
 {
-	return NO;
+	id response = [self
+		requestResource:[NSString stringWithFormat:@"document/%@", documentId]
+		method:@"DELETE"
+		body:nil
+		error:error];
+	return response != nil;
 }
 
 -(NSSet*)deletedDocumentIdsSinceDate:(NSDate*)date error:(NSError**)error
 {
-	return nil;
+	NSString* dateString = [date docBaseString];
+	dateString = (NSString *)CFURLCreateStringByAddingPercentEscapes(
+		NULL,
+		(CFStringRef)dateString,
+		NULL,
+		(CFStringRef)@"!*'\"();:@&=+$,/?%#[]% ",
+		kCFStringEncodingUTF8);
+	[dateString autorelease];
+	return [self requestResource:[NSString stringWithFormat:@"deleted?date=%@", dateString] error:error];
 }
 
 #pragma mark -
@@ -69,12 +89,24 @@
 
 -(id)requestResource:(NSString *)resource error:(NSError **)error
 {
+	return [self requestResource:resource method:@"GET" body:nil error:error];
+}
+
+-(id)requestResource:(NSString *)resource method:(NSString*)method body:(id)body error:(NSError **)error
+{
 	NSString* path = [_path stringByAppendingPathComponent:resource];
 	NSURL* url = [NSURL URLWithString:path];
-	NSURLRequest* request = [NSURLRequest 
+	NSMutableURLRequest* request = [NSMutableURLRequest 
 		requestWithURL:url 
 		cachePolicy:NSURLRequestUseProtocolCachePolicy 
 		timeoutInterval:10.0];
+	[request setHTTPMethod:method];
+	if (body) {
+		NSString* bodyString = [_json stringWithObject:body error:error];
+		if (!bodyString) return nil;
+		NSData* bodyData = [bodyString dataUsingEncoding:NSUTF8StringEncoding];
+		[request setHTTPBody:bodyData];
+	}
 	NSHTTPURLResponse* response = nil;
 	NSData* responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:error];
 	if (responseData && ([response statusCode] == 200)) {

@@ -57,7 +57,7 @@ static NSString* const BRDocDeletedDateKey = @"deletedDate";
 	if ([self readDeletedFile:error]) {
 		NSDate* truncatedDate = [NSDate dateWithDocBaseString:[date docBaseString]];
 		NSMutableSet* deletedDocumentIds = [NSMutableSet set];
-		for (NSDictionary* deletedDocument in _deletedDocuments) {
+		for (NSDictionary* deletedDocument in [_deletedDocuments allValues]) {
 			NSDate* deletedDate = [NSDate dateWithDocBaseString:[deletedDocument objectForKey:BRDocDeletedDateKey]];
 			if ([deletedDate laterDate:truncatedDate] == deletedDate) {
 				[deletedDocumentIds addObject:[deletedDocument objectForKey:BRDocIdKey]];
@@ -68,18 +68,22 @@ static NSString* const BRDocDeletedDateKey = @"deletedDate";
 	return nil;
 }
 
+-(BOOL)addedDocumentId:(NSString *)documentId error:(NSError **)error
+{
+	if (![self readDeletedFile:error]) return NO;
+	[_deletedDocuments removeObjectForKey:documentId];
+	return [self saveDeletedFile:error];
+}
 
 -(BOOL)deletedDocumentId:(NSString *)documentId date:(NSDate *)date error:(NSError**)error
 {
-	if ([self readDeletedFile:error]) {
-		NSDictionary* deletedDocument = [NSDictionary dictionaryWithObjectsAndKeys:
-			documentId, BRDocIdKey,
-			[date docBaseString], BRDocDeletedDateKey,
-			nil];
-		[_deletedDocuments addObject:deletedDocument];
-		return [self saveDeletedFile:error];
-	}
-	return NO;
+	if (![self readDeletedFile:error]) return NO;
+	NSDictionary* deletedDocument = [NSDictionary dictionaryWithObjectsAndKeys:
+		documentId, BRDocIdKey,
+		[date docBaseString], BRDocDeletedDateKey,
+		nil];
+	[_deletedDocuments setObject:deletedDocument forKey:documentId];
+	return [self saveDeletedFile:error];
 }
 
 -(id)readJsonFile:(NSString *)path error:(NSError **)error
@@ -110,9 +114,15 @@ static NSString* const BRDocDeletedDateKey = @"deletedDate";
 	}
 	NSString* path = [self.path stringByAppendingPathComponent:BRDocBaseDeletedDocumentsFile];
 	if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
-		_deletedDocuments = [[self readJsonFile:path error:error] retain];
+		NSArray* deletedDocuments = [self readJsonFile:path error:error];
+		if (deletedDocuments) {
+			_deletedDocuments = [[NSMutableDictionary alloc] initWithCapacity:[deletedDocuments count]];
+			for (NSDictionary* deletedDocument in deletedDocuments) {
+				[_deletedDocuments setObject:deletedDocument forKey:[deletedDocument objectForKey:BRDocIdKey]];
+			}
+		}
 	} else {
-		_deletedDocuments = [[NSMutableArray alloc] init];
+		_deletedDocuments = [[NSMutableDictionary alloc] init];
 	}
 	return _deletedDocuments != nil;
 }
@@ -120,7 +130,7 @@ static NSString* const BRDocDeletedDateKey = @"deletedDate";
 -(BOOL)saveDeletedFile:(NSError **)error
 {
 	NSString* path = [self.path stringByAppendingPathComponent:BRDocBaseDeletedDocumentsFile];
-	return [self writeJson:_deletedDocuments toFile:path error:error];
+	return [self writeJson:[_deletedDocuments allValues] toFile:path error:error];
 }
 
 @end

@@ -32,6 +32,20 @@ static volatile NSDateFormatter* _docBaseDateFormatter;
     return (NSDateFormatter*)_docBaseDateFormatter;
 }
 
++(id)docBaseDate
+{
+	// will normalize the date so it's the same that will be saved
+	// in a doc base
+	return [self docBaseDateWithDate:[NSDate date]];
+}
+
++(id)docBaseDateWithDate:(NSDate*)date
+{
+	// will normalize the date so it's the same that will be saved
+	// in a doc base
+	return [NSDate dateWithDocBaseString:[date docBaseString]];
+}
+
 +(id)dateWithDocBaseString:(NSString*)dateString
 {
 	return [[NSDate docBaseFormatter] dateFromString:dateString];

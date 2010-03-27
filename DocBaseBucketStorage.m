@@ -79,6 +79,9 @@ static NSString* const BRDocExtension = @"doc.js";
 	NSNumber* bucket = [self bucketForDocumentId:documentId];
 	NSMutableDictionary* documentsInBucket = [self documentsInBucket:bucket error:error];
 	if (documentsInBucket) {
+		if (![documentsInBucket objectForKey:documentId]) {
+			if (![self addedDocumentId:documentId error:error]) return NO;
+		}
 		[documentsInBucket setObject:document forKey:documentId];
 		saved = [self saveDocuments:documentsInBucket inBucket:bucket error:error];
 	}

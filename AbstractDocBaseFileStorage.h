@@ -13,7 +13,7 @@
 @interface BRAbstractDocBaseFileStorage : NSObject {
 	SBJSON* _json;
 	NSString* _path;
-	NSMutableArray* _deletedDocuments;
+	NSMutableDictionary* _deletedDocuments;
 }
 
 -(id)initWithConfiguration:(NSDictionary*)configuration path:(NSString*)path json:(SBJSON*)json;
@@ -23,7 +23,7 @@
 
 -(NSSet*)deletedDocumentIdsSinceDate:(NSDate*)date error:(NSError**)error;
 
-
+-(BOOL)addedDocumentId:(NSString*)documentId error:(NSError**)error;
 -(BOOL)deletedDocumentId:(NSString*)documentId date:(NSDate*)date error:(NSError**)error;
 
 -(id)readJsonFile:(NSString*)path error:(NSError**)error;

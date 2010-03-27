@@ -56,6 +56,9 @@ static NSString* const BRDocBaseFileName = @"docbase_data.js";
 	}
 	// save the document to a copy in case there's an error
 	NSMutableDictionary* documents = [[_documents mutableCopy] autorelease];
+	if (![documents objectForKey:documentId]) {
+		if (![self addedDocumentId:documentId error:error]) return NO;
+	}
 	[documents setObject:document forKey:documentId];
 	if (![self writeToFile:documents error:error]) {
 		return NO;

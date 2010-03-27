@@ -113,6 +113,10 @@ static int BRFindDocumentsCallback(void* instance, int columnCount, char** colum
 			documentData, documentId];
 	} else {
 		// insert
+		// first remove any previous deleted ids
+		if (![self executeStatement:
+			[NSString stringWithFormat:@"delete from deletedDocuments where documentId='%@'", documentId] 
+			error:error]) return NO;
 		stmt = [NSString stringWithFormat:@"insert into documents values('%@', '%@')",
 			documentId, documentData];
 	}
