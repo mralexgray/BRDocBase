@@ -91,4 +91,10 @@ extern const NSInteger BRDocBaseErrorUnknownStorageType;
 -(BOOL)verifyEnvironment:(NSError**)error;
 /// Inform the docbase that it should reverify it's configuration
 -(void)environmentChanged;
+
+/// In general these methods won't be needed.  There are used
+/// by the doc base syncing server to translate json into documents
+-(NSDictionary*)translateToDictionary:(id<BRDocument>)document;
+-(id<BRDocument>)translateToDocument:(NSMutableDictionary*)dictionary;
+
 @end

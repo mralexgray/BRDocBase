@@ -37,8 +37,6 @@ const NSInteger BRDocBaseErrorUnknownStorageType = 4;
 #pragma mark Private interface
 
 @interface BRDocBase()
--(NSDictionary*)translateToDictionary:(id<BRDocument>)document;
--(id<BRDocument>)translateToDocument:(NSMutableDictionary*)dictionary;
 
 -(void)makeBundle:(BOOL)isBundle;
 -(BOOL)readConfiguration:(NSError**)error;

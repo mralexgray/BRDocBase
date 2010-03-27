@@ -26,13 +26,13 @@
 			55B4C9AB1088A4AC00869682 /* Tests */,
 		);
 		perUserDictionary = {
-			PBXPerProjectTemplateStateSaveDate = 291414039;
-			PBXWorkspaceStateSaveDate = 291414039;
+			PBXPerProjectTemplateStateSaveDate = 291414868;
+			PBXWorkspaceStateSaveDate = 291414868;
 		};
 		perUserProjectItems = {
-			55E012CF115EA01D00C5D7EB /* PBXBookmark */ = 55E012CF115EA01D00C5D7EB /* PBXBookmark */;
-			55E012D8115EA07800C5D7EB /* PBXTextBookmark */ = 55E012D8115EA07800C5D7EB /* PBXTextBookmark */;
-			55E012D9115EA07800C5D7EB /* PBXTextBookmark */ = 55E012D9115EA07800C5D7EB /* PBXTextBookmark */;
+			55E012CF115EA01D00C5D7EB = 55E012CF115EA01D00C5D7EB /* PBXBookmark */;
+			55E012D8115EA07800C5D7EB = 55E012D8115EA07800C5D7EB /* PBXTextBookmark */;
+			55E012D9115EA07800C5D7EB = 55E012D9115EA07800C5D7EB /* PBXTextBookmark */;
 		};
 		sourceControlManager = 55B4C99E1088A43000869682 /* Source Control */;
 		userBookmarkGroup = 556822AA10D5A2B200432B34 /* PBXBookmarkGroup */;
@@ -389,7 +389,7 @@
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1297, 2054}}";
 			sepNavSelRange = "{5824, 0}";
-			sepNavVisRange = "{3552, 2378}";
+			sepNavVisRange = "{3472, 2458}";
 			sepNavWindowFrame = "{{56, 81}, {1356, 1086}}";
 		};
 	};
