@@ -29,8 +29,20 @@
 @synthesize delegate = _delegate;
 
 -(BOOL)syncDocBase:(BRDocBase*)localDocBase 
-		withRemote:(BRDocBase*)remoteDocBase 
-	  lastSyncDate:(NSDate*)lastSyncDate 
+	withRemote:(BRDocBase*)remoteDocBase 
+	lastSyncDate:(NSDate*)lastSyncDate
+{
+	return [self 
+		syncDocBase:localDocBase 
+		withRemote:remoteDocBase 
+		lastSyncDate:lastSyncDate 
+		documentsMatchingPredicate:[NSPredicate predicateWithValue:YES]];
+}
+
+-(BOOL)syncDocBase:(BRDocBase*)localDocBase 
+	withRemote:(BRDocBase*)remoteDocBase 
+	lastSyncDate:(NSDate*)lastSyncDate
+	documentsMatchingPredicate:(NSPredicate*)predicate
 {
 	// we don't need to retain this stuff, this is just so the delegate can have access to them
 	_localDocBase = localDocBase;

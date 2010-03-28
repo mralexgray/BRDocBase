@@ -18,7 +18,7 @@
 			553F9D1D10E17B7A00F0C97C /* objc_exception_throw */,
 			55E9DAB9112DC6C00077865A /* DocBaseMigrator.m:83 */,
 			55E00C261157B58600C5D7EB /* DocBaseSqlStorage.m:142 */,
-			55E01116115D239F00C5D7EB /* DocBaseSyncClient.m:100 */,
+			55E01116115D239F00C5D7EB /* DocBaseSyncClient.m:112 */,
 		);
 		codeSenseManager = 55B4C99F1088A43000869682 /* Code sense */;
 		executables = (
@@ -26,15 +26,15 @@
 			55B4C9AB1088A4AC00869682 /* Tests */,
 		);
 		perUserDictionary = {
-			PBXPerProjectTemplateStateSaveDate = 291496344;
-			PBXWorkspaceStateSaveDate = 291496344;
+			PBXPerProjectTemplateStateSaveDate = 291496565;
+			PBXWorkspaceStateSaveDate = 291496565;
 		};
 		perUserProjectItems = {
-			55E0132C115EAC4D00C5D7EB /* PBXTextBookmark */ = 55E0132C115EAC4D00C5D7EB /* PBXTextBookmark */;
-			55E01351115EAD3300C5D7EB /* PBXTextBookmark */ = 55E01351115EAD3300C5D7EB /* PBXTextBookmark */;
-			55E013D4115F77E400C5D7EB /* PBXTextBookmark */ = 55E013D4115F77E400C5D7EB /* PBXTextBookmark */;
-			55E013D6115F77E400C5D7EB /* PBXTextBookmark */ = 55E013D6115F77E400C5D7EB /* PBXTextBookmark */;
-			55E0149A115FE1D300C5D7EB /* PBXTextBookmark */ = 55E0149A115FE1D300C5D7EB /* PBXTextBookmark */;
+			55E0132C115EAC4D00C5D7EB = 55E0132C115EAC4D00C5D7EB /* PBXTextBookmark */;
+			55E01351115EAD3300C5D7EB = 55E01351115EAD3300C5D7EB /* PBXTextBookmark */;
+			55E013D4115F77E400C5D7EB = 55E013D4115F77E400C5D7EB /* PBXTextBookmark */;
+			55E013D6115F77E400C5D7EB = 55E013D6115F77E400C5D7EB /* PBXTextBookmark */;
+			55E0149A115FE1D300C5D7EB = 55E0149A115FE1D300C5D7EB /* PBXTextBookmark */;
 		};
 		sourceControlManager = 55B4C99E1088A43000869682 /* Source Control */;
 		userBookmarkGroup = 556822AA10D5A2B200432B34 /* PBXBookmarkGroup */;
@@ -383,15 +383,15 @@
 	55E00FF4115C329A00C5D7EB /* DocBaseSyncClient.h */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1297, 958}}";
-			sepNavSelRange = "{1788, 0}";
-			sepNavVisRange = "{0, 1794}";
+			sepNavSelRange = "{1791, 173}";
+			sepNavVisRange = "{0, 1969}";
 		};
 	};
 	55E00FF5115C329A00C5D7EB /* DocBaseSyncClient.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1297, 2054}}";
-			sepNavSelRange = "{5824, 0}";
-			sepNavVisRange = "{3472, 2458}";
+			sepNavIntBoundsRect = "{{0, 0}, {1297, 2171}}";
+			sepNavSelRange = "{1209, 0}";
+			sepNavVisRange = "{0, 2795}";
 			sepNavWindowFrame = "{{56, 81}, {1356, 1086}}";
 		};
 	};
@@ -402,7 +402,7 @@
 			sepNavVisRange = "{657, 1525}";
 		};
 	};
-	55E01116115D239F00C5D7EB /* DocBaseSyncClient.m:100 */ = {
+	55E01116115D239F00C5D7EB /* DocBaseSyncClient.m:112 */ = {
 		isa = PBXFileBreakpoint;
 		actions = (
 		);
@@ -414,7 +414,7 @@
 		functionName = "-syncLocalDocument:withRemoteDocument:error:";
 		hitCount = 1;
 		ignoreCount = 0;
-		lineNumber = 100;
+		lineNumber = 112;
 		modificationTime = 291316666.859246;
 		originalNumberOfMultipleMatches = 1;
 		state = 0;
@@ -424,7 +424,7 @@
 		fRef = 55E00FF5115C329A00C5D7EB /* DocBaseSyncClient.m */;
 		name = "DocBaseSyncClient.m: 153";
 		rLen = 0;
-		rLoc = 5824;
+		rLoc = 6165;
 		rType = 0;
 		vrLen = 2458;
 		vrLoc = 3472;

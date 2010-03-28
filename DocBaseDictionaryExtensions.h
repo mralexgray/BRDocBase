@@ -18,4 +18,6 @@
 /// documentDictionary method implementations.
 +(NSMutableDictionary*)dictionaryWithDocument:(id<BRDocument>)document objectsAndKeys:(id)firstObject,...;
 
+-(NSDate*)docBaseModificationDate;
+
 @end

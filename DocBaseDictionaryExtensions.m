@@ -31,9 +31,11 @@
 -(NSDate*)modificationDate
 {
 	NSString* dateString = [self objectForKey:BRDocModificationDateKey];
-	NSDate* date = [NSDate dateWithDocBaseString:dateString];
+	if (dateString) {
+		return [NSDate dateWithDocBaseString:dateString];
+	}
 	//NSLog(@"converted string: %@ to date: %@", dateString, date);
-	return date;
+	return nil;
 	//return [NSDate dateWithDocBaseString:[self objectForKey:BRDocModificationDateKey]];
 }
 
@@ -50,6 +52,11 @@
 	return self;
 }
 
+
+-(NSDate*)docBaseModificationDate
+{
+	return self.modificationDate;
+}
 
 +(NSMutableDictionary*)dictionaryWithDocument:(id<BRDocument>)document objectsAndKeys:(id)firstObject,...
 {

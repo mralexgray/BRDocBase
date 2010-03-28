@@ -175,6 +175,10 @@ NSString* const RemoteDocBaseName = @"remote-doc-base";
 	BRAssertEqual(sharedDoc.modificationDate, updatedDoc.modificationDate);	
 }
 
+-(void)testSyncDocumentsMatchingPredicate
+{
+}
+
 #pragma mark -
 #pragma mark Helper methods
 -(BRDocBase*)createRemoteDocBase
