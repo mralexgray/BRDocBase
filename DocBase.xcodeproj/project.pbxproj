@@ -62,6 +62,12 @@
 		55E00FF6115C329A00C5D7EB /* DocBaseSyncClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 55E00FF4115C329A00C5D7EB /* DocBaseSyncClient.h */; };
 		55E00FF7115C329A00C5D7EB /* DocBaseSyncClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 55E00FF5115C329A00C5D7EB /* DocBaseSyncClient.m */; };
 		55E01011115CC5CC00C5D7EB /* DocBaseSyncClientTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 55E01010115CC5CC00C5D7EB /* DocBaseSyncClientTest.m */; };
+		55E0148E115FE1C500C5D7EB /* DocBaseSyncRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 55E01488115FE1C500C5D7EB /* DocBaseSyncRequest.h */; };
+		55E0148F115FE1C500C5D7EB /* DocBaseSyncRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 55E01489115FE1C500C5D7EB /* DocBaseSyncRequest.m */; };
+		55E01490115FE1C500C5D7EB /* DocBaseSyncResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 55E0148A115FE1C500C5D7EB /* DocBaseSyncResponse.h */; };
+		55E01491115FE1C500C5D7EB /* DocBaseSyncResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 55E0148B115FE1C500C5D7EB /* DocBaseSyncResponse.m */; };
+		55E01492115FE1C500C5D7EB /* DocBaseSyncServer.h in Headers */ = {isa = PBXBuildFile; fileRef = 55E0148C115FE1C500C5D7EB /* DocBaseSyncServer.h */; };
+		55E01493115FE1C500C5D7EB /* DocBaseSyncServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 55E0148D115FE1C500C5D7EB /* DocBaseSyncServer.m */; };
 		55E9DD8011317D7E0077865A /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55E9DD7F11317D7E0077865A /* Carbon.framework */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
@@ -175,6 +181,12 @@
 		55E00FF4115C329A00C5D7EB /* DocBaseSyncClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DocBaseSyncClient.h; sourceTree = "<group>"; };
 		55E00FF5115C329A00C5D7EB /* DocBaseSyncClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DocBaseSyncClient.m; sourceTree = "<group>"; };
 		55E01010115CC5CC00C5D7EB /* DocBaseSyncClientTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DocBaseSyncClientTest.m; sourceTree = "<group>"; };
+		55E01488115FE1C500C5D7EB /* DocBaseSyncRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DocBaseSyncRequest.h; sourceTree = "<group>"; };
+		55E01489115FE1C500C5D7EB /* DocBaseSyncRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DocBaseSyncRequest.m; sourceTree = "<group>"; };
+		55E0148A115FE1C500C5D7EB /* DocBaseSyncResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DocBaseSyncResponse.h; sourceTree = "<group>"; };
+		55E0148B115FE1C500C5D7EB /* DocBaseSyncResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DocBaseSyncResponse.m; sourceTree = "<group>"; };
+		55E0148C115FE1C500C5D7EB /* DocBaseSyncServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DocBaseSyncServer.h; sourceTree = "<group>"; };
+		55E0148D115FE1C500C5D7EB /* DocBaseSyncServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DocBaseSyncServer.m; sourceTree = "<group>"; };
 		55E9DD7F11317D7E0077865A /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 		8D1107310486CEB800E47090 /* DocBase-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "DocBase-Info.plist"; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* DocBase.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DocBase.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -215,6 +227,12 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				55E01488115FE1C500C5D7EB /* DocBaseSyncRequest.h */,
+				55E01489115FE1C500C5D7EB /* DocBaseSyncRequest.m */,
+				55E0148A115FE1C500C5D7EB /* DocBaseSyncResponse.h */,
+				55E0148B115FE1C500C5D7EB /* DocBaseSyncResponse.m */,
+				55E0148C115FE1C500C5D7EB /* DocBaseSyncServer.h */,
+				55E0148D115FE1C500C5D7EB /* DocBaseSyncServer.m */,
 				55E00FF4115C329A00C5D7EB /* DocBaseSyncClient.h */,
 				55E00FF5115C329A00C5D7EB /* DocBaseSyncClient.m */,
 				256AC3D80F4B6AC300CF3369 /* DocBaseAppDelegate.h */,
@@ -357,6 +375,9 @@
 				55E00BA41156D43300C5D7EB /* AbstractDocBaseFileStorage.h in Headers */,
 				55E00EAC115B807300C5D7EB /* DocBaseRemoteStorage.h in Headers */,
 				55E00FF6115C329A00C5D7EB /* DocBaseSyncClient.h in Headers */,
+				55E0148E115FE1C500C5D7EB /* DocBaseSyncRequest.h in Headers */,
+				55E01490115FE1C500C5D7EB /* DocBaseSyncResponse.h in Headers */,
+				55E01492115FE1C500C5D7EB /* DocBaseSyncServer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -478,6 +499,9 @@
 				55E00BA51156D43300C5D7EB /* AbstractDocBaseFileStorage.m in Sources */,
 				55E00EAD115B807300C5D7EB /* DocBaseRemoteStorage.m in Sources */,
 				55E00FF7115C329A00C5D7EB /* DocBaseSyncClient.m in Sources */,
+				55E0148F115FE1C500C5D7EB /* DocBaseSyncRequest.m in Sources */,
+				55E01491115FE1C500C5D7EB /* DocBaseSyncResponse.m in Sources */,
+				55E01493115FE1C500C5D7EB /* DocBaseSyncServer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
