@@ -196,6 +196,7 @@ const NSInteger BRDocBaseErrorUnknownStorageType = 4;
 	if (![self verifyEnvironment:error]) return nil;
 	doc = [_documentsById objectForKey:documentId];
 	if (!doc) {
+		if (error) *error = nil;
 		NSMutableDictionary* dictionary = [_storage documentWithId:documentId error:error];
 		if (!dictionary && (error) && (*error == nil)) {
 			*error = [self notFoundError:documentId];
