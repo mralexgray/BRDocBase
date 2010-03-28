@@ -9,6 +9,21 @@
 #import "DocBaseDictionaryExtensions.h"
 #import "DocBaseDateExtensions.h"
 
+
+@implementation NSDictionary(BRDocBase_DictionaryExtensions)
+-(NSDate*)docBaseModificationDate
+{
+	NSString* dateString = [self objectForKey:BRDocModificationDateKey];
+	if (dateString) {
+		return [NSDate dateWithDocBaseString:dateString];
+	}
+	//NSLog(@"converted string: %@ to date: %@", dateString, date);
+	return nil;
+	//return [NSDate dateWithDocBaseString:[self objectForKey:BRDocModificationDateKey]];
+}
+
+@end
+
 @implementation NSMutableDictionary(BRDocBase_DictionaryExtensions)
 
 -(id)initWithDocumentDictionary:(NSMutableDictionary*)dictionary
@@ -30,13 +45,7 @@
 
 -(NSDate*)modificationDate
 {
-	NSString* dateString = [self objectForKey:BRDocModificationDateKey];
-	if (dateString) {
-		return [NSDate dateWithDocBaseString:dateString];
-	}
-	//NSLog(@"converted string: %@ to date: %@", dateString, date);
-	return nil;
-	//return [NSDate dateWithDocBaseString:[self objectForKey:BRDocModificationDateKey]];
+	return [self docBaseModificationDate];
 }
 
 -(void)setModificationDate:(NSDate*)modificationDate
@@ -52,11 +61,6 @@
 	return self;
 }
 
-
--(NSDate*)docBaseModificationDate
-{
-	return self.modificationDate;
-}
 
 +(NSMutableDictionary*)dictionaryWithDocument:(id<BRDocument>)document objectsAndKeys:(id)firstObject,...
 {

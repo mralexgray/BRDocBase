@@ -9,6 +9,10 @@
 #import <Foundation/Foundation.h>
 #import "DOcBase.h"
 
+@interface NSDictionary(BRDocBase_DictionaryExtensions)
+-(NSDate*)docBaseModificationDate;
+@end
+
 @interface NSMutableDictionary(BRDocBase_DictionaryExtensions)<BRDocument>
 
 /// Helper method to create document dictionaries.
@@ -17,7 +21,5 @@
 /// values passed.  It is mainly intended to be used for
 /// documentDictionary method implementations.
 +(NSMutableDictionary*)dictionaryWithDocument:(id<BRDocument>)document objectsAndKeys:(id)firstObject,...;
-
--(NSDate*)docBaseModificationDate;
 
 @end
