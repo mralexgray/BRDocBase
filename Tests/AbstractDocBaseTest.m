@@ -89,7 +89,7 @@ NSString* const TestDocBaseName = @"doc_base_test";
 {
 	self = [self init];
 	_name = [name copy];
-	_number = _number;
+	_number = number;
 	return self;
 }
 

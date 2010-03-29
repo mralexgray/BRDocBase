@@ -24,6 +24,7 @@ NSString* const RemoteDocBaseName = @"remote-doc-base";
 -(void)recreateDocBases;
 -(BOOL)sync;
 -(BOOL)syncWithDate:(NSDate*)date;
+-(BOOL)syncWithPredicate:(NSPredicate*)predicate date:(NSDate*)date;
 @end
 
 @implementation DocBaseSyncClientTest
@@ -177,7 +178,22 @@ NSString* const RemoteDocBaseName = @"remote-doc-base";
 
 -(void)testSyncDocumentsMatchingPredicate
 {
+	TestDocument* matchingRemoteDoc = [TestDocument testDocumentWithName:@"remote" number:14];
+	TestDocument* notMatchingRemoteDoc = [TestDocument testDocumentWithName:@"remote" number:15];
+	TestDocument* matchingLocalDoc = [TestDocument testDocumentWithName:@"local" number:14];
+	TestDocument* notMatchingLocalDoc = [TestDocument testDocumentWithName:@"local" number:15];
+	BRAssertNotNil([_remote saveDocument:matchingRemoteDoc error:nil]);
+	BRAssertNotNil([_remote saveDocument:notMatchingRemoteDoc error:nil]);
+	BRAssertNotNil([_local saveDocument:matchingLocalDoc error:nil]);
+	BRAssertNotNil([_local saveDocument:notMatchingLocalDoc error:nil]);
+	NSPredicate* predicate = [NSPredicate predicateWithFormat:@"number = 14"];
+	[self syncWithPredicate:predicate date:_pastDate];
+	BRAssertNotNil([_remote documentWithId:matchingLocalDoc.documentId error:nil]);
+	BRAssertNil([_remote documentWithId:notMatchingLocalDoc.documentId error:nil]);
+	BRAssertNotNil([_local documentWithId:matchingRemoteDoc.documentId error:nil]);
+	BRAssertNil([_local documentWithId:notMatchingRemoteDoc.documentId error:nil]);
 }
+
 
 #pragma mark -
 #pragma mark Helper methods
@@ -191,6 +207,12 @@ NSString* const RemoteDocBaseName = @"remote-doc-base";
 	if (date) date = [NSDate docBaseDateWithDate:date];
 	BRDocBaseSyncClient* sync = [[[BRDocBaseSyncClient alloc] init] autorelease];
 	return [sync syncDocBase:_local withRemote:_remote lastSyncDate:date];
+}
+
+-(BOOL)syncWithPredicate:(NSPredicate*)predicate date:(NSDate*)date
+{
+	BRDocBaseSyncClient* sync = [[[BRDocBaseSyncClient alloc] init] autorelease];
+	return [sync syncDocBase:_local withRemote:_remote lastSyncDate:date documentsMatchingPredicate:predicate];
 }
 
 -(BOOL)sync

@@ -75,9 +75,9 @@
 	}
 	
 
-	NSSet* remoteDocuments = [self.remoteDocBase findDocumentsUsingPredicate:[NSPredicate predicateWithValue:YES] error:&error];
+	NSSet* remoteDocuments = [self.remoteDocBase findDocumentsUsingPredicate:predicate error:&error];
 	HANDLE_ERR(remoteDocuments, error);
-	NSSet* localDocuments = [self.localDocBase  findDocumentsUsingPredicate:[NSPredicate predicateWithValue:YES] error:&error];
+	NSSet* localDocuments = [self.localDocBase  findDocumentsUsingPredicate:predicate error:&error];
 	HANDLE_ERR(localDocuments, error);
 	
 	NSMutableDictionary* remoteDocsById = [self convertToDictionary:remoteDocuments];
