@@ -12,7 +12,7 @@
 		activeExecutable = 55B4C9AB1088A4AC00869682 /* Tests */;
 		activeTarget = 55B4C9A91088A4AC00869682 /* Tests */;
 		addToTargets = (
-			55B4C9B21088A4DD00869682 /* BRDocBase */,
+			55B4C9A91088A4AC00869682 /* Tests */,
 		);
 		breakpoints = (
 			553F9D1D10E17B7A00F0C97C /* objc_exception_throw */,
@@ -387,7 +387,7 @@
 	};
 	55E00FF5115C329A00C5D7EB /* DocBaseSyncClient.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1297, 2119}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1297, 2132}}";
 			sepNavSelRange = "{3300, 0}";
 			sepNavVisRange = "{1122, 3097}";
 			sepNavWindowFrame = "{{56, 81}, {1356, 1086}}";
@@ -644,6 +644,20 @@
 		rType = 0;
 		vrLen = 3097;
 		vrLoc = 1122;
+	};
+	55E015CF11613C7700C5D7EB /* DocBasePredicateExtensions.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1297, 958}}";
+			sepNavSelRange = "{201, 44}";
+			sepNavVisRange = "{0, 317}";
+		};
+	};
+	55E015D011613C7700C5D7EB /* DocBasePredicateExtensions.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1297, 958}}";
+			sepNavSelRange = "{370, 0}";
+			sepNavVisRange = "{0, 379}";
+		};
 	};
 	55E9DAB9112DC6C00077865A /* DocBaseMigrator.m:83 */ = {
 		isa = PBXFileBreakpoint;

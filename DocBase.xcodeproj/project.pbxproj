@@ -68,6 +68,9 @@
 		55E01491115FE1C500C5D7EB /* DocBaseSyncResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 55E0148B115FE1C500C5D7EB /* DocBaseSyncResponse.m */; };
 		55E01492115FE1C500C5D7EB /* DocBaseSyncServer.h in Headers */ = {isa = PBXBuildFile; fileRef = 55E0148C115FE1C500C5D7EB /* DocBaseSyncServer.h */; };
 		55E01493115FE1C500C5D7EB /* DocBaseSyncServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 55E0148D115FE1C500C5D7EB /* DocBaseSyncServer.m */; };
+		55E015D111613C7700C5D7EB /* DocBasePredicateExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 55E015CF11613C7700C5D7EB /* DocBasePredicateExtensions.h */; };
+		55E015D211613C7700C5D7EB /* DocBasePredicateExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 55E015D011613C7700C5D7EB /* DocBasePredicateExtensions.m */; };
+		55E015D811613D2400C5D7EB /* DocBasePredicateExtensionsTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 55E015D711613D2400C5D7EB /* DocBasePredicateExtensionsTest.m */; };
 		55E9DD8011317D7E0077865A /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55E9DD7F11317D7E0077865A /* Carbon.framework */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
@@ -187,6 +190,9 @@
 		55E0148B115FE1C500C5D7EB /* DocBaseSyncResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DocBaseSyncResponse.m; sourceTree = "<group>"; };
 		55E0148C115FE1C500C5D7EB /* DocBaseSyncServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DocBaseSyncServer.h; sourceTree = "<group>"; };
 		55E0148D115FE1C500C5D7EB /* DocBaseSyncServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DocBaseSyncServer.m; sourceTree = "<group>"; };
+		55E015CF11613C7700C5D7EB /* DocBasePredicateExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DocBasePredicateExtensions.h; sourceTree = "<group>"; };
+		55E015D011613C7700C5D7EB /* DocBasePredicateExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DocBasePredicateExtensions.m; sourceTree = "<group>"; };
+		55E015D711613D2400C5D7EB /* DocBasePredicateExtensionsTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DocBasePredicateExtensionsTest.m; sourceTree = "<group>"; };
 		55E9DD7F11317D7E0077865A /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 		8D1107310486CEB800E47090 /* DocBase-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "DocBase-Info.plist"; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* DocBase.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DocBase.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -256,6 +262,8 @@
 				55E00BA31156D43300C5D7EB /* AbstractDocBaseFileStorage.m */,
 				55E00EAA115B807300C5D7EB /* DocBaseRemoteStorage.h */,
 				55E00EAB115B807300C5D7EB /* DocBaseRemoteStorage.m */,
+				55E015CF11613C7700C5D7EB /* DocBasePredicateExtensions.h */,
+				55E015D011613C7700C5D7EB /* DocBasePredicateExtensions.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -354,6 +362,7 @@
 				55D200C3114ED72000D91061 /* DocBaseConfigurationTest.m */,
 				55E00AB511569A8200C5D7EB /* DocBaseDateExtensionsTest.m */,
 				55E01010115CC5CC00C5D7EB /* DocBaseSyncClientTest.m */,
+				55E015D711613D2400C5D7EB /* DocBasePredicateExtensionsTest.m */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -378,6 +387,7 @@
 				55E0148E115FE1C500C5D7EB /* DocBaseSyncRequest.h in Headers */,
 				55E01490115FE1C500C5D7EB /* DocBaseSyncResponse.h in Headers */,
 				55E01492115FE1C500C5D7EB /* DocBaseSyncServer.h in Headers */,
+				55E015D111613C7700C5D7EB /* DocBasePredicateExtensions.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -482,6 +492,7 @@
 				55D200C4114ED72000D91061 /* DocBaseConfigurationTest.m in Sources */,
 				55E00AB611569A8200C5D7EB /* DocBaseDateExtensionsTest.m in Sources */,
 				55E01011115CC5CC00C5D7EB /* DocBaseSyncClientTest.m in Sources */,
+				55E015D811613D2400C5D7EB /* DocBasePredicateExtensionsTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -502,6 +513,7 @@
 				55E0148F115FE1C500C5D7EB /* DocBaseSyncRequest.m in Sources */,
 				55E01491115FE1C500C5D7EB /* DocBaseSyncResponse.m in Sources */,
 				55E01493115FE1C500C5D7EB /* DocBaseSyncServer.m in Sources */,
+				55E015D211613C7700C5D7EB /* DocBasePredicateExtensions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
