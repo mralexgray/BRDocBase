@@ -69,7 +69,7 @@
 	[dictionary setObject:[[document class] description] forKey:BRDocTypeKey];
 	if ([document respondsToSelector:@selector(modificationDate)]) {
 		NSString* docBaseDate = [document.modificationDate docBaseString];
-		[dictionary setObject:docBaseDate forKey:BRDocModificationDateKey];
+		if (docBaseDate) [dictionary setObject:docBaseDate forKey:BRDocModificationDateKey];
 	}
 	va_list objectsAndKeys;
 	va_start(objectsAndKeys, firstObject);
