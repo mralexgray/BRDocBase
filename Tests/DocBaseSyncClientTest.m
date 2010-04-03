@@ -206,13 +206,13 @@ NSString* const RemoteDocBaseName = @"remote-doc-base";
 {
 	if (date) date = [NSDate docBaseDateWithDate:date];
 	BRDocBaseSyncClient* sync = [[[BRDocBaseSyncClient alloc] init] autorelease];
-	return [sync syncDocBase:_local withRemote:_remote lastSyncDate:date];
+	return [sync syncDocBase:_local withRemote:_remote lastSyncDate:date error:nil];
 }
 
 -(BOOL)syncWithPredicate:(NSPredicate*)predicate date:(NSDate*)date
 {
 	BRDocBaseSyncClient* sync = [[[BRDocBaseSyncClient alloc] init] autorelease];
-	return [sync syncDocBase:_local withRemote:_remote lastSyncDate:date documentsMatchingPredicate:predicate];
+	return [sync syncDocBase:_local withRemote:_remote documentsMatchingPredicate:predicate lastSyncDate:date error:nil];
 }
 
 -(BOOL)sync

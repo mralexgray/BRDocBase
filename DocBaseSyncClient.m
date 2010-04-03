@@ -13,7 +13,7 @@
 #define HANDLE_ERR(cond, err) if (!(cond) && ![self handleError:err]) return NO
 
 @interface BRDocBaseSyncClient()
--(BOOL)handleError:(NSError*)error;
+-(BOOL)handleError:(NSError**)error;
 -(NSMutableDictionary*)convertToDictionary:(NSSet*)documentSet;
 -(BOOL)syncLocalDocument:(id<BRDocument>)localDocument withRemoteDocument:(id<BRDocument>)remoteDocument error:(NSError**)error;
 -(BOOL)saveToLocal:(id<BRDocument>)document error:(NSError**)error;
@@ -31,19 +31,23 @@
 -(BOOL)syncDocBase:(BRDocBase*)localDocBase 
 	withRemote:(BRDocBase*)remoteDocBase 
 	lastSyncDate:(NSDate*)lastSyncDate
+	error:(NSError**)error
 {
 	return [self 
 		syncDocBase:localDocBase 
 		withRemote:remoteDocBase 
+		documentsMatchingPredicate:[NSPredicate predicateWithValue:YES]
 		lastSyncDate:lastSyncDate 
-		documentsMatchingPredicate:[NSPredicate predicateWithValue:YES]];
+		error:error];
 }
 
 -(BOOL)syncDocBase:(BRDocBase*)localDocBase 
 	withRemote:(BRDocBase*)remoteDocBase 
-	lastSyncDate:(NSDate*)lastSyncDate
 	documentsMatchingPredicate:(NSPredicate*)predicate
+	lastSyncDate:(NSDate*)lastSyncDate
+	error:(NSError**)error
 {
+	if (error) *error = nil;
 	// we don't need to retain this stuff, this is just so the delegate can have access to them
 	_localDocBase = localDocBase;
 	_remoteDocBase = remoteDocBase;
@@ -52,32 +56,30 @@
 		lastSyncDate = [NSDate distantPast];
 	}
 	_lastSyncDate = [NSDate dateWithDocBaseString:[lastSyncDate docBaseString]];
-	
-	NSError* error = nil;
-	
-	NSSet* remoteDeletedDocumentIds = [self.remoteDocBase deletedDocumentIdsSinceDate:self.lastSyncDate error:&error];
+		
+	NSSet* remoteDeletedDocumentIds = [self.remoteDocBase deletedDocumentIdsSinceDate:self.lastSyncDate error:error];
 	HANDLE_ERR(remoteDeletedDocumentIds, error);
-	NSSet* localDeletedDocumentIds = [self.localDocBase deletedDocumentIdsSinceDate:self.lastSyncDate error:&error];
+	NSSet* localDeletedDocumentIds = [self.localDocBase deletedDocumentIdsSinceDate:self.lastSyncDate error:error];
 	HANDLE_ERR(localDeletedDocumentIds, error);
 
 	// delete documents in local that have been deleted in remote
 	for (NSString* remoteDeletedDocId in remoteDeletedDocumentIds) {
 		if ([self.localDocBase documentWithId:remoteDeletedDocId error:nil] != nil) {
-			HANDLE_ERR([self.localDocBase deleteDocumentWithId:remoteDeletedDocId error:&error], error);
+			HANDLE_ERR([self.localDocBase deleteDocumentWithId:remoteDeletedDocId error:error], error);
 		}
 	}
 	
 	// delete documents in remote that have been deleted in local
 	for (NSString* localDeletedDocId in localDeletedDocumentIds) {
 		if ([self.remoteDocBase documentWithId:localDeletedDocId error:nil] != nil) {
-			HANDLE_ERR([self.remoteDocBase deleteDocumentWithId:localDeletedDocId error:&error], error);
+			HANDLE_ERR([self.remoteDocBase deleteDocumentWithId:localDeletedDocId error:error], error);
 		}
 	}
 	
 
-	NSSet* remoteDocuments = [self.remoteDocBase findDocumentsUsingPredicate:predicate error:&error];
+	NSSet* remoteDocuments = [self.remoteDocBase findDocumentsUsingPredicate:predicate error:error];
 	HANDLE_ERR(remoteDocuments, error);
-	NSSet* localDocuments = [self.localDocBase  findDocumentsUsingPredicate:predicate error:&error];
+	NSSet* localDocuments = [self.localDocBase  findDocumentsUsingPredicate:predicate error:error];
 	HANDLE_ERR(localDocuments, error);
 	
 	NSMutableDictionary* remoteDocsById = [self convertToDictionary:remoteDocuments];
@@ -85,11 +87,11 @@
 	for (id<BRDocument> remoteDoc in [remoteDocsById allValues]) {
 		id<BRDocument> localDoc = [localDocsById objectForKey:remoteDoc.documentId];
 		if (localDoc) {
-			HANDLE_ERR([self syncLocalDocument:localDoc withRemoteDocument:remoteDoc error:&error], error);
+			HANDLE_ERR([self syncLocalDocument:localDoc withRemoteDocument:remoteDoc error:error], error);
 			// remove the local doc so we don't deal with it again
 			[localDocsById removeObjectForKey:localDoc.documentId];
 		} else {
-			HANDLE_ERR([self saveToLocal:remoteDoc error:&error], error);
+			HANDLE_ERR([self saveToLocal:remoteDoc error:error], error);
 		}
 	}
 	for (id<BRDocument> localDoc in [localDocsById allValues]) {
@@ -98,7 +100,7 @@
 			// this currently won't occur since we're going through all documents
 			// rather than just updated ones.
 		} else {
-			HANDLE_ERR([self saveToRemote:localDoc error:&error], error);
+			HANDLE_ERR([self saveToRemote:localDoc error:error], error);
 		}
 	}
 	return YES;
@@ -134,9 +136,11 @@
 	return docsById;
 }
 
--(BOOL)handleError:(NSError *)error
+-(BOOL)handleError:(NSError**)error
 {
-	NSLog(@"Error syncing: %@", error);
+	if (error) {
+		NSLog(@"Error syncing: %@", *error);
+	}
 	return NO;
 }
 

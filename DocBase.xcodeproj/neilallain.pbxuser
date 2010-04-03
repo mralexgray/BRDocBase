@@ -17,7 +17,7 @@
 		breakpoints = (
 			553F9D1D10E17B7A00F0C97C /* objc_exception_throw */,
 			55E9DAB9112DC6C00077865A /* DocBaseMigrator.m:83 */,
-			55E01116115D239F00C5D7EB /* DocBaseSyncClient.m:112 */,
+			55E01116115D239F00C5D7EB /* DocBaseSyncClient.m:114 */,
 		);
 		codeSenseManager = 55B4C99F1088A43000869682 /* Code sense */;
 		executables = (
@@ -25,8 +25,12 @@
 			55B4C9AB1088A4AC00869682 /* Tests */,
 		);
 		perUserDictionary = {
-			PBXPerProjectTemplateStateSaveDate = 291848333;
-			PBXWorkspaceStateSaveDate = 291848333;
+			PBXPerProjectTemplateStateSaveDate = 292014966;
+			PBXWorkspaceStateSaveDate = 292014966;
+		};
+		perUserProjectItems = {
+			5549F14C1165409800AC1B5B = 5549F14C1165409800AC1B5B /* PBXBookmark */;
+			5549F1551165410200AC1B5B = 5549F1551165410200AC1B5B /* PBXTextBookmark */;
 		};
 		sourceControlManager = 55B4C99E1088A43000869682 /* Source Control */;
 		userBookmarkGroup = 556822AA10D5A2B200432B34 /* PBXBookmarkGroup */;
@@ -106,6 +110,20 @@
 		originalNumberOfMultipleMatches = 1;
 		state = 1;
 		symbolName = objc_exception_throw;
+	};
+	5549F14C1165409800AC1B5B /* PBXBookmark */ = {
+		isa = PBXBookmark;
+		fRef = 55E00AEE1156A3EE00C5D7EB /* DocBaseDictionaryExtensions.m */;
+	};
+	5549F1551165410200AC1B5B /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 55E00AEE1156A3EE00C5D7EB /* DocBaseDictionaryExtensions.m */;
+		name = "DocBaseDictionaryExtensions.m: 72";
+		rLen = 0;
+		rLoc = 1997;
+		rType = 0;
+		vrLen = 2119;
+		vrLoc = 37;
 	};
 	5559F26D10E39EC500FAA853 /* DeploySDK */ = {
 		activeExec = 0;
@@ -320,9 +338,10 @@
 	};
 	55E00AEE1156A3EE00C5D7EB /* DocBaseDictionaryExtensions.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1297, 1092}}";
-			sepNavSelRange = "{1127, 0}";
-			sepNavVisRange = "{37, 2102}";
+			sepNavIntBoundsRect = "{{0, 0}, {1297, 1144}}";
+			sepNavSelRange = "{1997, 0}";
+			sepNavVisRange = "{37, 2119}";
+			sepNavWindowFrame = "{{15, 87}, {1356, 1086}}";
 		};
 	};
 	55E00BA21156D43300C5D7EB /* AbstractDocBaseFileStorage.h */ = {
@@ -357,16 +376,16 @@
 	55E00FF4115C329A00C5D7EB /* DocBaseSyncClient.h */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1297, 958}}";
-			sepNavSelRange = "{1791, 173}";
-			sepNavVisRange = "{0, 1969}";
+			sepNavSelRange = "{1811, 0}";
+			sepNavVisRange = "{0, 2017}";
 			sepNavWindowFrame = "{{123, 83}, {1356, 1086}}";
 		};
 	};
 	55E00FF5115C329A00C5D7EB /* DocBaseSyncClient.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1297, 2132}}";
-			sepNavSelRange = "{3300, 0}";
-			sepNavVisRange = "{1122, 3097}";
+			sepNavIntBoundsRect = "{{0, 0}, {1297, 2275}}";
+			sepNavSelRange = "{3733, 0}";
+			sepNavVisRange = "{317, 3142}";
 			sepNavWindowFrame = "{{56, 81}, {1356, 1086}}";
 		};
 	};
@@ -377,7 +396,7 @@
 			sepNavVisRange = "{6614, 1284}";
 		};
 	};
-	55E01116115D239F00C5D7EB /* DocBaseSyncClient.m:112 */ = {
+	55E01116115D239F00C5D7EB /* DocBaseSyncClient.m:114 */ = {
 		isa = PBXFileBreakpoint;
 		actions = (
 		);
@@ -389,7 +408,7 @@
 		functionName = "-syncLocalDocument:withRemoteDocument:error:";
 		hitCount = 0;
 		ignoreCount = 0;
-		lineNumber = 112;
+		lineNumber = 114;
 		location = Tests;
 		modificationTime = 291582171.069153;
 		originalNumberOfMultipleMatches = 1;

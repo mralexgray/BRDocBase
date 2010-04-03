@@ -47,10 +47,12 @@ typedef enum BRDocBaseSyncConflictResolution {
 
 -(BOOL)syncDocBase:(BRDocBase*)localDocBase 
 	withRemote:(BRDocBase*)remoteDocBase 
-	lastSyncDate:(NSDate*)lastSyncDate;
+	lastSyncDate:(NSDate*)lastSyncDate
+	error:(NSError**)error;
 	
 -(BOOL)syncDocBase:(BRDocBase*)localDocBase 
 	withRemote:(BRDocBase*)remoteDocBase 
+	documentsMatchingPredicate:(NSPredicate*)predicate
 	lastSyncDate:(NSDate*)lastSyncDate
-	documentsMatchingPredicate:(NSPredicate*)predicate;
+	error:(NSError**)error;
 @end
