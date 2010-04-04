@@ -56,7 +56,7 @@ static NSString* const BRDocExtension = @"doc.js";
 	return [[self documentsInBucket:bucket error:error] objectForKey:documentId];
 }
 
--(NSSet*)allDocuments:(NSError**)error
+-(NSSet*)findDocumentsWithPredicate:(NSPredicate*)predicate error:(NSError**)error
 {
 	BOOL success = YES;
 	NSMutableSet* allDocs = [NSMutableSet set];

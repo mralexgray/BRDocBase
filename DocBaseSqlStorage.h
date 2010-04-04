@@ -10,12 +10,17 @@
 #import "DocBaseStorage.h"
 #import <sqlite3.h>
 
+extern NSString* const BRDocBaseConfigIndexes;
+extern NSString* const BRDocBaseConfigIndexName;
+extern NSString* const BRDocBaseConfigIndexType; 
+
 extern const NSInteger BRDocBaseErrorSqlite;
 
 @interface BRDocBaseSqlStorage : NSObject<BRDocBaseStorage> {
 	NSString* _path;
 	SBJSON* _json;
 	sqlite3* _db;
+	NSArray* _indexes;
 }
 
 @end

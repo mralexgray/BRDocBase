@@ -11,4 +11,7 @@
 
 @interface NSPredicate(BRDocBase_NSPredicateExtensions)
 +(NSPredicate*)predicateWithDocumentType:(NSString*)documentType;
++(NSPredicate*)predicateWithModificationDateSince:(NSDate*)date;
+
+-(NSComparisonPredicate*)findIndexedPredicateForProperty:(NSString*)property;
 @end

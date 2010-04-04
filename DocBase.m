@@ -228,7 +228,7 @@ const NSInteger BRDocBaseErrorUnknownStorageType = 4;
 {
 	if (![self verifyEnvironment:error]) return nil;
 	NSMutableSet* matchingDocuments = nil;
-	NSSet* allDocs = [_storage allDocuments:error];
+	NSSet* allDocs = [_storage findDocumentsWithPredicate:predicate error:error];
 	if (allDocs) {
 		matchingDocuments = [NSMutableSet set];
 		for (NSMutableDictionary* dictionary in allDocs) {

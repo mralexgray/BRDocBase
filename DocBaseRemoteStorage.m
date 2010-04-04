@@ -45,7 +45,7 @@
 	return [self requestResource:[NSString stringWithFormat:@"document/%@", documentId] error:error];
 }
 
--(NSSet*)allDocuments:(NSError**)error
+-(NSSet*)findDocumentsWithPredicate:(NSPredicate*)predicate error:(NSError**)error
 {
 	NSArray* documents = [self requestResource:@"document" error:error];
 	return documents ? [NSSet setWithArray:documents] : nil;

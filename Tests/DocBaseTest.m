@@ -14,11 +14,12 @@
 #import "DocBaseBucketStorage.h"
 #import "DocBaseFileStorage.h"
 #import "DocBaseSqlStorage.h"
+#import "DocBasePredicateExtensions.h"
 
 @interface AbstractDocBaseStorageTest : BRAbstractDocBaseTest {
 
 }
-
+-(void)verifyDocBase:(BRDocBase*)docBase predicate:(NSPredicate*)predicate findsDocuments:(id<BRDocument>)firstDocument, ...;
 @end
 
 
@@ -171,19 +172,40 @@
 
 -(void)testFindDocuments
 {
+	NSDate* nowDate = [NSDate docBaseDate];
+	NSDate* pastDate = [nowDate dateByAddingTimeInterval:-1.0];
+	NSDate* futureDate = [nowDate dateByAddingTimeInterval:1.0];
 	BRDocBase* docBase = [self createDocBase];
 	TestDocument* doc1 = [TestDocument testDocumentWithName:@"foo" number:5];
+	doc1.modificationDate = pastDate;
 	TestDocument* doc2 = [TestDocument testDocumentWithName:@"bar" number:6];
-	[docBase saveDocument:doc1 error:nil];
-	[docBase saveDocument:doc2 error:nil];
-	NSPredicate* predicate = [NSPredicate predicateWithFormat:@"name == \"foo\""];
-	NSSet* found = [docBase findDocumentsUsingPredicate:predicate error:nil];
-	BRAssertTrue([found count] == 1);
-	BRAssertTrue([found containsObject:doc1]);
+	doc2.modificationDate = nowDate;
+	ChangeTrackingDocument* doc3 = [ChangeTrackingDocument testDocumentWithName:@"foo" number:5];
+	doc3.modificationDate = futureDate;
+	[docBase saveDocument:doc1 updateModificationDate:NO error:nil];
+	[docBase saveDocument:doc2 updateModificationDate:NO error:nil];
+	[docBase saveDocument:doc3 updateModificationDate:NO error:nil];
 	
-	predicate = [NSPredicate predicateWithFormat:@"noattr == \"foo\""];
-	found = [docBase findDocumentsUsingPredicate:predicate error:nil];
-	BRAssertTrue([found count] == 0);
+	docBase = [self createDocBase];
+	[self verifyDocBase:docBase predicate:[NSPredicate predicateWithFormat:@"name == \"foo\""] findsDocuments:doc1, doc3, nil];
+	[self verifyDocBase:docBase predicate:[NSPredicate predicateWithFormat:@"noattr == \"foo\""] findsDocuments:nil];
+	[self verifyDocBase:docBase predicate:[NSPredicate predicateWithDocumentType:@"TestDocument"] findsDocuments:doc1, doc2, nil];
+	[self verifyDocBase:docBase predicate:[NSPredicate predicateWithDocumentType:@"ChangeTrackingDocument"] findsDocuments:doc3, nil];
+	[self verifyDocBase:docBase predicate:[NSPredicate predicateWithModificationDateSince:futureDate] findsDocuments:doc3, nil];
+	[self verifyDocBase:docBase predicate:[NSPredicate predicateWithModificationDateSince:nowDate] findsDocuments:doc2, doc3, nil];
+	[self verifyDocBase:docBase predicate:[NSPredicate predicateWithModificationDateSince:pastDate] findsDocuments:doc1, doc2, doc3, nil];
+	
+	NSPredicate* predicate = [NSCompoundPredicate andPredicateWithSubpredicates:[NSArray arrayWithObjects:
+		[NSPredicate predicateWithModificationDateSince:pastDate],
+		[NSPredicate predicateWithDocumentType:@"TestDocument"],
+		nil]];
+	[self verifyDocBase:docBase predicate:predicate findsDocuments:doc1, doc2, nil];
+
+	predicate = [NSCompoundPredicate andPredicateWithSubpredicates:[NSArray arrayWithObjects:
+		[NSPredicate predicateWithModificationDateSince:pastDate],
+		[NSPredicate predicateWithFormat:@"name == \"foo\""],
+		nil]];
+	[self verifyDocBase:docBase predicate:predicate findsDocuments:doc1, doc3, nil];
 }
 
 -(void)testIsDocumentEdited
@@ -227,6 +249,35 @@
 	docBase = [self createDocBase];
 	doc = [docBase documentWithId:docId error:nil];
 	BRAssertTrue(!doc.isDocumentEdited);
+}
+
+-(void)verifyDocBase:(BRDocBase*)docBase predicate:(NSPredicate*)predicate findsDocuments:(id<BRDocument>)firstDocument, ...
+{
+	NSMutableSet* expectedDocuments = [NSMutableSet set];
+	va_list documents;
+	va_start(documents, firstDocument);
+	id<BRDocument> document = firstDocument;
+	while (document) {
+		[expectedDocuments addObject:document];
+		document = va_arg(documents, id<BRDocument>);
+	}
+	va_end(documents);
+	NSSet* foundDocuments = [docBase findDocumentsUsingPredicate:predicate error:nil];
+	BRAssertNotNil(foundDocuments);
+	BRAssertEqual([NSNumber numberWithInt:[expectedDocuments count]], [NSNumber numberWithInt:[foundDocuments count]]);
+	for (id<BRDocument> expectedDocument in expectedDocuments) {
+		BOOL found = NO;
+		for (id<BRDocument> foundDocument in foundDocuments) {
+			if ([foundDocument.documentId isEqualToString:expectedDocument.documentId]) {
+				found = YES;
+				break;
+			}
+		}
+		if (!found) {
+			NSString* message = [NSString stringWithFormat:@"Didn't find document id: %@", expectedDocument.documentId];
+			BRFail(message);
+		}
+	}
 }
 
 @end
@@ -286,9 +337,20 @@
 }
 -(BRDocBase*)createDocBase
 {
-	NSDictionary* configuration = [NSDictionary 
-								   dictionaryWithObject:NSStringFromClass([BRDocBaseSqlStorage class]) 
-								   forKey:BRDocBaseConfigStorageType];
+	NSArray* indexes = [NSArray arrayWithObjects:
+		[NSDictionary dictionaryWithObjectsAndKeys:
+			BRDocTypeKey, BRDocBaseConfigIndexName,
+			@"TEXT", BRDocBaseConfigIndexType,
+			nil],
+		[NSDictionary dictionaryWithObjectsAndKeys:
+			BRDocModificationDateKey, BRDocBaseConfigIndexName,
+			@"DATETIME", BRDocBaseConfigIndexType,
+		nil],
+						nil];
+	NSDictionary* configuration = [NSDictionary dictionaryWithObjectsAndKeys:
+		NSStringFromClass([BRDocBaseSqlStorage class]), BRDocBaseConfigStorageType,
+		indexes, BRDocBaseConfigIndexes,
+		nil];
 	return [BRDocBase docBaseWithPath:self.docBasePath configuration:configuration];
 }
 

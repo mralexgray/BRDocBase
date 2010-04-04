@@ -42,7 +42,7 @@
 		// configurations already match, no update needed
 		return docBase;
 	}
-	NSLog(@"Updating BRDocBase configuration from:\n%@\nto:\n%@", docBase.configuration, configuration);
+	//NSLog(@"Updating BRDocBase configuration from:\n%@\nto:\n%@", docBase.configuration, configuration);
 	NSString* tempDocBasePath = [self tempDocBasePath];
 	if (![self deleteDocBaseAtPath:tempDocBasePath error:error]) {
 		return nil;

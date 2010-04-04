@@ -41,7 +41,7 @@ static NSString* const BRDocBaseFileName = @"docbase_data.js";
 	return nil;
 }
 
--(NSSet*)allDocuments:(NSError**)error
+-(NSSet*)findDocumentsWithPredicate:(NSPredicate*)predicate error:(NSError**)error
 {
 	if ([self readFromFile:error]) {
 		return [NSSet setWithArray:[_documents allValues]];
