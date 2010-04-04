@@ -28,4 +28,5 @@
 @property (readonly) NSFileHandle* fileHandle;
 @property (readonly) NSString* method;
 @property (readonly) NSData* body;
+@property (readonly) NSDictionary* queryParams;
 @end

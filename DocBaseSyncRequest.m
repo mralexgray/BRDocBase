@@ -56,6 +56,27 @@
 	return [body autorelease];
 }
 
+-(NSDictionary*)queryParams
+{
+	NSMutableDictionary* params = [NSMutableDictionary dictionary];
+	NSArray* pairs = [[self.url query] componentsSeparatedByString:@"&"];
+	for (NSString* pair in pairs) {
+		NSArray* keyValue = [pair componentsSeparatedByString:@"="];
+		if ([keyValue count] == 2) {
+			NSString* key = [keyValue objectAtIndex:0];
+			NSString* value = [keyValue objectAtIndex:1];
+			NSString* valueString = (NSString*)CFURLCreateStringByReplacingPercentEscapes(
+				NULL, 
+				(CFStringRef)value, 
+				(CFStringRef)@"");
+			[valueString autorelease];
+			[params setObject:valueString forKey:key];
+		}
+	}
+	return params;
+}
+
+
 #pragma mark -
 #pragma mark Public methods
 

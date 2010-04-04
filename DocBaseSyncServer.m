@@ -11,6 +11,7 @@
 #import "DocBase.h"
 #import "DocBaseSyncResponse.h"
 #import "DocBaseDateExtensions.h"
+#import "DocBasePredicateExtensions.h"
 #import <JSON/JSON.h>
 #import <netinet/in.h>
 #import <sys/socket.h>
@@ -258,8 +259,16 @@ NSString* const BRDocBaseSyncDocumentDeletedNotification = @"BRDocBaseSyncDocume
 -(BRDocBaseSyncResponse*)findDocuments:(BRDocBaseSyncRequest*)request error:(NSError**)error
 {
 	// retrieve all documents
-	NSLog(@"findDocuments");
-	NSSet* documents = [_docBase findDocumentsUsingPredicate:[NSPredicate predicateWithValue:YES] error:error];
+	NSPredicate* predicate;
+	NSDictionary* params = request.queryParams;
+	NSString* dateString = [params objectForKey:@"modificationDate"];
+	if (dateString) {
+		NSDate* modificationDate = [NSDate dateWithDocBaseString:dateString];
+		predicate = [NSPredicate predicateWithModificationDateSince:modificationDate];
+	} else {
+		predicate = [NSPredicate predicateWithValue:YES];
+	}
+	NSSet* documents = [_docBase findDocumentsUsingPredicate:predicate error:error];
 	if (documents) {
 		NSMutableArray* dictionaries = [NSMutableArray arrayWithCapacity:[documents count]];
 		for (id<BRDocument> doc in documents) {
@@ -274,21 +283,7 @@ NSString* const BRDocBaseSyncDocumentDeletedNotification = @"BRDocBaseSyncDocume
 -(BRDocBaseSyncResponse*)findDeletedDocuments:(BRDocBaseSyncRequest*)request error:(NSError**)error
 {
 	NSDate* deletedSince = [NSDate distantPast];
-	NSMutableDictionary* params = [NSMutableDictionary dictionary];
-	NSArray* pairs = [[request.url query] componentsSeparatedByString:@"&"];
-	for (NSString* pair in pairs) {
-		NSArray* keyValue = [pair componentsSeparatedByString:@"="];
-		if ([keyValue count] == 2) {
-			NSString* key = [keyValue objectAtIndex:0];
-			NSString* value = [keyValue objectAtIndex:1];
-			NSString* valueString = (NSString*)CFURLCreateStringByReplacingPercentEscapes(
-				NULL, 
-				(CFStringRef)value, 
-				(CFStringRef)@"");
-			[valueString autorelease];
-			[params setObject:valueString forKey:key];
-		}
-	}
+	NSDictionary* params = request.queryParams;
 	NSString* dateString = [params objectForKey:@"date"];
 	if (dateString) {
 		deletedSince = [NSDate dateWithDocBaseString:dateString];

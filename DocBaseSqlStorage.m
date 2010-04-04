@@ -141,7 +141,7 @@ static id BRFormatSqlValue(id value);
 			[queryBuffer appendFormat:@"%@(documentId in (%@))", join, subselect];
 			join = @" and ";
 		}
-		NSLog(@"Indexed document query:\n%@", queryBuffer);
+		//NSLog(@"Indexed document query:\n%@", queryBuffer);
 		query = queryBuffer;
 	}
 	BRQueryResults* results = [self executeDocumentQuery:query error:error];

@@ -9,12 +9,15 @@
 #import "DocBaseRemoteStorage.h"
 #import <JSON/JSON.h>
 #import "DocBaseDateExtensions.h"
+#import "DocBasePredicateExtensions.h"
+#import "DocBase.h"
 
 #pragma mark -
 #pragma mark Private Interface
 @interface BRDocBaseRemoteStorage()
 -(id)requestResource:(NSString*)resource error:(NSError**)error;
 -(id)requestResource:(NSString *)resource method:(NSString*)method body:(id)body error:(NSError **)error;
+-(NSString*)urlEncodedDate:(NSDate*)date;
 @end
 
 @implementation BRDocBaseRemoteStorage
@@ -47,7 +50,20 @@
 
 -(NSSet*)findDocumentsWithPredicate:(NSPredicate*)predicate error:(NSError**)error
 {
-	NSArray* documents = [self requestResource:@"document" error:error];
+	NSString* resource = @"document";
+	NSComparisonPredicate* modificationDatePredicate = [predicate findIndexedPredicateForProperty:BRDocModificationDateKey];
+	if (modificationDatePredicate && 
+		([modificationDatePredicate predicateOperatorType] == NSGreaterThanOrEqualToPredicateOperatorType))
+	{
+		NSExpression* rhs = [modificationDatePredicate rightExpression];
+		if ([rhs expressionType] == NSConstantValueExpressionType) {
+			id value = [rhs constantValue];
+			if ([value isKindOfClass:[NSDate class]]) {
+				resource = [NSString stringWithFormat:@"document?modificationDate=%@", [self urlEncodedDate:value]];
+			}
+		}
+	}
+	NSArray* documents = [self requestResource:resource error:error];
 	return documents ? [NSSet setWithArray:documents] : nil;
 }
 
@@ -73,14 +89,7 @@
 
 -(NSSet*)deletedDocumentIdsSinceDate:(NSDate*)date error:(NSError**)error
 {
-	NSString* dateString = [date docBaseString];
-	dateString = (NSString *)CFURLCreateStringByAddingPercentEscapes(
-		NULL,
-		(CFStringRef)dateString,
-		NULL,
-		(CFStringRef)@"!*'\"();:@&=+$,/?%#[]% ",
-		kCFStringEncodingUTF8);
-	[dateString autorelease];
+	NSString* dateString = [self urlEncodedDate:date];
 	NSArray* documentIds = [self requestResource:[NSString stringWithFormat:@"deleted?date=%@", dateString] error:error];
 	if (documentIds) {
 		return [NSSet setWithArray:documentIds];
@@ -119,4 +128,18 @@
 	}
 	return [response statusCode] == 200 ? @"SUCCESS" : nil;
 }
+
+-(NSString*)urlEncodedDate:(NSDate *)date
+{
+	NSString* dateString = [date docBaseString];
+	dateString = (NSString *)CFURLCreateStringByAddingPercentEscapes(
+		NULL,
+		(CFStringRef)dateString,
+		NULL,
+		(CFStringRef)@"!*'\"();:@&=+$,/?%#[]% ",
+		kCFStringEncodingUTF8);
+	[dateString autorelease];
+	return dateString;
+}
+
 @end
