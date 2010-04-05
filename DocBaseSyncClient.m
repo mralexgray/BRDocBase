@@ -9,6 +9,7 @@
 #import "DocBaseSyncClient.h"
 #import "DocBase.h"
 #import "DocBaseDateExtensions.h"
+#import "DocBasePredicateExtensions.h"
 
 #define HANDLE_ERR(cond, err) if (!(cond) && ![self handleError:err]) return NO
 
@@ -19,6 +20,7 @@
 -(BOOL)saveToLocal:(id<BRDocument>)document error:(NSError**)error;
 -(BOOL)saveToRemote:(id<BRDocument>)document error:(NSError**)error;
 -(BOOL)documentModifiedSinceLastSync:(id<BRDocument>)document;
+-(NSSet*)findDocumentsInDocBase:(BRDocBase*)docBase withPredicate:(NSPredicate*)predicate lastSyncDate:(NSDate*)syncDate error:(NSError**)error;
 @end
 
 @implementation BRDocBaseSyncClient
@@ -77,9 +79,9 @@
 	}
 	
 
-	NSSet* remoteDocuments = [self.remoteDocBase findDocumentsUsingPredicate:predicate error:error];
+	NSSet* remoteDocuments = [self findDocumentsInDocBase:self.remoteDocBase withPredicate:predicate lastSyncDate:lastSyncDate error:error];
 	HANDLE_ERR(remoteDocuments, error);
-	NSSet* localDocuments = [self.localDocBase  findDocumentsUsingPredicate:predicate error:error];
+	NSSet* localDocuments = [self findDocumentsInDocBase:self.localDocBase withPredicate:predicate lastSyncDate:lastSyncDate error:error];
 	HANDLE_ERR(localDocuments, error);
 	
 	NSMutableDictionary* remoteDocsById = [self convertToDictionary:remoteDocuments];
@@ -168,6 +170,27 @@
 		document.isDocumentEdited = YES;
 	}
 	return ([_remoteDocBase saveDocument:document updateModificationDate:NO error:error] != nil);
+}
+
+-(NSSet*)findDocumentsInDocBase:(BRDocBase*)docBase withPredicate:(NSPredicate*)predicate lastSyncDate:(NSDate*)syncDate error:(NSError**)error
+{
+	NSPredicate* datePredicate = [NSPredicate predicateWithModificationDateSince:syncDate];
+	NSSet* documents = [docBase findDocumentsUsingPredicate:datePredicate error:error];
+	if (!documents) {
+		return nil;
+	}
+	NSMutableSet* matchingDocuments = [NSMutableSet setWithCapacity:[documents count]];
+	for (id<BRDocument> document in documents) {
+		@try {
+			if ([predicate evaluateWithObject:document]) {
+				[matchingDocuments addObject:document];
+			}
+		}
+		@catch (NSException*) {
+			// ignore
+		}
+	}
+	return matchingDocuments;
 }
 
 @end
