@@ -433,11 +433,15 @@ static int BRFindDocumentsCallback(void* instance, int columnCount, char** colum
 {
 	BRQueryResults* results = (BRQueryResults*)instance;
 	NSString* documentData = [NSString stringWithUTF8String:columnValues[1]];
-	NSDictionary* documentDictionary = [results.storage translateToDictionary:documentData error:results.error];
+	NSError* jsonError;
+	NSDictionary* documentDictionary = [results.storage translateToDictionary:documentData error:&jsonError];
 	if (documentDictionary) {
 		[results.results addObject:documentDictionary];
 	} else {
-		return -1;
+		// instead of returning an error here, we'll simply log and discard the document.
+		// otherwise, once bad document can make the whole database unreadable
+		NSLog(@"Bad document found and being discarded from results.  Unable to parse as json:\n%@", documentData);
+		NSLog(@"Error from JSON parser: %@", jsonError);
 	}
 	return 0;
 }
